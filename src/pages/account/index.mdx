@@ -1,0 +1,92 @@
+export const description =
+  'On this page, we’ll dive into the different account endpoints you can use to manage your account programmatically.'
+
+# Account
+
+These endpoints allow you to retrieve, update your Account.
+
+---
+
+## Retrieve account
+
+<Row>
+  <Col>
+		### Fields 
+		<Properties>	
+			<Property label="Account!" route="/account/types#account">
+				The Account query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query AccountQuery{
+			account{
+				# Account type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   {
+			"data": {
+				"account": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"_id": 15511,
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update account
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Store.
+		### Arguments 
+		<Properties> 
+			<Property name="node" label="InputUpdateAccount!" route="/account/types#input-update-account">
+				The account node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Account!" route="/account/types#account">
+				The Account! query type.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    ```
+    mutation updateStoreMutation($node: InputUpdateAccount!){
+			updateAccount(node: $node){
+				# Account type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"account": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+

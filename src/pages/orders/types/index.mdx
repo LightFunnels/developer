@@ -1,0 +1,791 @@
+export const description =
+  'On this page, we’ll dive into the different order types.'
+
+# Order types
+This list contains all query and input types for the order endpoints.
+
+---
+
+## Order
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product.
+			</Property>
+
+			<Property name="_id" type="Int!">
+				Unique number identifier for the product.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the order was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the order was created.
+			</Property>
+			<Property name="archived_at" label="TimeStamp" route='/other#timestamp'>
+				Timestamp of when the order was archived.
+			</Property>
+			<Property name="cancelled_at" label="TimeStamp" route='/other#timestamp'>
+				Timestamp of when the order was cancelled.
+			</Property>
+			<Property name="email" type="Email!">
+				The customer email address.
+				```
+				scalar Email
+				```
+			</Property>
+			<Property name="phone" type="Phone!">
+				The customer phone number.
+				```
+				scalar Phone
+				```
+			</Property>
+			<Property name="name" type="String!">
+				The customer name.
+			</Property>
+			<Property name="notes" type="String">
+				The order notes.
+			</Property>
+			<Property name="financial_status" type="OrderFinancialStatus!">
+				The order financial status.
+				```
+				enum OrderFinancialStatus {
+					pending
+					paid
+					refunded
+					partially_refunded
+				}
+				```
+			</Property>
+			<Property name="fulfillment_status" type="OrderFulfillmentStatus!">
+				The order fulfillment status.
+				```
+				enum OrderFulfillmentStatus {
+					unfulfilled
+					fulfilled
+					partial
+				}
+				```
+			</Property>
+			<Property name="client_details" type="ClientDetails!">
+				The customer client details.
+				```
+				type ClientDetails {
+					ip: String
+					device: String
+					user_agent: String
+				}
+				```
+			</Property>
+			<Property name="custom" type="CustomFields!">
+				The order custom fields.
+				```
+				scalar CustomFields
+				```
+			</Property>
+			<Property name="tags" type="[String!]!">
+				The order tags. 
+			</Property>
+			<Property name="discount_value" type="Float!">
+				The order discount value. 
+			</Property>
+			<Property name="bundle_discount_value" type="Float!">
+				The order bundle discount value.
+			</Property>
+			<Property name="normal_discount_value" type="Float!">
+				The order normal discount value.
+			</Property>
+			<Property name="total" type="Float!">
+				The order total cost.
+			</Property>
+			<Property name="shipping" type="Float!">
+				The order shipping cost.
+			</Property>
+			<Property name="subtotal" type="Float!">
+				The order subtotal.
+			</Property>
+			<Property name="payments" label="[Payment!]!" route="/orders/types#payment">
+				The order payments.
+			</Property>
+			<Property name="refunded_amount" type="Float!">
+				The order refunded amount.
+			</Property>
+			<Property name="refundable" type="Float!">
+				The order refundable amount.
+			</Property>
+			<Property name="net_payment" type="Float!">
+				The order net payment amount.
+			</Property>
+			<Property name="paid_by_customer" type="Float!">
+				The order amount paid by customer.
+			</Property>
+			<Property name="original_total" type="Float!">
+				The order original total cost.
+			</Property>
+			<Property name="shipping_address" label="Address" route="/customers/types#address">
+				The customer shipping address.
+			</Property>
+			<Property name="billing_address" label="Address" route="/customers/types#address">
+				The customer billing address.
+			</Property>
+			<Property name="customer" label="Customer!"  route="/customers/types#customer">
+				The customer details.
+			</Property>
+			<Property name="customer_full_name" type="String">
+				The customer full name.
+			</Property>
+			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
+				The order items union type.
+			</Property>
+			<Property name='checkout' label="Checkout" route="/orders/types#checkout">
+				The order checkout details.
+			</Property>
+			<Property name="test" type="Boolean!">
+				The order test option.
+			</Property>
+			<Property name="nextOrderID" type="ID">
+				The next order id.
+			</Property>
+			<Property name="prevOrderID" type="ID">
+				The previous order id.
+			</Property>
+			<Property name="link" type="String">
+				The order link.
+			</Property>
+			<Property name="currency" type="String!">
+				The order currency.
+			</Property>
+			<Property name="utm" type="[Utm!]">
+				The order utm.
+				```
+				type Utm {
+					v: String!
+					k: String!
+					id: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query ordersQuery($first: Int, $after: String, $query: String!){
+				orders(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							name
+							total
+							fulfillment_status
+							financial_status
+							customer {
+								id
+								full_name
+							}
+							...
+						}
+					}
+				}		
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputOrder
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="notes" type="String">
+				The order notes.
+			</Property>
+			<Property name="archived" type="Boolean">
+				The archived option.
+			</Property>
+			<Property name="shipping_address" label="InputAddress" route="/customers/types#input-address">
+				The customer shipping address.
+			</Property>
+			<Property name="billing_address" label="InputAddress" route="/customers/types#input-address">
+				The customer billing address.
+			</Property>
+			<Property name="email" type="String">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String">
+				The customer phone number.
+			</Property>
+			<Property name="sync_customer_details" type="Boolean">
+				The order sync customer detail boolean.
+			</Property>
+			<Property name="items" type="[ID!]">
+				The order items.
+			</Property>
+			<Property name="variants" type="[Int!]">
+				The order variants.
+			</Property>
+			<Property name="custom" type="CustomFields">
+				The order custom fields.
+				```
+				scalar CustomFields
+				```
+			</Property>
+			<Property name="tags" type="[String!]">
+				The order tags. 
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation updateOrderMutation($node: InputOrder!, $id: Int!){
+				updateOrder(node: $node, id: $id){
+					# Order type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## Payment
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the payment.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the payment.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the payment was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the payment was created.
+			</Property>
+			<Property name="discount_snapshot" label="DiscountSnapshot" route="/orders/types#discount-snapshot">
+				The payment discount snapshot.
+			</Property>
+			<Property name="price_bundle_snapshot" label="[PriceBundleSnapshot!]!" route="/bundles/types#price-bundle-snapshot">
+				The payment price bundle snapshot.
+			</Property>
+			<Property name="total" type="Float!">
+				The payment total.
+			</Property>
+			<Property name="sub_total" type="Float!">
+				The payment subtotal.
+			</Property>
+			<Property name="refunds" type="[Refund]">
+				The payment refunds.
+				```
+				type Refund {
+					id: ID!
+					_id: Int!
+					amount: Float!
+					reason: String
+				}
+				```
+			</Property>
+			<Property name="refunded" type="Float!">
+				The payment refunded amount.
+			</Property>
+			<Property name="refundable" type="Float!">
+				The payment refundable amount.
+			</Property>
+			<Property name="paid" type="Float!">
+				The payment paid amount.
+			</Property>
+			<Property name="paid_at" label="TimeStamp" route='/other#timestamp'>
+				Timestamp of when the payment was paid.
+			</Property>
+			<Property name="discount_value" type="Float!">
+				The payment discount value.
+			</Property>
+			<Property name="source" label="Source!" route="/orders/types#source">
+				The payment source.
+			</Property>
+			<Property name="shipping" type="Shipping">
+				The payment shipping information.
+				```
+				type Shipping {
+					id: ID!
+					_id: Int!
+					price: Float!
+					discount_value: Float!
+					label: String!
+				}
+				```
+			</Property>
+			<Property name="paymentMethodLabel" type="String!">
+				The payment method label.
+			</Property>
+			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
+				The payment financial status.
+				```
+				enum VariantSnapshotFinancialStatus {
+					pending
+					paid
+				}
+				```
+			</Property>
+			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
+				The order items union type.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## ProductVariantSnapshotOrOrderBumpSnapshot
+
+<Row>
+  <Col>
+	<Properties> 
+		The ProductVariantSnapshotOrOrderBumpSnapshot type can be either
+		<Property label="VariantSnapshot" route="/orders/types#variant-snapshot"></Property> 
+		or
+		<Property label="OrderBumpSnapshot" route="/orders/types#order-bump-snapshot"></Property>
+		```
+		union ProductVariantSnapshotOrOrderBumpSnapshot = VariantSnapshot | OrderBumpSnapshot
+		```
+	</Properties> 
+  </Col>
+</Row>
+
+---
+
+## DiscountSnapshot
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the discount snapshot.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the discount snapshot.
+			</Property>
+			<Property name="code" type="String">
+				The discount snapshot code.
+			</Property>
+			<Property name="value" type="Float">
+				The discount snapshot value.
+			</Property>
+			<Property name="discount_result" type="Float">
+				The discount snapshot result.
+			</Property>
+			<Property name="type" type="DiscountType">
+				The discount snapshot type.
+				```
+				enum DiscountType {
+					percentage
+					fixed
+				}
+				```
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount snapshot was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount snapshot was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Source
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the payment source.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the payment source.
+			</Property>
+			<Property name="order" label="Order!" route="/orders/types#order">
+				The payment source order.
+			</Property>
+			<Property name="payment_gateway" label="PaymentGateway!" route="/other#payment-gateway">
+				The payment gateway.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the payment source was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the payment source was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## VariantSnapshot
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the variant snapshot.
+			</Property>
+			<Property name="groupID" type="String!">
+				The variant snapshot group id.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the variant snapshot.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the variant snapshot was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the variant snapshot was created.
+			</Property>
+			<Property name="removed_at" type="TimeStamp">
+				Timestamp of when the variant snapshot was removed.
+			</Property>
+			<Property name="title" type="String!">
+				The variant snapshot title.
+			</Property>
+			<Property name="sku" type="String!">
+				The variant snapshot sku.
+			</Property>
+			<Property name="image" label="Image" route="/other#image">
+				The variant snapshot image.
+			</Property>
+			<Property name="price" type="Float!">
+				The variant snapshot price.
+			</Property>
+			<Property name="options" type="[OrderVariantOption!]!">
+				The orderbump snapshot options.
+				```
+				type OrderVariantOption {
+					id: String!
+					label: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="tracking_number" type="String">
+				The variant snapshot tracking number.
+			</Property>
+			<Property name="tracking_link" type="String">
+				The variant snapshot tracking link.
+			</Property>
+			<Property name="carrier" type="String">
+				The variant snapshot carrier.
+			</Property>
+			<Property name="payment_id" type="Int!">
+				The variant snapshot payment id.
+			</Property>
+			<Property name="refund_id" type="Int">
+				The variant snapshot refund id.
+			</Property>
+			<Property name="variant_id" type="Int">
+				The variant snapshot variant id.
+			</Property>
+			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
+				The variant snapshot fulfillment status.
+				```
+				enum VariantSnapshotItemFulfillmentStatus {
+					none
+					fulfilled
+				}
+				```
+			</Property>
+			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
+				The variant snapshot financial status.
+				```
+				enum VariantSnapshotFinancialStatus {
+					pending
+					paid
+				}
+				```
+			</Property>
+			<Property name="variant" label="ProductVariant" route="/products/types#product-variant">
+				The variant snapshot product variant.
+			</Property>
+			<Property name="payment" label="Payment!" route="/orders/types#payment">
+				The variant snapshot payment.
+			</Property>
+			<Property name="customer_files" type="[CustomerFileGroup!]!">
+				The variant snapshot customer files.
+				```
+				type CustomerFileGroup {
+					name: String
+					files: [CustomerFile!]!
+				}
+
+				type CustomerFile {
+					path: String!
+					key: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## OrderBumpSnapshot
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the orderbump snapshot.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the orderbump snapshot.
+			</Property>
+			<Property name="groupID" type="String!">
+				The orderbump snapshot group id.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the orderbump snapshot was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the orderbump snapshot was created.
+			</Property>
+			<Property name="removed_at" type="TimeStamp">
+				Timestamp of when the orderbump snapshot was removed.
+			</Property>
+			<Property name="title" type="String!">
+				The orderbump snapshot title.
+			</Property>
+			<Property name="sku" type="String!">
+				The orderbump snapshot sku.
+			</Property>
+			<Property name="image" label="Image" route="/other#image">
+				The orderbump snapshot image.
+			</Property>
+			<Property name="price" type="Float!">
+				The orderbump snapshot price.
+			</Property>
+			<Property name="tracking_number" type="String">
+				The orderbump snapshot tracking number.
+			</Property>
+			<Property name="tracking_link" type="String">
+				The orderbump snapshot tracking link.
+			</Property>
+			<Property name="carrier" type="String">
+				The orderbump snapshot carrier.
+			</Property>
+			<Property name="payment_id" type="Int!">
+				The orderbump snapshot payment id.
+			</Property>
+			<Property name="refund_id" type="Int">
+				The orderbump snapshot refund id.
+			</Property>
+			<Property name="order_id" type="Int!">
+				The orderbump snapshot order id.
+			</Property>
+			<Property name="product_id" type="Int">
+				The orderbump snapshot product id.
+			</Property>
+			<Property name="product_uid" type="String!">
+				The orderbump snapshot product uid.
+			</Property>
+			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
+				The orderbump snapshot fulfillment status.
+				```
+				enum VariantSnapshotItemFulfillmentStatus {
+					none
+					fulfilled
+				}
+				```
+			</Property>
+			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
+				The orderbump snapshot financial status.
+				```
+				enum VariantSnapshotFinancialStatus {
+					pending
+					paid
+				}
+				```
+			</Property>
+			<Property name="product" label="Product" route="/products/types#product">
+				The orderbump snapshot product.
+			</Property>
+			<Property name="payment" label="Payment!" route="/orders/types#payment">
+				The orderbump snapshot payment.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Checkout
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the checkout.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the checkout.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the checkout was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the checkout was created.
+			</Property>
+			<Property name="customer" type="CheckoutCustomer!">
+				The checkout customer.
+				```
+				type CheckoutCustomer {
+					first_name: String!
+					last_name: String!
+					full_name: String!
+					email: Email!
+					phone: Phone!
+					accepts_marketing: Boolean!
+					avatar: String!
+					location: String!
+				}
+				```
+			</Property>
+			<Property name="variants" label="[CheckoutVariant!]!" route='/orders/types#checkout-variant'>
+				The checkout variants.
+			</Property>
+			<Property name="total" type="Float!">
+				The checkout total.
+			</Property>
+			<Property name="discount_value" type="Float!">
+				The checkout discount value.
+			</Property>
+			<Property name="subtotal" type="Float">
+				The checkout subtotal.
+			</Property>
+			<Property name="email" type="String">
+				The checkout email.
+			</Property>
+			<Property name="phone" type="String">
+				The checkout phone.
+			</Property>
+			<Property name="step" label="Step" route="/funnels/types#step">
+				The checkout step.
+			</Property>
+			<Property name="link" type="String">
+				The checkout link.
+			</Property>
+			<Property name="store" label="Store" route='/stores/types#store'>
+				The checkout store.
+			</Property>
+			<Property name="funnel" label="Funnel" route='/funnels/types#funnel'>
+				The checkout funnel.
+			</Property>
+			<Property name="currency" type="String!">
+				The checkout currency.
+			</Property>
+			<Property name="recovered" type="Boolean">
+				The checkout recovered option.
+			</Property>
+			<Property name="shipping_address" type="CheckoutAddress">
+				The checkout shipping address.
+				```
+				type CheckoutAddress {
+					first_name: String!
+					last_name: String!
+					full_name: String!
+					email: Email!
+					phone: Phone!
+					accepts_marketing: Boolean!
+					avatar: String!
+					location: String!
+				}
+				```
+			</Property>
+			<Property name="billing_address" type="CheckoutAddress">
+				The checkout billing address.
+				```
+				type CheckoutAddress {
+					first_name: String!
+					last_name: String!
+					full_name: String!
+					email: Email!
+					phone: Phone!
+					accepts_marketing: Boolean!
+					avatar: String!
+					location: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CheckoutVariant 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name='variant' label='ProductVariant' route="/products/types#product-variant">
+				The checkout product variant.
+			</Property>
+			<Property name="quantity" type="Int!">
+				The checkout variant quantity.
+			</Property>
+		</Properties> 
+  </Col>
+</Row>
+---
+
+## OrderConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Order connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[OrderEdge]">
+				The Order connection edges.
+				```
+				type OrderEdge {
+					node: Order
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>

@@ -1,0 +1,261 @@
+export const description =
+  'On this page, we’ll dive into the different store endpoints you can use to manage stores programmatically.'
+
+# Stores
+
+These endpoints allow you to retrieve, create, update, and delete Store(s).
+
+---
+
+## List all stores
+
+<Row>
+  <Col>
+    This query allows you to retrieve all stores on your account.
+		### Fields 
+		<Properties>	
+			<Property label="Store!" route="/stores/types#store">
+				The Store! query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query AccountQuery{
+				account{
+					stores{
+						# Store type fields
+						id
+						...
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"account": {
+					"stores": [
+						{
+							"id": "VzVE4OTA5LDFR4OTA5XQ==",
+						}
+					]
+				},
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a store 
+
+<Row>
+  <Col>
+    This query allows you to add a new store.
+		### Arguments 
+		<Properties> 
+			<Property label="StoreInput!" route="/stores/types#store-input">
+				The StoreInput type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property name='CreateStoreMutation!' type="CreateStoreMutation!">
+				The CreateStoreMutation! query type.
+				```
+				type CreateStoreMutation {
+					account: Account!
+					store: Store!
+				}
+				```
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: StoreInput!) {
+				createStore(node: $node){
+					# CreateStoreMutation type fields
+					account {
+						id
+					}
+					store {
+						id
+					}
+					...
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createStore": {
+					"account": {
+						"id": "RnVubmVsOjIwMTIz"
+					},
+					"store": {
+						"id": "RnVubmVsOjIwMTIs"
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a store
+
+<Row>
+  <Col>
+    This query allows you to retrieve a store by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The store id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Store!" route="/stores/types#store">
+				The Store! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query StoreQuery($id: ID!){
+			node(id: $id){
+				... on Store{
+					# Store type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   {
+			"data": {
+				"node": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Store 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Store.
+
+		### Arguments 
+		<Properties> 
+			<Property name="uid" type="ID!">
+				The store id.
+			</Property>
+			<Property name="node" label="StoreUpdateInput!" route="/stores/types#store-update-input">
+				The store node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Store!" route="/stores/types#store">
+				The Store! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateStoreMutation($node: StoreUpdateInput!, $uid: ID!){
+			updateStore(node: $node, uid: $uid){
+				# Store type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"updateStore": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"name": "My Awesome Store",
+					...
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Store
+
+<Row>
+  <Col>
+    This query allows you to delete stores.
+
+		### Arguments 
+		<Properties> 
+			<Property name="uids" type="[ID!]!">
+				The store uids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Account" route='/account/types#account'>
+				The account type.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteStoresMutation($uids: [ID!]!){
+			deleteStore(uids: $uids){
+				# Account type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteStore": {
+					# Account type fields
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>

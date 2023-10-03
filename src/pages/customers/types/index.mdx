@@ -1,0 +1,393 @@
+export const description =
+  'On this page, we’ll dive into the different customer types.'
+
+# Customer types
+This list contains all query and input types for the customer endpoints.
+
+---
+
+## Customer
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the product.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was created.
+			</Property>
+			<Property name="email" type="Email!">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String!">
+				The customer phone number.
+			</Property>
+			<Property name="first_name" type="String!">
+				The customer first name.
+			</Property>
+			<Property name="last_name" type="String!">
+				The customer last name.
+			</Property>
+			<Property name="full_name" type="String!">
+				The customer full name.
+			</Property>
+			<Property name="location" type="String">
+				The customer location.
+			</Property>
+			<Property name="avatar" type="String!">
+				The customer avatar.
+			</Property>
+			<Property name="accepts_marketing" type="Boolean!">
+				The customer avatar.
+			</Property>
+			<Property name="notes" type="String">
+				The customer notes.
+			</Property>
+			{/* <Property name="orders" label="[Order!]!" route="/orders/types#order">
+				The customer orders.
+			</Property> */}
+			<Property name="shipping_address" label="Address" route="/customers/types#address">
+				The customer shipping address.
+			</Property>
+			<Property name="billing_address" label="Address" route="/customers/types#address">
+				The customer billing address.
+			</Property>
+			<Property name="expenses" type="Float!">
+				The customer expenses.
+			</Property>
+			<Property name="orders_count" type="Int!">
+				The customer orders_count.
+			</Property>
+			<Property name="summary" label="CustomerSummary!" route="/customers/types#customer-summary">
+				The customer summary.
+			</Property>
+			<Property name="custom" type="CustomFields">
+				The customer custom fields.
+				```
+				scalar CustomFields
+				```
+			</Property>
+			<Property name="leads" type="[Lead!]!">
+				The customer leads.
+			</Property>
+			<Property name="tags" type="[String!]!">
+				The customer tags.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query CustomersQuery($first: Int, $after: String, $query: String!){
+				customers(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							email
+							phone
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputUpdateCustomer
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="email" type="String">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String">
+				The customer phone number.
+			</Property>
+			<Property name="first_name" type="String">
+				The customer first name.
+			</Property>
+			<Property name="last_name" type="String">
+				The customer last name.
+			</Property>
+			<Property name="accepts_marketing" type="Boolean">
+				Boolean to check if the customer accepts marketing.
+			</Property>
+			<Property name="notes" type="String">
+				The customer notes.
+			</Property>
+			<Property name="shipping_address" label="InputAddress" route="/customers/types#input-address">
+				The customer shipping address.
+			</Property>
+			<Property name="billing_address" label="InputAddress" route="/customers/types#input-address">
+				The customer billing address.
+			</Property>
+			<Property name="custom" type="CustomFields">
+				The customer custom fields.
+				```
+				scalar CustomFields
+				```
+			</Property>
+			<Property name="tags" type="[String!]">
+				The customer tags.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation updateCustomerMutation($node: InputUpdateCustomer!, $id: Int!){
+				updateCustomer(node: $node, id: $id){
+					# Customer type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputCustomer
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="email" type="String!">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String!">
+				The customer phone number.
+			</Property>
+			<Property name="first_name" type="String!">
+				The customer first name.
+			</Property>
+			<Property name="last_name" type="String!">
+				The customer last name.
+			</Property>
+			<Property name="accepts_marketing" type="Boolean!">
+				Boolean to check if the customer accepts marketing.
+			</Property>
+			<Property name="shipping_address" label="InputAddress" route="/customers/types#input-address">
+				The customer shipping address.
+			</Property>
+			<Property name="billing_address" label="InputAddress" route="/customers/types#input-address">
+				The customer billing address.
+			</Property>
+			<Property name="tags" type="[String!]!">
+				The customer tags.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputCustomer!) {
+				createCustomer(node: $node){
+					# Customer type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputAddress
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="line1" type="String">
+				The customer first address line.
+			</Property>
+			<Property name="line2" type="String">
+				The customer secondary address line.
+			</Property>
+			<Property name="city" type="String">
+				The customer city.
+			</Property>
+			<Property name="area" type="String">
+				The customer area.
+			</Property>
+			<Property name="country" type="String">
+				The customer country.
+			</Property>
+			<Property name="first_name" type="String">
+				The customer first name.
+			</Property>
+			<Property name="last_name" type="String">
+				The customer last name.
+			</Property>
+			<Property name="zip" type="String">
+				The customer zip.
+			</Property>
+			<Property name="state" type="String">
+				The customer state.
+			</Property>
+			<Property name="email" type="String">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String">
+				The customer phone number.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Address
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the customer.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the customer.
+			</Property>
+			<Property name="line1" type="String!">
+				The customer first address line.
+			</Property>
+			<Property name="line2" type="String!">
+				The customer secondary address line.
+			</Property>
+			<Property name="city" type="String!">
+				The customer city.
+			</Property>
+			<Property name="area" type="String!">
+				The customer area.
+			</Property>
+			<Property name="country" type="String">
+				The customer country.
+			</Property>
+			<Property name="first_name" type="String!">
+				The customer first name.
+			</Property>
+			<Property name="last_name" type="String!">
+				The customer last name.
+			</Property>
+			<Property name="zip" type="String!">
+				The customer zip.
+			</Property>
+			<Property name="state" type="String!">
+				The customer state.
+			</Property>
+			<Property name="email" type="String!">
+				The customer email address.
+			</Property>
+			<Property name="phone" type="String!">
+				The customer phone number.
+			</Property>
+			<Property name="toString" type="String!">
+				The toString field.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CustomerSummary
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="visits" type="Int!">
+				The customer visits.
+			</Property>
+			<Property name="orders" label='CustomerOrders!' type="/customers/types#customer-orders">
+				The customer orders.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CustomerOrders
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="expenses" type="Float!">
+				The customer expenses.
+			</Property>
+			<Property name="count" type="Int!">
+				The customer order count.
+			</Property>
+			<Property name="list" type='[OrderSummary!]!' type="/orders/types#order-summary">
+				The customer orders.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+## OrderSummary
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="order" label="Order!" route='/orders/types#order'>
+				The order type.
+			</Property>
+			<Property name="referrer" type="String">
+				The order referrer.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CustomerConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Customer connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[CustomerEdge]">
+				The Customer connection edges.
+				```
+				type CustomerEdge {
+					node: Customer
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>

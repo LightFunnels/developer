@@ -1,0 +1,330 @@
+export const description =
+  'On this page, we’ll dive into the different review endpoints you can use to manage reviews programmatically.'
+
+# Reviews
+
+These endpoints allow you to retrieve, create, update, and delete Review(s).
+
+---
+
+## List all reviews 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your reviews. By default, a maximum of 25 reviews are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+				`product_id`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Review!" route='/reviews/types#review'>
+				The Review query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query reviewsQuery($first: Int, $after: String, $query: String!){
+				reviews(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							name
+							email
+							content
+							rate
+							published
+							avatar
+							created_at
+							updated_at							
+							...
+						}
+						cursor
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "UmV2aWV3OjQ4NDUy",
+							"_id": 48452,
+							"name": "Yassir Ennazk",
+							"email": "Yassir@lightfunnels.com",
+							"content": "some text",
+							"rate": 5,
+							"published": true,
+							"avatar": "//www.gravatar.com/avatar/...",
+							"created_at": "a few seconds ago",
+							"updated_at": "a few seconds ago",
+							"__typename": "Review"
+							...
+						},
+						"cursor": "WzQ4NDUyLDQ4NDUyXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "WzQ4NDUyLDQ4NDUyXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a review 
+
+<Row>
+  <Col>
+    This query allows you to add a new review.
+		### Arguments 
+		<Properties> 
+			<Property name="product_id" type='ID!'>
+				The review product id.
+			</Property>
+			<Property label="InputReview!" route='/reviews/types#input-review'>
+				The InputReview type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Review!" route='/reviews/types#review'>
+				The Review query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($product_id: ID!, $node: InputReview!) {
+				createReview(product_id: $product_id, node: $node){
+					# Review type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "UmV2aWV3OjQ4NDUy",
+							"name": "Yassir Ennazk",
+							"email": "Yassir@lightfunnels.com",
+							"content": "some text",
+							...
+						},
+						"cursor": "WzQ4NDUyLDQ4NDUyXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "WzQ4NDUyLDQ4NDUyXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a review
+
+<Row>
+  <Col>
+    This query allows you to retrieve a review by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The review id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Review!" route="/reviews/types#review">
+				The Review query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query reviewQuery($id: ID!){
+			node(id: $id){
+				... on Review {
+					# Review type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   	{
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "UmV2aWV3OjQ4NDUy",
+							"name": "Yassir Ennazk",
+							"email": "Yassir@lightfunnels.com",
+							"content": "some text",
+							...
+						},
+						"cursor": "WzQ4NDUyLDQ4NDUyXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "WzQ4NDUyLDQ4NDUyXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Review 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Review.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The review id.
+			</Property>
+			<Property name="node" label="InputUpdateReview!" route="/reviews/types#input-update-review">
+				The review node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Review!" route="/reviews/types#review">
+				The Review query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateReviewMutation($node: InputUpdateReview!, $id: ID!){
+			updateReview(node: $node, id: $id){
+				# Review type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "UmV2aWV3OjQ4NDUy",
+							"name": "Yassir Ennazk",
+							"email": "Yassir@lightfunnels.com",
+							"content": "some text",
+							...
+						},
+						"cursor": "WzQ4NDUyLDQ4NDUyXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "WzQ4NDUyLDQ4NDUyXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Review
+
+<Row>
+  <Col>
+    This query allows you to delete reviews.
+
+		### Arguments 
+		<Properties> 
+			<Property name="items" type="[ID!]!">
+				The review ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of review ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteReviewsMutation($items: [ID!]!){
+			deleteReviews(items: $items){
+				# [ID] type field
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteReviews": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+  </Col>
+</Row>

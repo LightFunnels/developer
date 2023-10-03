@@ -1,0 +1,75 @@
+export const description =
+  'In this guide, we will look at how to register and consume webhooks to integrate your app with Protocol.'
+
+# Getting Started
+
+Welcome to the Lightfunnels GraphQL API documentation! This page will provide you with an overview of how to get started with using the Lightfunnels GraphQL API. {{ className: 'lead' }}
+
+## Prerequisites
+
+Before you start using the Lightfunnels GraphQL API, you will need the following:
+
+- An active Lightfunnels account. You can [sign up here](https://app.lightfunnels.com/admin/auth/signup).
+- An `client ID` and `app secret`, which can be obtained by [contacting our team](mailto:support@lightfunnels.com?subject=New%20Lightfunnels%20application%20request&body=Hello%20Lightfunnels%2C%0D%0A%0D%0AI%20would%20like%20to%20create%20a%20new%20application%20to%20use%20your%20API.%0D%0A%0D%0AMy%20app%20name%20is%3A%20REPLACE_WITH_YOUR_APP_NAME%0D%0AMy%20app%20URL%20is%3A%20https%3A%2F%2Flocalhost%3A3000%2F%0D%0AMy%20redirect%20URL%20is%3A%20https%3A%2F%2Flocalhost%3A3000%2Fredirect%0D%0A%0D%0AThanks%0D%0A%0D%0AYour%20name)
+- Familiarity with [GraphQL](https://graphql.org/), including the GraphQL syntax and GraphQL HTTP requests
+
+## Making a Query
+To make a GraphQL query using the Lightfunnels API, you will need to send an HTTP POST request to the API endpoint with the following parameters:
+
+- `query`: The GraphQL query, encoded as a string
+- `variables` (optional): A JSON object containing variables for the query
+
+### Authorization
+You should also include your API `access token` in the Authorization header of the request as follows:
+```json {{ title: 'Authorization header' }}
+Authorization: Bearer <your access token>
+```
+Learn how to get your access token on the [Access Token page](/authentication) {{ className: 'lead' }}
+
+## Apps
+
+To have access to an app you have to have an `App ID`, which can be obtained by [contacting our team](mailto:support@lightfunnels.com),
+then you can access your app through https://app.lightfunnels.com/admin/apps/`{{app_id}}`
+
+### Endpoint
+
+The GraphQL API endpoint for all your queries is:
+
+```text {{ title: 'GraphQL endpoint' }}
+https://services.lightfunnels.com/api2
+```
+
+## Query Example
+Here is an example of a GraphQL query to get the title of a product with the id of `1`:
+
+
+```graphql {{ title: 'Example query' }}
+query getProduct{
+    product(id: 1){
+        title
+    }
+}
+```
+
+Example response:
+
+```json {{ title: 'Example query' }}
+{
+    "data": {
+        "product": {
+            "title": "Awesome Product Example"
+        }
+    }
+}
+```
+
+Learn more about GraphQL [queries and mutations here](https://graphql.org/learn/queries/) {{ className: 'lead' }}
+
+---
+
+## See it live on Postman
+Click the button below to open the Lightfunnels collection in Postman and see the API working live.
+
+Make sure you update the variables in the collection settings to your own values.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/25777811-deac7e44-eded-44d2-8daa-0a79a13dec06?action=collection%2Ffork&collection-url=entityId%3D25777811-deac7e44-eded-44d2-8daa-0a79a13dec06%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51)

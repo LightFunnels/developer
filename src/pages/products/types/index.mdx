@@ -1,0 +1,783 @@
+export const description =
+  'On this page, we’ll dive into the different product types.'
+
+# Product types
+This list contains all query and inputs types for the product endpoints.
+
+---
+
+## Product
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the product.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the product.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was created.
+			</Property>
+			<Property name="title" type="String!">
+				The product title.
+			</Property>
+			<Property name="slug" type="String!">
+				The product slug.
+			</Property>
+			<Property name="description" type="String">
+				The product description.
+			</Property>
+			<Property name="price" type="Float!">
+				The product price.
+			</Property>
+			<Property name="compare_at_price" type="Float!">
+				The product compare price.
+			</Property>
+			<Property name="images" label="[Image!]!" route="/other#image">
+				The product images.
+			</Property>
+			<Property name="images_ids" type="[ID!]!">
+				The product image ids.
+			</Property>
+			<Property name="options" type="[ProductOption!]!">
+				The product options.
+				```
+				type ProductOption {
+					id: String!
+					label: String!
+					options: [String!]!
+					type: ProductOptionTypeEnum!
+					options_types: [ProductOptionType!]!
+				}
+
+				enum ProductOptionTypeEnum {
+					image
+					text
+					color
+				}
+
+				type ProductOptionType {
+					option_id: String!
+					value: ProductOptionTypeValue!
+				}
+
+				scalar ProductOptionTypeValue
+				```
+			</Property>
+			<Property name="variants" label="[ProductVariant!]!" route="/products/types#product-variant">
+				The product variants.
+			</Property>
+			<Property name="default_variant" label="ProductVariant!" route="/products/types#product-variant">
+				The product default variants. 
+			</Property>
+			<Property name="reviews" label="ReviewConnection!" route="/reviews/types#review-connection">
+				The product reviews. 
+				##### Arguments 
+				<Property name="query" type="String!">
+					the reviews query string. 
+				</Property>
+			</Property>
+			<Property name="tags" label="[Tag!]!" route="/products/types#tag">
+				The product tags. 
+			</Property>
+			<Property name="review_score" type="Float!">
+				The product review score. 
+			</Property>
+			<Property name="review_count" type="Int!">
+				The product review count. 
+			</Property>
+			<Property name="thumbnail" label="Image" route="/other#image">
+				The product thumbnail. 
+			</Property>
+			<Property name="order_bump" type="ProductBump!">
+				The product order bump. 
+				```
+				type ProductBump {
+					id: String!
+					title: String!
+					price: Float!
+					compare_at_price: Float!
+					description: String!
+					enabled: Boolean!
+					image: Image
+					image_uid: ID
+					file_uid: ID
+					sku: String!
+					file: File
+				}
+				```
+			</Property>
+			<Property name="countdown" type="ProductCountdown!">
+				The product countdown timer. 
+				```
+				type ProductCountdown {
+					enabled: Boolean!
+					evergreen: Boolean!
+					minutes: Int!
+					due: String
+				}
+				```
+			</Property>
+			<Property name="sticky" type="ProductSticky!">
+				The product sticky buy button. 
+				```
+				type ProductSticky {
+					enabled: Boolean!
+				}
+				```
+			</Property>
+			<Property name="features" type="[ProductFeatures!]!">
+				The product features. 
+				```
+				type ProductFeatures {
+					id: String!
+					title: String!
+					description: String!
+					image: Image
+					image_uid: ID
+				}
+				```
+			</Property>
+			<Property name="testimonials" type="[ProductTestimonials!]!">
+				The product testimonials. 
+				```
+				type ProductTestimonials {
+					image: Image
+					image_uid: ID
+					id: String!
+					name: String!
+					position: String!
+					comment: String!
+				}
+				```
+			</Property>
+			<Property name="faq" type="[ProductFaq!]!">
+				The product faq. 
+				```
+				type ProductFaq {
+					id: String!
+					question: String!
+					answer: String!
+				}
+				```
+			</Property>
+			<Property name="notice_text" type="String!">
+				The product notice text. 
+			</Property>
+			<Property name="product_type" type="ProductType!">
+				The product type. 
+				```
+				enum ProductType {
+					physical_product
+					digital_product
+				}
+				```
+			</Property>
+			<Property name="default_variant_uid" type="ID!">
+				The product default variant uid. 
+			</Property>
+			<Property	Property name="default_variant_id" type="Int!">
+				The product default variant id. 
+			</Property>
+			<Property name="shipping_group_id" type="String">
+				The product shipping group id. 
+			</Property>
+			<Property name="price_bundle_id" type="String">
+				The product price bundle id. 
+			</Property>
+			<Property name="price_bundle" label="PriceBundle" route="/bundles/types#price-bundle">
+				The product price bundle. 
+			</Property>
+			<Property name="file" label="File" route="/products/types#file">
+				The product file. 
+			</Property>
+			<Property name="file_uid" type="ID">
+				The product file uid. 
+			</Property>
+			<Property name="sku" type="String!">
+				The product sku. 
+			</Property>
+			<Property name="crossSellProducts" label="[CrossSellProduct!]!" route="/products/types#cross-sell-product">
+				The product cross sell products. 
+				```
+				type CrossSellProduct {
+					upsell_product_uid: ID!
+					upsell_product: Product!
+					downsell_product_uid: ID
+					downsell_product: Product
+				}
+				```
+			</Property>
+			<Property name="has_published_funnel" type="Boolean!">
+				The product has published funnel option. 
+			</Property>	
+			<Property name="collections_uids" type="[ID!]!">
+				The product collections uids. 
+			</Property>
+			<Property name="customFunnel" label='Funnel' route="/funnels/types#funnel">
+				The product funnel. 
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query productsQuery($first: Int, $after: String, $query: String!){
+				products(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							title
+							price
+							thumbnail{
+								path(version: version1)
+							}
+							created_at
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputProduct
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="title" type="String!">
+				The product title.
+			</Property>
+			<Property name="description" type="String">
+				The product description.
+			</Property>
+			<Property name="price" type="Float">
+				The product price.
+			</Property>
+			<Property name="sku" type="String">
+				The product sku.
+			</Property>
+			<Property name="slug" type="String">
+				The product slug.
+			</Property>
+			<Property name="compare_at_price" type="Float">
+				The product compare price.
+			</Property>
+			<Property name="options" type="[InputProductOption!]!">
+				The product options.
+				```
+				input InputProductOption {
+					id: String
+					label: String
+					options: [String!]
+					type: ProductOptionTypeEnum! = text
+					options_types: [InputProductOptionType!]! = []
+				}
+
+				input InputProductOptionType {
+					option_id: String!
+					value: ProductOptionTypeValue!
+				}
+
+				scalar ProductOptionTypeValue
+				```
+			</Property>
+			<Property name="images" type="[ID!]">
+				The product images.
+			</Property>
+			<Property name="variants" type="[InputProductVariant!]!">
+				The product variants.
+				```
+				input InputProductVariant {
+					id: ID
+					price: Float = 0
+					compare_at_price: Float = 0
+					image_uid: ID
+					file_uid: ID
+					sku: String
+					options: [InputProductOptionValue!]! = []
+				}
+
+				input InputProductOptionValue {
+					value: String!
+					id: String!
+				}
+				```
+			</Property>
+			<Property name="tags" type="[ID!]">
+				The product tags.
+			</Property>
+			<Property name="order_bump" type="InputProductBump">
+				The product order bump.
+				```
+				input InputProductBump {
+					id: String!
+					title: String!
+					price: Float!
+					compare_at_price: Float!
+					description: String!
+					sku: String!
+					enabled: Boolean!
+					image_uid: ID
+					file_uid: ID
+				}
+				```
+			</Property>
+			<Property name="countdown" type="InputProductCountdown">
+				The product countdown.
+				```
+				input InputProductCountdown {
+					enabled: Boolean!
+					evergreen: Boolean!
+					minutes: Int
+					due: String
+				}
+				```
+			</Property>
+			<Property name="sticky" type="InputProductSticky">
+				The product sticky.
+				```
+				input InputProductSticky {
+					enabled: Boolean!
+				}
+				```
+			</Property>
+			<Property name="features" type="[InputProductFeatures!]">
+				The product features.
+				```
+				input InputProductFeatures {
+					id: String!
+					title: String!
+					description: String!
+					image_uid: ID
+				}
+				```
+			</Property>
+			<Property name="testimonials" type="[InputProductTestimonials!]">
+				The product testimonials.
+				```
+				input InputProductTestimonials {
+					id: String!
+					name: String!
+					position: String!
+					comment: String!
+					image_uid: ID
+				}
+				```
+			</Property>
+			<Property name="faq" type="[InputProductFaq!]">
+				The product faq.
+				```
+				input InputProductFaq {
+					id: String!
+					question: String!
+					answer: String!
+				}
+				```
+			</Property>
+			<Property name="notice_text" type="String">
+				The product notice text.
+			</Property>
+			<Property name="product_type" type="ProductType">
+				The product type.
+				```
+				enum ProductType {
+					physical_product
+					digital_product
+				}
+				```
+			</Property>
+			<Property name="shipping_group_id" type="String">
+				The product shipping group id.
+			</Property>
+			<Property name="price_bundle_id" type="String">
+				The product price bundle id.
+			</Property>
+			<Property name="file_uid" type="ID">
+				The product file uid.
+			</Property>
+			<Property name="file_uid" type="ID">
+				The product file uid.
+			</Property>
+			<Property name="crossSellProducts" type="[CrossInputSellProduct!]">
+				The product enable price bundle option.
+				```
+				input CrossInputSellProduct {
+					upsell_product_uid: ID!
+					downsell_product_uid: ID
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputProduct!) {
+				createProduct(node: $node){
+					# Product fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+## InputUpdateProduct
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="title" type="String">
+				The product title.
+			</Property>
+			<Property name="sku" type="String">
+				The product sku.
+			</Property>
+			<Property name="slug" type="String">
+				The product slug.
+			</Property>
+			<Property name="description" type="String">
+				The product description.
+			</Property>
+			<Property name="price" type="Float">
+				The product price.
+			</Property>
+			<Property name="compare_at_price" type="Float">
+				The product compare price.
+			</Property>
+			<Property name="options" type="[InputProductOption!]!">
+				The product options.
+				```
+				input InputProductOption {
+					id: String
+					label: String
+					options: [String!]
+					type: ProductOptionTypeEnum! = text
+					options_types: [InputProductOptionType!]! = []
+				}
+
+				input InputProductOptionType {
+					option_id: String!
+					value: ProductOptionTypeValue!
+				}
+
+				scalar ProductOptionTypeValue
+				```
+			</Property>
+			<Property name="images" type="[ID!]">
+				The product images.
+			</Property>
+			<Property name="variants" type="[InputProductVariant!]!">
+				The product variants.
+			</Property>
+			<Property name="tags" type="[ID!]">
+				The product tags.
+			</Property>
+			<Property name="order_bump" type="InputProductBump">
+				The product order bump.
+				```
+				input InputProductBump {
+					id: String!
+					title: String!
+					price: Float!
+					compare_at_price: Float!
+					description: String!
+					sku: String!
+					enabled: Boolean!
+					image_uid: ID
+					file_uid: ID
+				}
+				```
+			</Property>
+			<Property name="countdown" type="InputProductCountdown">
+				The product countdown.
+				```
+				input InputProductCountdown {
+					enabled: Boolean!
+					evergreen: Boolean!
+					minutes: Int
+					due: String
+				}
+				```
+			</Property>
+			<Property name="sticky" type="InputProductSticky">
+				The product sticky.
+				```
+				input InputProductSticky {
+					enabled: Boolean!
+				}
+				```
+			</Property>
+			<Property name="features" type="[InputProductFeatures!]">
+				The product features.
+				```
+				input InputProductFeatures {
+					id: String!
+					title: String!
+					description: String!
+					image_uid: ID
+				}
+				```
+			</Property>
+			<Property name="testimonials" type="[InputProductTestimonials!]">
+				The product testimonials.
+				```
+				input InputProductTestimonials {
+					id: String!
+					name: String!
+					position: String!
+					comment: String!
+					image_uid: ID
+				}
+				```
+			</Property>
+			<Property name="faq" type="[InputProductFaq!]">
+				The product faq.
+				```
+				input InputProductFaq {
+					id: String!
+					question: String!
+					answer: String!
+				}
+				```
+			</Property>
+			<Property name="notice_text" type="String">
+				The product notice text.
+			</Property>
+			<Property name="product_type" type="ProductType">
+				The product type.
+				```
+				enum ProductType {
+					physical_product
+					digital_product
+				}
+				```
+			</Property>
+			<Property name="file_uid" type="ID">
+				The product file uid.
+			</Property>
+			<Property name="shipping_group_id" type="String">
+				The product shipping group id.
+			</Property>
+			<Property name="price_bundle_id" type="String">
+				The product price bundle id.
+			</Property>
+			<Property name="crossSellProducts" type="[CrossInputSellProduct!]">
+				The product cross-sell products option.
+				```
+				input CrossInputSellProduct {
+					upsell_product_uid: ID!
+					downsell_product_uid: ID
+				}
+				```
+			</Property>
+			<Property name="custom_funnel_uid" type="String">
+				The product custom funnel id.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation updateProductMutation($node: InputUpdateProduct!, $id: Int!){
+				updateProduct(node: $node, id: $id){
+					# Product fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## ProductVariant
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the product.
+			</Property>
+			<Property name="price" type="Float!">
+				The product price.
+			</Property>
+			<Property name="compare_at_price" type="Float!">
+				The product compare price.
+			</Property>
+			<Property name="sku" type="String!">
+				The product sku.
+			</Property>
+			<Property name="title" type="String!">
+				The product title.
+			</Property>
+			<Property name="image" label="Image" route="/other#image">
+				The product image.
+			</Property>
+			<Property name="image_uid" type="ID">
+				The product image uid.
+			</Property>
+			<Property name="file" label="File" route="/products/types#file">
+				The product file.
+			</Property>
+			<Property name="file_uid" type="ID">
+				The product file uid.
+			</Property>
+			<Property name="product_id" type="Int!">
+				The product id.
+			</Property>
+			<Property name="options" type="[ProductOptionValue!]!">
+				The product options.
+				```
+				type ProductOptionValue {
+					id: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="labeldOptions (typo here)" type="[OrderVariantOption!]!">
+				The product options.
+				```
+				type OrderVariantOption {
+					id: String!
+					label: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## File
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product file.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the product file.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the product file.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product file was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product file was created.
+			</Property>
+			<Property name="title" type="String!">
+				The product file title.
+			</Property>
+			<Property name="path" type="String!">
+				The product file path.
+			</Property>
+			<Property name="key" type="String!">
+				The product file key.
+			</Property>
+			<Property name="size" type="String!">
+				The product file size.
+				##### Arguments
+				<Property name="format" type="String">
+					The size format string.
+				</Property>
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Tag
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product tag.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the product tag.
+			</Property>
+			<Property name="title" type="String!">
+				The product tag title.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product tag was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the product tag was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## ProductConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Product connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[ProductEdge]">
+				The Product connection edges.
+				```
+				type ProductEdge {
+					node: Product
+					cursor: String!
+				}
+				```
+			</Property>
+			<Property name="count" type="Int!">
+				Product connection count.
+			</Property>
+		</Properties>
+  </Col>
+</Row>

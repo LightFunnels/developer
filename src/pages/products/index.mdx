@@ -1,0 +1,299 @@
+export const description =
+  'On this page, we’ll dive into the different product endpoints you can use to manage products programmatically.'
+
+# Products
+
+These endpoints allow you to retrieve, create, update, and delete Product(s).
+
+---
+
+## List all products 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your products. By default, a maximum of 25 products are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+				`last_month`
+				`last_week`
+				`last_3_months`
+				`last_year`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Product!" route='/products/types#product'>
+				The Product query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query productsQuery($first: Int, $after: String, $query: String!){
+				products(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							title
+							price
+							thumbnail{
+								path(version: version1)
+							}
+							created_at
+						}
+						cursor
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+      "data": {
+				"edges" : [
+					{
+						"cursor": "WzVE4OTA5LDEe/4OTA5XQ==",
+						"node": {
+							"id": "VzVE4OTA5LDFR4OTA5XQ==",
+							"price": 10,
+							"thumbnail": {
+								"id": "SW1hZ2U6NTAyMTQ00",
+								"path": "https://assets.lightfunnels.com/...",
+								"title": "My beautiful thumbnail"
+							},
+							"title": "My really great product",
+							"__typename": "Product",
+							"_id": 14352
+						}
+					}		
+				]
+			}
+    }
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a product 
+
+<Row>
+  <Col>
+    This query allows you to add a new product.
+		### Arguments 
+		<Properties> 
+			<Property label="InputProduct!" route='/products/types#input-product'>
+				The InputProduct type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Product!" route='/products/types#product'>
+				The Product query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputProduct!) {
+				createProduct(node: $node){
+					# Product type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createProduct": {
+					"id": "UHJvZHVjdDoxNTg1aOA==",
+					"_id": 158508,
+					"title": "My product",
+					"description": "My product description",
+					"price": 10,
+					"compare_at_price": 21,
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a product
+
+<Row>
+  <Col>
+    This query allows you to retrieve a product by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The product id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Product!" route="/products/types#product">
+				The Product query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query productQuery($id: ID!){
+			node(id: $id){
+				... on Product {
+					# Product type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   {
+			"data": {
+				"product": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"_id": 15511,
+					"title": "Awesome Demo Product",
+					"description": "This is a dummy product description.",
+					"notice_text": "47% Off Today Only",
+					"price": 25.75,
+					"compare_at_price": 39.99,
+					"product_type": "physical_product",
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Product 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Product.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The product id.
+			</Property>
+			<Property name="node" label="InputUpdateProduct!" route="/products/types#Input-update-product">
+				The product node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Product!" route="/products/types#product">
+				The Product query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateProductMutation($node: InputUpdateProduct!, $id: ID!){
+			updateProduct(node: $node, id: $id){
+				# Product type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"updateProduct": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"_id": 15511,
+					"title": "Awesome Demo Product",
+					"description": "This is a dummy product description.",
+					"notice_text": "47% Off Today Only",
+					...
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Product
+
+<Row>
+  <Col>
+    This query allows you to delete products.
+
+		### Arguments 
+		<Properties> 
+			<Property name="items" type="[ID!]!">
+				The product ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of product ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteProductsMutation($items: [ID!]!){
+			deleteProducts(items: $items){
+				# [ID] type field
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteProducts": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+  </Col>
+</Row>

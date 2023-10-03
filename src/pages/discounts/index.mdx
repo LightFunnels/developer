@@ -1,0 +1,299 @@
+export const description =
+  'On this page, we’ll dive into the different discount endpoints you can use to manage discounts programmatically.'
+
+# Discounts
+
+These endpoints allow you to retrieve, create, update, and delete Discount(s).
+
+---
+
+## List all Discounts 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your Discounts. By default, a maximum of 25 Discounts are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Discount!" route="/discounts/types#discount">
+				The discount query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query DiscountsQuery($first: Int, $after: String, $query: String!){
+				discounts(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							code
+							value
+							type
+							usage_limit
+							one_time_usage_per_customer
+							started_at
+							expired_at
+							active
+							limited_usage
+							usage
+						}
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"edges": [
+					{
+						"node": {
+							"id": "RGlzY291bnQ6MzQw",
+							"code": "test discount",
+							"value": 15,
+							"type": "percentage",
+							"usage_limit": 25,
+							"one_time_usage_per_customer": false,
+							"started_at": "2023-01-03 00:00:00",
+							"expired_at": "2023-01-24 00:00:00",
+							"active": true,
+							"limited_usage": true,
+							"usage": 2,
+						}
+					}
+				],
+				"pageInfo": {
+					"endCursor": "WzE5OTY4LDE5OTY4XQ==",
+					"hasNextPage": false
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a Discount 
+
+<Row>
+  <Col>
+    This query allows you to add a new Discount.
+		### Arguments 
+		<Properties> 
+			<Property label="createDiscountMutationInput!" route="/discounts/types#create-discount-mutation-input">
+				The createDiscountMutationInput type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Discount!" route="/discounts/types#discount">
+				The discount query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($input: createDiscountMutationInput!) {
+				createDiscount(input: $input){
+					# createDiscountMutationPayload
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createDiscount": {
+					"clientMutationId": "Y291bnQ6MzQw",
+					"discount": {
+						"id": "RGlzY291bnQ6MzQw",
+						"code": "test discount",
+						"value": 15,
+						"type": "percentage",
+						"usage_limit": 25
+						...
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a Discount
+
+<Row>
+  <Col>
+    This query allows you to retrieve a Discount by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The Discount id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Discount!" route="/discounts/types#discount">
+				The Discount! query type.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query DiscountQuery($id: ID!){
+			node(id: $id){
+				... on Discount{
+					# Discount type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+		{
+			"data": {
+				"node": {
+					"id": "RGlzY291bnQ6MzQw",
+					"code": "test discount",
+					"value": 15,
+					"type": "percentage",
+					"usage_limit": 25
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Discount 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Discount.
+
+		### Arguments 
+		<Properties> 
+			<Property name="input" label="updateDiscountMutationInput!" route="/discounts/types#update-discount-mutation-input">
+				The Discount input.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Discount!" route="/discounts/types#discount">
+				The Discount! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateDiscountMutation($input: updateDiscountMutationInput!){
+			updateDiscount(input: $input){
+				# updateDiscountMutationPayload type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"updateDiscount": {
+					"id": "RGlzY291bnQ6MzQw",
+					"code": "test discount",
+					"value": 15,
+					"type": "percentage",
+					"usage_limit": 25
+					...
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Discount
+
+<Row>
+  <Col>
+    This query allows you to delete Discounts.
+
+		### Arguments 
+		<Properties> 
+			<Property name="items" type="[ID!]!">
+				The Discount ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of Discount ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteDiscountsMutation($items: [ID!]!){
+			deleteDiscounts(items: $items){
+				# [ID] type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteDiscounts": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+
+  </Col>
+</Row>

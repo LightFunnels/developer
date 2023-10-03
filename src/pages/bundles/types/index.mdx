@@ -1,0 +1,258 @@
+export const description =
+  'On this page, we’ll dive into the different bundle types.'
+
+# Bundle types
+This list contains all query and inputs types for the bundle endpoints.
+
+---
+
+## PriceBundle
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the price bundle.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the price bundle was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the price bundle was created.
+			</Property>
+			<Property name="label" type="String!">
+				The price bundle label.
+			</Property>
+			<Property name="items" label="[PriceBundleItem!]!" route="/bundles/types#price-bundle-item">
+				The price bundle items.
+			</Property>
+			<Property name="products" label="[Product!]!" route='/products/types#product'>
+				The price bundle products.
+			</Property>		
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query BundlesQuery($first: Int, $after: String, $query: String!){
+				priceBundles(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							label
+							created_at
+							items {
+								id
+								discount_value
+								quantity
+								...
+							}
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputPriceBundle
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="label" type="String!">
+				The price bundle label.
+			</Property>
+			<Property name="items" label="[InputPriceBundleItem!]!" route="/bundles/types#input-price-bundle-item">
+				The price bundle items.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputPriceBundle!) {
+				createPriceBundle(node: $node){
+					# PriceBundle fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputUpdatePriceBundle
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="label" type="String!">
+				The price bundle label.
+			</Property>
+			<Property name="items" label="[InputPriceBundleItem!]!" route="/bundles/types#input-price-bundle-item">
+				The price bundle items.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation updateBundleMutation($node: InputUpdatePriceBundle!, $id: ID!){
+				updatePriceBundle(node: $node, id: $id){
+					# PriceBundle fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## PriceBundleItem
+
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the price bundle item.
+			</Property>
+			<Property name="label" type="String!">
+				The price bundle label.
+			</Property>
+			<Property name="quantity" type="Int!">
+				The price bundle quantity.
+			</Property>
+			<Property name="discount_value" type="Float!">
+				The price bundle label.
+			</Property>
+			<Property name="discount_type" type="AllDiscountType!">
+				The price bundle label.
+			</Property>
+			```
+			enum AllDiscountType {
+				percentage
+				fixed
+				item
+			}
+			```
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputPriceBundleItem	
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the price bundle item.
+			</Property>
+			<Property name="label" type="String!">
+				The price bundle label.
+			</Property>
+			<Property name="quantity" type="Int!">
+				The price bundle quantity.
+			</Property>
+			<Property name="discount_value" type="Float!">
+				The price bundle label.
+			</Property>
+			<Property name="discount_type" type="AllDiscountType!">
+				The price bundle label.
+			</Property>
+			```
+			enum AllDiscountType {
+				percentage
+				fixed
+				item
+			}
+			```
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## PriceBundleConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Price bundle connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[PriceBundleEdge]">
+				The price bundle connection edges.
+				```
+				type PriceBundleEdge {
+					node: PriceBundle
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## PriceBundleSnapshot
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the priceBundle snapshot.
+			</Property>
+			<Property name="value" type="Float!">
+				The priceBundle snapshot value.
+			</Property>
+			<Property name="discount_result" type="Float!">
+				The priceBundle snapshot result.
+			</Property>
+			<Property name="label" type="String!">
+				The priceBundle snapshot label
+			</Property>
+			<Property name="type" type="AllDiscountType">
+				The priceBundle snapshot type.
+				```
+				enum AllDiscountType {
+					percentage
+					fixed
+					item
+				}
+				```
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the priceBundle snapshot was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the priceBundle snapshot was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>

@@ -1,0 +1,274 @@
+export const description =
+  'On this page, we’ll dive into the different contact endpoints you can use to manage segments programmatically.'
+
+# Segments
+
+These endpoints allow you to retrieve, create, update, and delete Segment(s).
+
+---
+
+## List all Segments 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your Segments. By default, a maximum of 25 Segments are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Segment!" route="/segments/types#segment">
+				The Segment! query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query SegmentsQuery($first: Int, $after: String, $query: String!){
+				segments(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							name
+							description
+						}
+						cursor
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"edges": [{
+					"node": {
+						"id": "U2VnbWVudDozMQ==",
+						"name": "Segment test",
+						"description": "description ...",
+					},
+					"cursor": "WzE5MTM1MCwxOTEzNTBd"
+				}],
+				"pageInfo": {
+					"endCursor": "WzE0Njk5MSwxNDY5OTFd",
+					"hasNextPage": true
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a Segment 
+
+<Row>
+  <Col>
+    This query allows you to add a new Segment.
+		### Arguments 
+		<Properties> 
+			<Property label="SegmentInput!" route="/segments/types#segment-input">
+				The SegmentInput type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Segment!" route="/segments/types#segment">
+				The Segment! query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: SegmentInput!) {
+				createSegment(node: $node){
+					# Segment type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createSegment": {
+					"id": "U2VnbWVudDozMQ==",
+					"name": "Segment test",
+					"description": "description ..."
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a Segment
+
+<Row>
+  <Col>
+    This query allows you to retrieve a Segment by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The Segment id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Segment!" route='/segments/types#segment'>
+				The Segment! query type.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query SegmentQuery($id: ID!){
+			node(id: $id){
+				... on Segment {
+					# Segment type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+		{
+			"data": {
+				"node": {
+					"id": "U2VnbWVudDozMQ==",
+					"name": "Segment test",
+					"description": "description ..."
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Segment 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Segment.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="Int!">
+				The Segment id.
+			</Property>
+			<Property name="node" label="SegmentInput!" route="/segments/types#segment-input">
+				The Segment node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Segment!" route="/segments/types#segment">
+				The Segment! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateSegmentMutation($node: SegmentInput!, $id: ID!){
+			updateSegment(node: $node, id: $id){
+				# Segment type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"updateSegment": {
+					"id": "U2VnbWVudDozMQ==",
+					"name": "Segment test",
+					"description": "description ..."
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Segment
+
+<Row>
+  <Col>
+    This query allows you to delete Segments.
+
+		### Arguments 
+		<Properties> 
+			<Property name="items" type="[ID!]!">
+				The Segment ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of segment ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteSegmentsMutation($items: [ID!]!){
+			deleteSegments(items: $items){
+				# [ID] type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteSegments": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+
+  </Col>
+</Row>

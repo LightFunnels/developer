@@ -1,0 +1,287 @@
+export const description =
+  'On this page, we’ll dive into the different funnel endpoints you can use to manage funnels programmatically.'
+
+# Funnels
+
+These endpoints allow you to retrieve, create, update, and delete Funnel(s).	
+
+---
+
+## List all funnels
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your funnels. By default, a maximum of 25 funnels are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by` (String)
+				`order_dir` (String)
+				`published` (Boolean)
+				`product_id` (String)
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Funnel!" route="/funnels/types#funnel">
+				The Funnel! query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query FunnelsQuery($first: Int, $after: String, $query: String!){
+				funnels(query: "order_by:id order_dir:desc product_id:"15858" published:true", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							name
+							published
+							slug
+							created_at
+						}
+						cursor
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"edges": [
+					{
+						"cursor": "WzVE4OTA5LDEe/4OTA5XQ==",
+						"node": {
+							"id": "VzVE4OTA5LDFR4OTA5XQ==",
+							"_id": 14352,
+							"slug": "fsnZ8_t3c",
+							"name": "My funnel",
+							"created_at": "a day ago",
+							"published": true,
+							"__typename": "Funnel"
+						}
+					}
+				],
+				"pageInfo": {
+					"endCursor": "WzE5OTY4LDE5OTY4XQ==",
+					"hasNextPage": false
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a funnel 
+
+<Row>
+  <Col>
+    This query allows you to add a new funnel.
+		### Arguments 
+		<Properties> 
+			
+			<Property label="InputCreateFunnel!" route="/funnels/types#input-create-funnel">
+				The InputCreateFunnel! type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Funnel!" route="/funnels/types#funnel">
+				The Funnel! query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputCreateFunnel!) {
+				createFunnel(node: $node){
+					# Funnel type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createFunnel": {
+					_id: 2023, 
+					id: "RnVubmVsOjIwMTIz"
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a funnel
+
+<Row>
+  <Col>
+    This query allows you to retrieve a funnel by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The funnel id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Funnel!" route="/funnels/types#funnel">
+				The Funnel! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query FunnelQuery($id: ID!){
+			node(id: $id){
+				... on Funnel{
+					# Funnel type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   {
+			"data": {
+				"funnel": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"_id": 15511,
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Funnel 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Funnel.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The funnel id.
+			</Property>
+			<Property name="node" label="InputFunnel!" route="/funnels/types#input-funnel">
+				The funnel node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Funnel!" route="/funnels/types#funnel">
+				The Funnel! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateFunnelMutation($node: InputFunnel!, $id: Int!){
+			updateFunnel(node: $node, id: $id){
+				# Funnel type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"funnel": {
+					"id": "UHJvZHVjdDoxNTUxMQ==",
+					"_id": 15511,
+					"name": "My Awesome Funnel",
+					...
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Funnel
+{/* {{ tag: 'DELETE', label: '/v1/contacts/:id' }} */}
+
+<Row>
+  <Col>
+    This query allows you to delete funnels.
+
+		### Arguments 
+		<Properties> 
+			<Property name="items" type="[ID!]!">
+				The funnel ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of funnel ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteFunnelsMutation($items: [ID!]!){
+			deleteFunnels(items: $items){
+				# [ID] type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteFunnels": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+  </Col>
+</Row>

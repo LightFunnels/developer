@@ -1,0 +1,287 @@
+export const description =
+  'On this page, we’ll dive into the different product types.'
+
+# Product types
+This list contains all query and inputs types for the product endpoints.
+
+---
+
+## TimeStamp
+
+	<Col>
+		<Properties> 
+			### Arguments
+			<Property name="format" type="String">
+				The supported format parameters:
+				`fromNow`
+				`YYYY-MM-DD`
+				`HH:mm:ss`
+			</Property>
+			<Property name="suffix" type="Boolean">
+				TimeStamp suffix, defaults to `true`
+			</Property>
+		</Properties>
+		<Properties> 
+			#### Return type
+			<Property>
+				`scalar TimeStamp`
+				##### Example:
+				```
+				{
+					updated_at('YYYY-MM-DD')
+					---
+					updated_at: "2023-09-22"
+				}
+				```
+			</Property>
+		</Properties> 
+	</Col>
+
+---
+
+## Image
+
+	<Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				The image unique identifier.
+			</Property>
+			<Property name="_id" type="Int!">
+				The image unique number identifier.
+			</Property>
+			<Property name="uid" type="ID!">
+				The image unique identifier.
+			</Property>
+			<Property name="title" type="String!">
+				The image title.
+			</Property>
+			<Property name="path" type="String!">
+				The image title.
+				##### Arguments
+				<Property name="version" type="ImageVariant">
+					The image variant version.
+					```
+					enum ImageVariant {
+						version1
+						version2
+						version3
+					}
+					```
+				</Property>
+			</Property>
+			<Property name="key" type="String!">
+				The image key.
+			</Property>
+			<Property name="alt" type="String!">
+				The image alt.
+			</Property>
+			<Property name="resource_type" type="String!">
+				The image resource type.
+			</Property>
+			<Property name="overview" label="ImageOverview!" route='/other#image-overview'>
+				The image resource type.
+			</Property>
+		</Properties> 
+	</Col>
+
+---
+
+## ImageOverview
+
+	<Col>
+		### Fields
+		<Properties> 
+			<Property name="width" type="Float">
+				The image width.
+			</Property>
+			<Property name="height" type="Float">
+				The image height.
+			</Property>
+			<Property name="type" type="String">
+				The image type.
+			</Property>
+			<Property name="size" type="String!">
+				The image size.
+				##### Arguments
+				<Property name="format" type="String">
+					format the image size type.
+				</Property>
+			</Property>
+		</Properties> 
+	</Col>
+
+	---
+
+## Domain
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the domain.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the domain.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the domain.
+			</Property>
+			<Property name="name" type="String!">
+				The domain name.
+			</Property>
+			<Property name="connected" type="Boolean!">
+				The domain connected option.
+			</Property>
+			<Property name="ssl_connected" type="Boolean!">
+				The domain ssl connected option.
+			</Property>
+			<Property name="require_actions" type="Boolean!">
+				The domain require actions option.
+			</Property>
+			<Property name="redirect_to_primary" type="Boolean!">
+				The domain redirect to primary option.
+			</Property>
+			<Property name="registrar" type="String">
+				The domain registrar.
+			</Property>
+			<Property name="home_funnel_uid" type="ID">
+				The domain home funnel uid.
+			</Property>
+			<Property name="home_funnel" label="Funnel" type='/funnels/types#funnel'>
+				The domain home funnel.
+			</Property>
+			<Property name="resource_type" type="FunnelResourceType">
+				The domain resource type.
+				```
+				enum FunnelResourceType {
+					funnel
+					store
+				}
+				```
+			</Property>
+			<Property name="store_uid" type="ID">
+				The domain store uid.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the domain was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the domain was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## PaymentGateway
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the payment gateway.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the payment gateway.
+			</Property>
+			<Property name="type" type="payment_gateway_type!">
+				The payment gateway type.
+				```
+				enum payment_gateway_type {
+					paypal
+					cod
+					stripe
+					external
+					razorpay
+					cinetpay
+					thirdparty
+				}
+				```
+			</Property>
+			<Property name="prototype" label="PaymentGatewayPrototype!" route='/other#payment-gateway-prototype'>
+				the payment gateway prototype.
+			</Property>
+			<Property name="settings" type="PaymentGatewaySettings!">
+				The payment gateway settings.
+				```
+				scalar PaymentGatewaySettings
+				```
+			</Property>
+			<Property name="details" type="PaymentGatewayDetails!">
+				The payment gateway details.
+				```
+				scalar PaymentGatewayDetails
+				```
+			</Property>
+			<Property name="active" type="Boolean!">
+				The payment gateway active option.
+			</Property>
+			<Property name="identifier" type="String!">
+				The payment gateway identifier.
+			</Property>
+			<Property name="test" type="Boolean!">
+				The payment gateway test option.
+			</Property>
+			<Property name="platform_active" type="Boolean!">
+				The payment gateway platform active option.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## PaymentGatewayPrototype
+
+<Row>  
+	<Col>
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the payment gateway prototype.
+			</Property>
+			<Property name="label" type="String!">
+				The payment gateway prototype label.
+			</Property>
+			<Property name="link" type="String!">
+				The payment gateway prototype link.
+			</Property>
+			<Property name="thumbnail" type="String!">
+				The payment gateway prototype thumbnail.
+			</Property>
+			<Property name="key" type="String!">
+				The payment gateway prototype key.
+			</Property>
+			<Property name="backendOnly" type="Boolean!">
+				The payment gateway prototype backendOnly boolean.
+			</Property>
+			<Property name="thirdparty" type="Boolean!">
+				The payment gateway prototype thirdparty boolean.
+			</Property>
+			<Property name="express" type="Boolean!">
+				The payment gateway prototype express boolean.
+			</Property>
+			<Property name="testMode" type="Boolean!">
+				The payment gateway prototype testMode boolean.
+			</Property>
+			<Property name="public" type="Boolean!">
+				The payment gateway prototype public boolean.
+			</Property>
+			<Property name="keys" type="PaymentGatewayPrototypeKeys!">
+				The payment gateway prototype keys.
+				```
+				scalar PaymentGatewayPrototypeKeys
+				```
+			</Property>
+			<Property name="connection_keys" type="PaymentGatewayPrototypeKeys!">
+				The payment gateway prototype connection keys.
+				```
+				scalar PaymentGatewayPrototypeKeys
+				```
+			</Property>
+		</Properties>	
+  </Col>
+</Row>

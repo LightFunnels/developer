@@ -1,0 +1,158 @@
+export const description =
+  'On this page, we’ll dive into the different segment types.'
+
+# Segment types
+This list contains all query and input types for the segment endpoints.
+
+---
+
+## Segment
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the segment.
+			</Property>
+				<Property name="uid" type="ID!">
+				Unique identifier for the segment.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the segment.
+			</Property>
+			<Property name="settings" type="SegmentConfig!">
+				The segment settings.
+				```
+				type SegmentConfig {
+					exclude: SegmentCondition!
+					include: SegmentCondition!
+				}
+
+				type SegmentCondition {
+					operator: SegmentConfigConditionType!
+					tags: [String!]!
+				}
+
+				enum SegmentConfigConditionType {
+					AND
+					OR
+				}
+				```
+			</Property>
+			<Property name="name" type="String!">
+				The segment name.
+			</Property>
+			<Property name="description" type="String!">
+				The segment description.
+			</Property>
+			<Property name="statistics" type="Int!">
+				The segment statistics.
+			</Property>	
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the segment was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the segment was created.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query SegmentsQuery($first: Int, $after: String, $query: String!){
+				segments(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							name
+							description
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## SegmentInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="name" type="String">
+				The segment name.
+			</Property>
+			<Property name="description" type="String">
+				The segment description.
+			</Property>
+			<Property name="settings" type="InputSegmentConfig">
+				The segment settings.
+				```
+				input InputSegmentConfig {
+					exclude: InputSegmentCondition
+					include: InputSegmentCondition
+				}
+
+				input InputSegmentCondition {
+					operator: SegmentConfigConditionType
+					tags: [String!]!
+				}
+				
+				enum SegmentConfigConditionType {
+					AND
+					OR
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: SegmentInput!) {
+				createSegment(node: $node){
+					# Segment type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## SegmentConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Segment connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[SegmentEdge]">
+				The Segment connection edges.
+				```
+				type SegmentEdge {
+					node: Segment
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>

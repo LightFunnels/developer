@@ -1,0 +1,226 @@
+export const description =
+  'On this page, we’ll dive into the different collection types.'
+
+# Collection types
+This list contains all query and inputs types for the collection endpoints.
+
+---
+
+## Collection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the collection.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the collection.
+			</Property>
+			<Property name="type" type="CollectionType!">
+				The collection type.
+				```
+				enum CollectionType {
+					specific_funnels
+					specific_keywords
+				}
+				```
+			</Property>
+			<Property name="products_uids" type="[ID!]!">
+				The products unique identifiers for the collection.
+			</Property>
+			<Property name="tags_uids" type="[String!]!">
+				The tags unique identifiers for the collection.
+			</Property>
+			<Property name="name" type="String!">
+				The collection name.
+			</Property>
+			<Property name="slug" type="String!">
+				The collection slug.
+			</Property>
+			<Property name="image" type="Image" route='/other#image'>
+				The collection image.
+			</Property>
+			<Property name="image_uid" type="ID">
+				The collection image unique identifier.
+			</Property>
+			<Property name="description" type="String!">
+				The collection description.
+			</Property>
+			<Property name="productsCount" type="Int!">
+				The collection products count.
+			</Property>
+			<Property name="result" type="[CollectionResult!]!">
+				The collection result.
+				```
+				type CollectionResult {
+					title: String!
+					price: Float!
+					thumbnail: String
+					compare_at_price: Float!
+					reviews_value: Float!
+					link: String!
+					funnel_uid: String!
+					cursor: String!
+				}
+				```
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the collection was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the collection was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CollectionResult
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="title" type="String!">
+				The collection result title.
+			</Property>
+			<Property name="price" type="Float!">
+				The collection result price.
+			</Property>
+			<Property name="thumbnail" type="String">
+				The collection result thumbnail.
+			</Property>
+			<Property name="compare_at_price" type="Float!">
+				The collection result compare at price.
+			</Property>
+			<Property name="reviews_value" type="Float!">
+				The collection result reviews value.
+			</Property>
+			<Property name="link" type="String">
+				The collection result link.
+			</Property>
+			<Property name="slug" type="String!">
+				The collection result slug.
+			</Property>
+			<Property name="product_id" type="Int!">
+				The collection result product id.
+			</Property>
+			<Property name="cursor" type="String!">
+				The collection result cursor.
+			</Property>
+		</Properties> 	
+	</Col> 
+</Row> 
+
+---
+
+## CollectionInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="type" type="CollectionType!">
+				The collection type.
+				```
+				enum CollectionType {
+					specific_funnels
+					specific_keywords
+				}
+				```
+			</Property>
+			<Property name="tags_uids" type="[String!]">
+				The tags unique identifiers for the collection.
+			</Property>
+			<Property name="products_uids" type="[ID!]">
+				The products unique identifiers for the collection.
+			</Property>
+			<Property name="slug" type="String!">
+				The collection slug.
+			</Property>
+			<Property name="name" type="String!">
+				The collection name.
+			</Property>
+			<Property name="image_uid" type="ID">
+				The collection image unique identifier.
+			</Property>
+			<Property name="description" type="String!">
+				The collection description.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CollectionUpdateInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="type" type="CollectionType">
+				The collection type.
+				```
+				enum CollectionType {
+					specific_funnels
+					specific_keywords
+				}
+				```
+			</Property>
+			<Property name="tags_uids" type="[String!]">
+				The tags unique identifiers for the collection.
+			</Property>
+			<Property name="products_uids" type="[ID!]">
+				The products unique identifiers for the collection.
+			</Property>
+			<Property name="slug" type="String">
+				The collection slug.
+			</Property>
+			<Property name="name" type="String">
+				The collection name.
+			</Property>
+			<Property name="image_uid" type="ID">
+				The collection image unique identifier.
+			</Property>
+			<Property name="description" type="String">
+				The collection description.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## CollectionConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Collection connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[CollectionEdge]">
+				The Collection connection edges.
+				```
+				type CollectionEdge {
+					node: Collection
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>

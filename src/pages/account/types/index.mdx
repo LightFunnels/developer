@@ -1,0 +1,640 @@
+export const description =
+  'On this page, we’ll dive into the different Account types.'
+
+# Account types
+This list contains all query and inputs types for the Account endpoints.
+
+---
+
+## Account
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the account.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the account.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the account.
+			</Property>
+			<Property name="slug" type="String!">
+				The account slug.
+			</Property>
+			<Property name="cancelled" type="Boolean!">
+				The account cancelled boolean.
+			</Property>
+			<Property name="cancel_at" label="Timestamp!" route='/other#timestamp'>
+				Timestamp of when the account was cancelled.
+			</Property>
+			<Property name="lockDash" type="Boolean!">
+				The account lockDash boolean.
+			</Property>
+			<Property name="stripe_default_payment_id" type="String">
+				The account stripe default payment id.
+			</Property>
+			<Property name="sub_status" type="String!">
+				The account sub status.
+			</Property>
+			<Property name="past_due" type="Boolean!">
+				The account past due.
+			</Property>
+			<Property name="sub" type="String">
+				The account sub.
+			</Property>
+			<Property name="owner_id" type="Int">
+				The account owner id.
+			</Property>
+			<Property name="account_name" type="String!">
+				The account name.
+			</Property>
+			<Property name="has_free_access" type="Boolean!">
+				The account has free access boolean.
+			</Property>
+			<Property name="appliedCouponValue" type="Float!">
+				The account applied coupon value.
+			</Property>
+			<Property name="email" type="String">
+				The account email.
+			</Property>
+			<Property name="customers_email" type="String!">
+				The account customers email.
+			</Property>
+			<Property name="image" label="VirtualImage!" route='/account/types#virtual-image'>
+				The account image.
+				```
+				type VirtualImage implements Node {
+					id: ID!
+					url(version: ImageVariant = version3): String!
+					key: String
+					defaultURL: String!
+				}
+				```
+				```
+				enum ImageVariant {
+					version1
+					version2
+					version3
+				}
+				```
+			</Property>
+			<Property name="active_plan" type="Plans!">
+				The account active plan.
+				```
+				enum Plans {
+					basic
+					professional_monthly
+					business_monthly
+					pitchground_a
+					pitchground_b
+					pitchground_c
+					pitchground_d
+				}
+				```
+			</Property>
+			<Property name="free_orders" type="Int!">
+				The account free orders.
+			</Property>
+			<Property name="sales_threshold" type="Float!">
+				The account sales threshold.
+			</Property>
+			<Property name="disable_sales_invoices" type="Boolean!">
+				The account disable sales invoices boolean.
+			</Property>
+			<Property name="block_orders_access" type="Boolean!">
+				The account block orders access boolean.
+			</Property>
+			<Property name="next_billing_cycle" label="TimeStamp" route='/other#timestamp'>
+				The account block orders access boolean.
+			</Property>
+			<Property name="subscription_id" type="String">
+				The account subscription id.
+			</Property>
+			<Property name="legal_name" type="String">
+				The account legal name.
+			</Property>
+			<Property name="company" type="String">
+				The account company.
+			</Property>
+			<Property name="phone" type="String">
+				The account phone.
+			</Property>
+			<Property name="zip" type="String">
+				The account zip.
+			</Property>
+			<Property name="address_line1" type="String">
+				The account address line1.
+			</Property>
+			<Property name="address_line2" type="String">
+				The account address line2.
+			</Property>
+			<Property name="city" type="String">
+				The account city.
+			</Property>
+			<Property name="country" type="String">
+				The account country.
+			</Property>
+			<Property name="address" type="String!">
+				The account address.
+			</Property>
+			<Property name="google_account" type="String">
+				The account google_account.
+			</Property>
+			<Property name="facebook_pixels" type="[Pixel!]!">
+				The account facebook_pixels.
+				```
+				type Pixel {
+					label: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="snapchat_pixels" type="[Pixel!]!">
+				The account snapchat_pixels.
+				```
+				type Pixel {
+					label: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="tiktok_pixels" type="[Pixel!]!">
+				The account tiktok_pixels.
+				```
+				type Pixel {
+					label: String!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="timezone" type="String!">
+				The account timezone.
+			</Property>
+			<Property name="weight_unit" type="String!">
+				The account weight unit.
+			</Property>
+			<Property name="store_currency" type="String!">
+				The account store currency.
+			</Property>
+			<Property name="store_currency_format" type="String!">
+				The account store currency format.
+			</Property>
+			<Property name="store_currency_symbol" type="String!">
+				The account store currency symbol.
+			</Property>
+			<Property name="use_all_currencies" type="Boolean!">
+				The account use all currencies.
+			</Property>
+			<Property name="switch_to_the_visitor_currency" type="Boolean!">
+				The account switch to the visitor currency.
+			</Property>
+			<Property name="auto_add_missed_currencies" type="Boolean!">
+				The account auto add missed currencies.
+			</Property>
+			<Property name="funnels_currencies" type="[String!]">
+				The account funnels currencies.
+			</Property>
+			<Property name="refund_policy" type="String">
+				The account refund policy.
+			</Property>
+			<Property name="privacy_policy" type="String">
+				The account privacy policy.
+			</Property>
+			<Property name="terms_of_services" type="String">
+				The account terms of services.
+			</Property>
+			<Property name="alerts" label="[Alert!]!" route='/account/types#alert'>
+				The account alerts.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the account was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the account was created.
+			</Property>
+			<Property name="primary_domain_uid" type="ID">
+				The account primary domain uid.
+			</Property>
+			<Property name="redirect_subdomain_to_primary" type="Boolean!">
+				The account redirect subdomain to primary.
+			</Property>
+			<Property name="primary_domain_name" type="String!">
+				The account primary domain name.
+			</Property>
+			<Property name="home_funnel_uid" type="ID">
+				The account home funnel uid.
+			</Property>
+			<Property name="home_funnel" label="Funnel" route='/funnels/types#funnel'>
+				The account home funnel.
+			</Property>
+			<Property name="profileHasPaymentMethod" type="Boolean!">
+				The account profile has payment method boolean.
+			</Property>
+			<Property name="payment_gateways" label="PaymentGateway!" route="/other#payment-gateway">
+				The account payment gateways.
+			</Property>
+			<Property name="domains" label="[Domain!]!" route='/other#domain'>
+				The account domains.
+			</Property>
+			<Property name="defaultDomain" type="String!">
+				The account default domain.
+			</Property>
+			<Property name="has_other_admin" type="Boolean!">
+				The account has other admins boolean.
+			</Property>
+			<Property name="limits" type="AccountLimits!">
+				The account limits.
+				```
+				type AccountLimits {
+					max_products: Int!
+					products_left: Int!
+					max_funnels: Int!
+					funnels_left: Int!
+					max_pages_per_funnels: Int!
+					max_files_size: Int!
+					max_members: Int!
+					members_left: Int!
+					domainsLeft: Int!
+					storesLeft: Int!
+				}
+				```
+			</Property>
+			<Property name="accountProgress" type="Progress!">
+				The account progress.
+				```
+				type Progress {
+					hasProduct: Boolean!
+					hasPaymentGateway: Boolean!
+				}
+				```
+			</Property>
+			<Property name="fetchEmails" label="[StoreEmail!]!" route='/account/types#store-email'>
+				The account fetch emails.
+			</Property>
+			<Property name="emails_notifications" type="EmailsNotifications!">
+				The account email notifications.
+				```
+				type EmailsNotifications {
+					orderCancel: EmailsNotificationConfig!
+					orderRefund: EmailsNotificationConfig!
+					orderFulfilled: EmailsNotificationConfig!
+					orderConfirmation: EmailsNotificationConfig!
+				}
+				```
+				```
+				type EmailsNotificationConfig {
+					disabled: Boolean!
+				}
+				```
+			</Property>
+			<Property name="integrations" type="[Integration!]!">
+				The account integrations.
+				```
+				type Integration implements Node {
+					id: ID!
+					platform: String!
+					label: String!
+					details: IntegrationDetails
+				}
+				```
+				```
+				scalar IntegrationDetails
+				```
+			</Property>
+			<Property name="allocatedResources" type="AllocatedResources!">
+				The account next billing amount.
+				```
+				type AllocatedResources {
+					domain: Int!
+					store: Int!
+				}
+				```
+			</Property>
+			<Property name="allocatedPlanResources" type="AllocatedPlanResources!">
+				The account allocated plan resources.
+				```
+				type AllocatedPlanResources {
+					sessions: Int!
+					domains: Int!
+					stores: Int!
+				}
+				```
+			</Property>
+			<Property name="is_trial" type="Boolean!">
+				The account is trial boolean.
+			</Property>
+			<Property name="shipping_rates" label="[ShippingRateGroup!]!" route='/account/types#shipping-rate-group'>
+				The account shipping rates.
+			</Property>
+			<Property name="shipping_countries" label="[ShippingCountry!]!" route='/account/types#shipping-country'>
+				The account shipping countries.
+			</Property>
+			<Property name="clarity_project_id" type="String!">
+				The account clarity project id.
+			</Property>
+			<Property name="totalSold" type="Float!">
+				The account total sold.
+			</Property>
+			<Property name="badges" type="[AccountBadge!]!">
+				The account badges.
+				```
+				type AccountBadge {
+					id: ID!
+					key: String!
+					claimed: Boolean!
+				}
+				```
+			</Property>
+			<Property name="achievementsResult" type="AchievementsResult!">
+				The account achievements result.
+				```
+				type AchievementsResult {
+					seller_of_week: Int!
+					bundle_genie_of_week: Int!
+					upsell_genie_of_week: Int!
+					conversion_master_of_week: Int!
+					aov_slayer_of_week: Int!
+				}
+				```
+			</Property>
+			<Property name="achievements" type="[Achievement!]!">
+				The account achievements.
+				```
+				type Achievement {
+					uid: ID!
+					id: ID!
+					key: String!
+					created_at(format: String = "fromNow", suffix: Boolean = true): TimeStamp!
+				}
+				```
+			</Property>
+			<Property name="blocked_countries" type="[BlockedIp!]!">
+				The account blocked countries.
+				```
+				type BlockedIp {
+					created_at(format: String = "fromNow", suffix: Boolean = true): TimeStamp!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="blocked_ips" type="[BlockedIp!]!">
+				The account blocked ips.
+				```
+				type BlockedIp {
+					created_at(format: String = "fromNow", suffix: Boolean = true): TimeStamp!
+					value: String!
+				}
+				```
+			</Property>
+			<Property name="max_order_items" type="Int">
+				The account max order items.
+			</Property>
+			<Property name="allow_support_signin" type="Boolean!">
+				The account allow support signin.
+			</Property>
+			<Property name="cod_order_min_delay" type="Int!">
+				The account cod order min delay.
+			</Property>
+			<Property name="cod_order_min_delay_error_message" type="String!">
+				The account cod order min delay error message.
+			</Property>
+			<Property name="stores" label="[Store!]!" route='/stores/types#store'>
+				The account stores.
+			</Property>
+			<Property name="currencies" type="[StoreCurrency!]!">
+				The account store currencies.
+				```
+				type StoreCurrency {
+					key: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query AccountsQuery{
+				account{
+					id
+					...
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputUpdateAccount
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="account_name" type="String">
+				The account name.
+			</Property>
+			<Property name="clarity_project_id" type="String">
+				The account clarity project id.
+			</Property>
+			<Property name="slug" type="String">
+				The account slug.
+			</Property>
+			<Property name="email" type="String">
+				The account email.
+			</Property>
+			<Property name="customers_email" type="String">
+				The account customers email.
+			</Property>
+			<Property name="legal_name" type="String">
+				The account legal name.
+			</Property>
+			<Property name="company" type="String">
+				The account company.
+			</Property>
+			<Property name="phone" type="String">
+				The account phone.
+			</Property>
+			<Property name="zip" type="String">
+				The account zip.
+			</Property>
+			<Property name="city" type="String">
+				The account city.
+			</Property>
+			<Property name="country" type="String">
+				The account country.
+			</Property>
+			<Property name="address_line1" type="String">
+				The account address line1.
+			</Property>
+			<Property name="address_line2" type="String">
+				The account address line2.
+			</Property>
+			<Property name="refund_policy" type="String">
+				The account refund policy.
+			</Property>
+			<Property name="privacy_policy" type="String">
+				The account privacy policy.
+			</Property>
+			<Property name="terms_of_services" type="String">
+				The account terms of services.
+			</Property>
+			<Property name="google_account" type="String">
+				The google account.
+			</Property>
+			<Property name="facebook_pixels" type="[InputPixel]">
+				The account facebook pixels.
+			</Property>
+			<Property name="snapchat_pixels" type="[InputPixel]">
+				The account snapchat pixels.
+			</Property>
+			<Property name="tiktok_pixels" type="[InputPixel]">
+				The account tiktok pixels.
+			</Property>
+			<Property name="funnels_currencies" type="[String]">
+				The account funnels currencies.
+			</Property>
+			<Property name="shipping_countries" type="[InputShippingCountry!]">
+				The account shipping countries.
+			</Property>
+			<Property name="use_all_currencies" type="Boolean">
+				The account use all currencies.
+			</Property>
+			<Property name="switch_to_the_visitor_currency" type="Boolean">
+				The account switch to the visitor currency.
+			</Property>
+			<Property name="auto_add_missed_currencies" type="Boolean">
+				The account auto add missed currencies.
+			</Property>
+			<Property name="home_funnel_uid" type="ID">
+				The account home funnel uid.
+			</Property>
+			<Property name="timezone" type="String">
+				The account timezone.
+			</Property>
+			<Property name="weight_unit" type="String">
+				The account weight unit.
+			</Property>
+			<Property name="store_currency" type="String">
+				The account store currency.
+			</Property>
+			<Property name="store_currency_format" type="String">
+				The account store currency format.
+			</Property>
+			<Property name="max_order_items" type="Int">
+				The account max order items.
+			</Property>
+			<Property name="allow_support_signin" type="Boolean">
+				The account allow support signin boolean.
+			</Property>
+			<Property name="cod_order_min_delay" type="Int">
+				The account cod order min delay.
+			</Property>
+			<Property name="cod_order_min_delay_error_message" type="String">
+				The account cod order min delay error message.
+			</Property>
+			<Property name="blocked_countries" type="[String!]">
+				The account blocked countries.
+			</Property>
+			<Property name="blocked_ips" type="[String!]">
+				The account blocked ips.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Alert
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the alert.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the alert.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the alert.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the alert was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the alert was created.
+			</Property>
+			<Property name="type" type="AlertType!">
+				the alert type.
+				```
+				enum AlertType {
+					FIRST_SELL
+					FUNNEL_BUILDER_TOUR
+					PAGE_BUILDER_TOUR
+					BADGE_ACQUIRED
+					ACHIEVEMENT
+					FAKE_PRICE_RED_FLAG
+					FAKE_PRICE_WARNING
+					ACCOUNT_SETUP
+					ONBOARDING
+					CREATE_STORE
+					ADD_STORE_PRODUCT
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## StoreEmail
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the store email.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique number identifier for the store email.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the store email.
+			</Property>
+			<Property name="type" type="EmailsTypes!">
+				the store email type.
+				```
+				enum EmailsTypes {
+					orderCancel
+					orderRefund
+					orderFulfilled
+					orderConfirmation
+				}
+				```
+			</Property>
+			<Property name="subject" type="String!">
+				the store email subject.
+			</Property>
+			<Property name="body" type="String!">
+				the store email body.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the store email was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the store email was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---

@@ -1,0 +1,661 @@
+export const description =
+  'On this page, we’ll dive into the different funnel types.'
+
+# Funnel types
+This list contains all query types for the funnel endpoints.
+
+---
+
+## Funnel 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the funnel.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the funnel.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the funnel.
+			</Property>
+			<Property name="name" type="String!">
+				The funnel name.
+			</Property>
+			<Property name="slug" type="String!">
+				The funnel slug.
+			</Property>
+			<Property name="starting_step_uid" type="ID">
+				The funnel starting step uid.
+			</Property>
+			<Property name="published" type="Boolean!">
+				The funnel published option.
+			</Property>
+			<Property name="record" type="Boolean!">
+				The funnel record option.
+			</Property>
+			<Property name="enable_address_autocomplete" type="Boolean!">
+				The funnel enable address autocomplete option.
+			</Property>
+			<Property name="fire_lead_insteadof_purchase" type="Boolean!">
+				The funnel fire lead instead of purchase option.
+			</Property>
+			<Property name="share_code" type="String">
+				The funnel share code.
+			</Property>
+			<Property name="styles" type="[StepStyle!]">
+				The funnel styles.
+				```
+				input StepStyle {
+					key: String!
+					name: String!
+					type: String!
+					value: FunnelStyleValue
+				}
+				```
+				```
+				scalar FunnelStyleValue
+				```
+			</Property>
+			<Property name="active_payment_methods" label="[FunnelPaymentGateway!]!" route="/funnels/types#funnel-payment-gateway">
+				The funnel active payment method.
+			</Property>
+			<Property name="active_facebook_pixels" type="[String!]!">
+				The funnel active facebook pixels.
+			</Property>
+			<Property name="active_tiktok_pixels" type="[String!]!">
+				The funnel active tiktok pixels.
+			</Property>
+			<Property name="active_snapchat_pixels" type="[String!]!">
+				The funnel active snapchat pixels.
+			</Property>
+			<Property name="activate_google_analytics" type="Boolean!">
+				The funnel activate google analytics option.
+			</Property>
+			<Property name="transform" type="Transform!">
+				The funnel transform.
+				```
+				type Transform {
+					y: Float!
+					x: Float!
+					k: Float!
+				}
+				```
+			</Property>
+			<Property name="instructions" type="[Instruction!]!">
+				The funnel instructions.
+				```
+				scalar Instruction
+				```
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the funnel was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the funnel was created.
+			</Property>
+			<Property name="meta" type="FunnelMeta!">
+				The funnel meta.
+				```
+				scalar FunnelMeta
+				```
+			</Property>
+			<Property name="favicon_uid" type="ID">
+				The funnel favicon uid.
+			</Property>
+			<Property name="preferred_domain" label="Domain" route="/other#domain">
+				The funnel preferred domain.
+			</Property>
+			<Property name="favicon" label="Image" route="/other#image">
+				The funnel favicon.
+			</Property>
+			<Property name="default_language" type="FunnelLanguage!">
+				The funnel default language.
+				```
+				scalar FunnelLanguage
+				```
+			</Property>
+			<Property name="languages" type="[FunnelLanguage!]!">
+				The funnel language.
+				```
+				scalar FunnelLanguage
+				```
+			</Property>
+			<Property name="steps" label="[Step!]!" route="/funnels/types#step">
+				The funnel steps.
+			</Property>
+			<Property name="statistics" type="FunnelStatistics!">
+				The funnel statistics.
+				```
+				type FunnelStatistics {
+					steps: [StepStatistics!]!
+				}
+
+				type StepStatistics {
+					id: String!
+					visits: Int!
+					clicks: Int!
+					ctr: Float!
+					links: [StepLinkState!]!
+				}
+
+				type StepLinkState {
+					id: String!
+					ctr: Float!
+					visits: Int!
+					cvr: Float!
+				}
+				```
+			</Property>
+			<Property name="header_scripts" type="String">
+				The funnel header scripts.
+			</Property>
+			<Property name="ignore_invalide_phones" type="Boolean!">
+				The funnel ignore invalid phones option.
+			</Property>
+			<Property name="store" label="Store" route='/stores/types#store'>
+				The funnel store.
+			</Property>
+			<Property name="currency" type="String">
+				The funnel currency.
+			</Property>
+			<Property name="currency_format" type='String'>
+				The funnel currency format.
+			</Property>
+			<Property name="smart_sections" type="[SmartSection!]!">
+				The funnel smart sections.
+				```
+				type SmartSection {
+					reference_id: ID!
+					name: String!
+					thumbnail: VirtualImage2!
+					body: BuilderNode!
+				}
+				```
+				```
+				type VirtualImage2 {
+					key: String
+					url: String
+				}
+				scalar BuilderNode
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query FunnelsQuery($first: Int, $after: String, $query: String!){
+				funnels(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							name
+							published
+							slug
+							created_at
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputCreateFunnel
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="funnel_steps" label="[StepType!]!" route='/funnels/types#step-type'>
+				The funnel steps.
+			</Property>
+			<Property name="style_id" type="ID">
+				The funnel style id.
+			</Property>
+			<Property name="product_id" type="ID">
+				The funnel product id.
+			</Property>
+			<Property name="name" type="String!">
+				The funnel name.
+			</Property>
+			<Property name="slug" type="String!">
+				The funnel slug.
+			</Property>
+			<Property name="currency" type="String">
+				The funnel currency.
+			</Property>
+			<Property name="lang" type="FunnelLanguage!">
+				The funnel language.
+				```
+				scalar FunnelLanguage
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: InputCreateFunnel! {
+				createFunnel(node: $node){
+					# Funnel type fields
+				}
+			})
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputFunnel
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="name" type="String">
+				The funnel name.
+			</Property>
+			<Property name="slug" type="String">
+				The funnel slug.
+			</Property>
+			<Property name="starting_step_uid" type="ID">
+				The funnel starting step uid.
+			</Property>
+			<Property name="favicon_id" type="ID">
+				The funnel favicon id.
+			</Property>
+			<Property name="steps" label="[InputUpdateStep!]" route="/funnels/types#input-update-step">
+				The funnel steps.
+			</Property>
+			<Property name="deleted_steps" type="[ID!]">
+				The funnel deleted steps.
+			</Property>
+			<Property name="published" type="Boolean">
+				The funnel published option.
+			</Property>
+			<Property name="record" type="Boolean">
+				The funnel record option.
+			</Property>
+			<Property name="fire_lead_insteadof_purchase" type="Boolean">
+				The funnel fire lead instead of purchase option.
+			</Property>
+			<Property name="enable_address_autocomplete" type="Boolean">
+				The funnel enable address autocomplete option.
+			</Property>
+			<Property name="header_scripts" type="String">
+				The funnel header scripts.
+			</Property>
+			<Property name="preferred_domain_uid" type="String">
+				The funnel preferred domain uid.
+			</Property>
+			<Property name="active_payment_methods" type="[ActivePaymentMethod!]">
+				The funnel active payment method.
+				```
+				input ActivePaymentMethod {
+					settings: FunnelPaymentGatewaySettings!
+					id: Int!
+				}
+				```
+				```
+				scalar FunnelPaymentGatewaySettings
+				```
+			</Property>
+			<Property name="active_facebook_pixels" type="[String!]">
+				The funnel active facebook pixels.
+			</Property>
+			<Property name="active_tiktok_pixels" type="[String!]">
+				The funnel active tiktok pixels.
+			</Property>
+			<Property name="active_snapchat_pixels" type="[String!]">
+				The funnel active snapchat pixels.
+			</Property>
+			<Property name="activate_google_analytics" type="Boolean">
+				The funnel activate google analytics option.
+			</Property>
+			<Property name="transform" type="InputTransform">
+				The funnel transform.
+				```
+				input InputTransform {
+					y: Float!
+					x: Float!
+					k: Float!
+				}
+				```
+			</Property>
+			<Property name="styles" type="[InputStepStyle!]">
+				The funnel styles.
+				```
+				input InputStepStyle {
+					key: String!
+					name: String!
+					type: String!
+					value: FunnelStyleValue
+				}
+				```
+			</Property>
+			<Property name="default_language" type="FunnelLanguage">
+				The funnel default language.
+				```
+				scalar FunnelLanguage
+				```
+			</Property>
+			<Property name="languages" type="[FunnelLanguage!]">
+				The funnel languages.
+				```
+				scalar FunnelLanguage
+				```
+			</Property>
+			<Property name="ignore_invalide_phones" type="Boolean">
+				The funnel ignore invalid phones option.
+			</Property>
+			<Property name="currency" type="String">
+				The funnel currency.
+			</Property>
+			<Property name="currency_format" type='String'>
+				The funnel currency format.
+			</Property>
+			<Property name="smart_sections" type="[SmartSectionInput!]">
+				The funnel smart sections.
+				```
+				type SmartSectionInput {
+					reference_id: ID!
+					name: String!
+					thumbnail: VirtualImage2!
+					body: BuilderNode!
+				}
+				```
+				```
+				type VirtualImage2 {
+					key: String
+					url: String
+				}
+				scalar BuilderNode
+				```
+			</Property>
+			<Property name="reset_translations" type='Boolean'>
+				The funnel reset translations boolean.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation updateFunnelMutation($node: InputFunnel!, $id: Int!){
+				updateFunnel(node: $node, id: $id){
+					# Funnel type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputUpdateStep
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				The funnel unique identifier.
+			</Property>
+			<Property name="product_uid" type="ID!">
+				The funnel product uid.
+			</Property>
+			<Property name="slug" type="String!">
+				The funnel slug.
+			</Property>
+			<Property name="visual" type="InputStepVisual">
+				The funnel visual.
+				```
+				input InputStepVisual {
+					x: Float
+					y: Float
+				}
+				```
+			</Property>
+			<Property name="title" type="String!">
+				The funnel title.
+			</Property>
+				<Property name="type" label="StepType!" route='/funnels/types#step-type'>
+				The funnel step type.
+			</Property>
+		</Properties> 	
+	</Col>
+</Row>
+
+---
+
+## FunnelPaymentGateway
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="index" type="Int!">
+				The funnel index.
+			</Property>
+			<Property name="payment_gateway_uid" type="ID!">
+				The funnel payment gateway id.
+			</Property>
+			<Property name="payment_gateway" label="PaymentGateway!" route="/other#payment-gateway">
+				The funnel payment gateway.
+			</Property>
+			<Property name="settings" type="FunnelPaymentGatewaySettings!">
+				The funnel product id.
+				```
+				scalar FunnelPaymentGatewaySettings
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## Step
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the funnel step.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the funnel step.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier the funnel step.
+			</Property>
+			<Property name="slug" type="String!">
+				The funnel step slug.
+			</Property>
+			<Property name="title" type="String!">
+				The funnel step title.
+			</Property>
+			<Property name="type" label="StepType!" route='/funnels/types#step-type'>
+				The funnel step type.
+			</Property>
+			<Property name="visual" type="StepVisual!">
+				The funnel step visual.
+				```
+				type StepVisual {
+					x: Float!
+					y: Float!
+				}
+				```
+			</Property>
+			<Property name="settings" type="StepSettings!">
+				The funnel step settings.
+				```
+				scalar StepSettings
+				```
+			</Property>
+			<Property name="product_uid" type="ID">
+				The funnel step product uid.
+			</Property>
+			<Property name="funnel" type="Funnel">
+				The funnel type.
+			</Property>
+			<Property name="thumbnail" type="VirtualImage2">
+				The funnel step thumbnail.
+			</Property>
+			<Property name="body" type="StepBody">
+				The funnel step body.
+			</Property>
+			<Property name="links" type="[StepLink!]">
+				The funnel step links.
+			</Property>
+			<Property name="disable_token_redirection" type="Boolean!">
+				The funnel step disable token redirection.
+			</Property>
+			<Property name="meta" type="StepMeta!">
+				The funnel step disable token redirection.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the image was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the image was created.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputStep
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="product_uid" type="ID">
+				The funnel product uid.
+			</Property>
+			<Property name="slug" type="String!">
+				The funnel step slug.
+			</Property>
+			<Property name="visual" type="InputStepVisual">
+				The funnel visual.
+				```
+				input InputStepVisual {
+					x: Float
+					y: Float
+				}
+				```
+			</Property>
+			<Property name="title" type="String!">
+				The funnel step title.
+			</Property>
+			<Property name="type" label="StepType!" route='/funnels/types#step-type'>
+				The funnel step type.
+			</Property>
+			<Property name="settings" type="StepSettings!">
+				The funnel step settings.
+				```
+				scalar StepSettings
+				```
+			</Property>
+			<Property name="body" type="StepBody">
+				The funnel step body.
+				```
+				scalar StepBody
+				```
+			</Property>
+			<Property name="disable_token_redirection" type="Boolean">
+				The funnel disable token redirection option.
+			</Property>
+			<Property name="thumbnail" type="String">
+				The funnel thumbnail.
+			</Property>
+			<Property name="template" type="GeniricStepTemplate">
+				The funnel template.
+				```
+				enum GeniricStepTemplate {
+					blank
+					contact_us
+					privacy_policy
+					refund_policy
+					terms_of_service
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## FunnelConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Funnel connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[FunnelEdge]">
+				The Funnel connection edges.
+				```
+				type FunnelEdge {
+					node: Funnel
+					cursor: String!
+				}
+				```
+			</Property>
+			<Property name="count" type="Int!">
+				The Funnel connection count.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## StepType
+
+<Row>
+  <Col>
+		<Properties> 
+			```
+			enum StepType {
+				blank_page
+				product_page
+				checkout_page
+				upsell_page
+				downsell_page
+				split_test
+				article_page
+				squeeze_page
+				thank_you_page
+				generic_page
+				home_page
+				collection_page
+			}
+			```
+		</Properties> 
+  </Col>
+</Row>

@@ -1,0 +1,269 @@
+export const description =
+  'On this page, we’ll dive into the different order endpoints you can use to manage orders programmatically.'
+
+# Orders
+
+These endpoints allow you to retrieve, create, update, and delete Order(s).	
+
+---
+
+## List all Orders 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your orders. By default, a maximum of 25 orders are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+				`status`
+				`financial_status`
+				`fulfillment_status`
+				`created_at`
+				`product_id`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label='Order!' route='/orders/types#order'>
+				The Order! query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query ordersQuery($first: Int, $after: String, $query: String!){
+				orders(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							_id
+							name
+							total
+							fulfillment_status
+							financial_status
+							customer {
+								id
+								full_name
+							}
+							cancelled_at
+							date
+							test
+						}
+					}
+					cursor
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "T3JkZXI6MTgyNTE0",
+							"_id": 182514,
+							"name": "1608",
+							"total": 10,
+							"fulfillment_status": "fulfilled",
+							"financial_status": "pending",
+							"customer": {
+								"full_name": "Yassir Ennazk",
+								"id": "Q3VzdG9tZXI6MTkxMzUw"
+							},
+							"cancelled_at": null,
+							"date": "3 days ago",
+							"test": false,
+							"__typename": "Order"
+						},
+						"cursor": "WzE4MjUxNCwxODI1MTRd"
+					}]
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve an order
+
+<Row>
+  <Col>
+    This query allows you to retrieve an order by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The order id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label='Order!' route='/orders/types#order'>
+				The Order! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query orderQuery($id: ID!){
+			node(id: $id){
+				... on Order {
+					# Order type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   {
+			"data": {
+				"order": {
+					"id": "T3JkZXI6MTgyNTE0",
+					"_id": 182514,
+					"name": "1608",
+					"total": 10,
+					"fulfillment_status": "fulfilled",
+					"financial_status": "pending"
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update an Order 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on an Order.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The order id.
+			</Property>
+			<Property name="node" label="InputOrder!" route="/orders/types#input-order">
+				The order node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label='Order!' route='/orders/types#order'>
+				The Order! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    ```
+    mutation updateOrderMutation($node: InputOrder!, $id: ID!){
+			updateOrder(node: $node, id: $id){
+				# Order type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"order": {
+					"id": "T3JkZXI6MTgyNTE0",
+					"_id": 182514,
+					"name": "1608",
+					"total": 10,
+					"fulfillment_status": "fulfilled",
+					"financial_status": "pending"
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Cancel an Order 
+
+<Row>
+  <Col>
+    This query allows you to perform an cancel an Order.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The order id.
+			</Property>
+			<Property name="reason" type="String!">
+				The reason for cancelling.
+			</Property>
+			<Property name="notifyCustomer" type="Boolean!">
+				Notifying the customer about the cancelling.
+			</Property>
+			<Property name="refund" type="Boolean!">
+				The order refund.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label='Order!' route='/orders/types#order'>
+				The Order! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    ```
+    mutation updateOrderMutation($id: ID!, $reason: String!, $notifyCustomer: Boolean!, $refund: Boolean!){
+			cancelOrder(id: $id, reason: $reason, notifyCustomer: $notifyCustomer, refund: $refund){
+				# Order type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"order": {
+					"id": "T3JkZXI6MTgyNTE0",
+					"_id": 182514,
+					"name": "1608",
+					"refunded_amount": 10
+					...
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>

@@ -1,0 +1,317 @@
+export const description =
+  'On this page, we’ll dive into the different collection endpoints you can use to manage collections programmatically.'
+
+# Collections
+
+These endpoints allow you to retrieve, create, update, and delete Collection(s).
+
+---
+
+## List all collections 	
+
+<Row>
+  <Col>
+    This query allows you to retrieve a paginated list of all your collections. By default, a maximum of 25 collections are shown per page.
+		### Arguments 
+		<Properties> 
+			<Property name="query" type="String!">
+				Supported filter parameters:
+				`order_by`
+				`order_dir`
+			</Property>
+			<Property name="after" type="String">
+				Returns the elements that come after the specified cursor.
+			</Property>
+			<Property name="first" type="String">
+				Returns up to the first `n` elements from the list.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Collection!" route='/collections/types#collection'>
+				The Collection query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query collectionsQuery($first: Int, $after: String, $query: String!){
+				collections(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							type
+							name
+							created_at				
+							...
+						}
+						cursor
+					}
+					pageInfo{
+						endCursor
+						hasNextPage
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "col_tDs_sAQZrq9RIrPS-BkyD",
+							"type": "specific_funnels",
+							"name": "My Collection",
+							"created_at": "a few seconds ago",
+							"__typename": "Collection"
+							...
+						},
+						"cursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create a collection 
+
+<Row>
+  <Col>
+    This query allows you to add a new collection.
+		### Arguments 
+		<Properties> 
+			<Property label="CollectionInput!" route="/collections/types#collection-input">
+				The CollectionInput type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Collection!" route='/collections/types#collection'>
+				The Collection query type.
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($node: CollectionInput!) {
+				createCollection(node: $node){
+					# Collection type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "col_tDs_sAQZrq9RIrPS-BkyD",
+							"type": "specific_funnels",
+							"name": "My Collection",
+							"created_at": "a few seconds ago",
+							"__typename": "Collection"
+							...
+						},
+						"cursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Retrieve a collection
+
+<Row>
+  <Col>
+    This query allows you to retrieve a collection by providing its id.
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The collection id.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property label="Collection!" route="/collections/types#collection">
+				The Collection query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		query collectionQuery($id: ID!){
+			node(id: $id){
+				... on Collection{
+					# Collection type fields
+				}
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+   	{
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "col_tDs_sAQZrq9RIrPS-BkyD",
+							"type": "specific_funnels",
+							"name": "My Collection",
+							"created_at": "a few seconds ago",
+							"__typename": "Collection"
+							...
+						},
+						"cursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update a Collection 
+
+<Row>
+  <Col>
+    This query allows you to perform an update on a Collection.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The collection id.
+			</Property>
+			<Property name="node" label="CollectionUpdateInput!" route="/collections/types#collection-update-input">
+				The collection node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Collection!" route="/collections/types#collection">
+				The Collection query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+
+    ```
+    mutation updateCollectionMutation($node: CollectionUpdateInput!, $id: ID!){
+			updateCollection(node: $node, id: $id){
+				# Collection type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"pagination": {
+					"edges": [{
+						"node": {
+							"id": "col_tDs_sAQZrq9RIrPS-BkyD",
+							"type": "specific_funnels",
+							"name": "My Collection",
+							"created_at": "a few seconds ago",
+							"__typename": "Collection"
+							...
+						},
+						"cursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ=="
+					}],
+					"pageInfo": {
+						"endCursor": "W251bGwsImNvbF90RHNfc0FRWnJxOVJJclBTLUJreUQiXQ==",
+						"hasNextPage": false
+					}
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a Collection
+
+<Row>
+  <Col>
+    This query allows you to delete collections.
+
+		### Arguments 
+		<Properties> 
+			<Property name="ids" type="[ID!]!">
+				The collection ids.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name="[ID]">
+				List of collection ids.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    ```
+		mutation deleteCollectionsMutation($ids: [ID!]!){
+			deleteCollections(ids: $ids){
+				# [ID] type field
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteCollections": [
+					"UHJvZHVjdDoxNTUxMQ==",
+					"UHJvZHVjdFKWATUxMQ=="
+				]
+			}
+		}
+    ```
+  </Col>
+</Row>

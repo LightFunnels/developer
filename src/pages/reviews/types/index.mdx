@@ -1,0 +1,160 @@
+export const description =
+  'On this page, we’ll dive into the different review types.'
+
+# Review types
+This list contains all query and inputs types for the review endpoints.
+
+---
+
+## Review
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the review.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the review.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the review was created.
+			</Property>
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the review was updated.
+			</Property>
+			<Property name="content" type="String!">
+				The review content.
+			</Property>
+			<Property name="rate" type="Int!">
+				The review rate.
+			</Property>
+			<Property name="name" type="String!">
+				The review name.
+			</Property>
+			<Property name="email" type="String!">
+				The review email.
+			</Property>
+			<Property name="published" type="Boolean!">
+				The review published.
+			</Property>
+			<Property name="product_uid" type="ID!">
+				The review product uid.
+			</Property>
+			<Property name="avatar" type="String!">
+				The review avatar.
+			</Property>
+			<Property name="images" label="[Image!]!" route="/other#image">
+				The review images.
+			</Property>
+			<Property name="images_ids" type="[ID!]!">
+				The review image ids.
+			</Property>
+			<Property name="product" label="Product!" route="/products/types#product">
+				The review product.
+			</Property>
+			<Property name="date" label="TimeStamp!" route='/other#timestamp'>
+				The review date.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputReview
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="content" type="String!">
+				The review content.
+			</Property>
+			<Property name="rate" type="Int!">
+				The review rate.
+			</Property>
+			<Property name="name" type="String!">
+				The review name.
+			</Property>
+			<Property name="email" type="String">
+				The review email.
+			</Property>
+			<Property name="date" label="TimeStamp" route='/other#timestamp'>
+				The review date.
+			</Property>
+			<Property name="published" type="Boolean">
+				The review published.
+			</Property>
+			<Property name="images" type="[ID!]">
+				The review images.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputUpdateReview
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="content" type="String">
+				The review content.
+			</Property>
+			<Property name="rate" type="Int">
+				The review rate.
+			</Property>
+			<Property	name="name" type="String">
+				The review name.
+			</Property>
+			<Property name="email" type="String">
+				The review email.
+			</Property>
+			<Property name="date" type="TimeStamp">
+				The review date.
+			</Property>
+			<Property name="published" type="Boolean">
+				The review published.
+			</Property>
+			<Property name="images" type="[ID!]">
+				The review images.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## ReviewConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Review connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[ReviewEdge]">
+				The Review connection edges.
+				```
+				type ReviewEdge {
+					node: Review
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>

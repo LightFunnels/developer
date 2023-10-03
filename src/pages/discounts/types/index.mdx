@@ -1,0 +1,318 @@
+export const description =
+  'On this page, we’ll dive into the different discount types.'
+
+# discount types
+This list contains all query and input types for the discount endpoints.
+
+---
+
+## Discount
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the discount.
+			</Property>
+			<Property name="code" type="String!">
+				The discount code.
+			</Property>
+			<Property name="value" type="Float!">
+				The discount value.
+			</Property>
+			<Property name="type" type="DiscountType!">
+				The discount type.
+				```
+				enum DiscountType {
+					percentage
+					fixed
+				}
+				```
+			</Property>
+			<Property name="usage_limit" type="Int!">
+				The discount usage limit.
+			</Property>
+			<Property name="usage" type="Int">
+				The discount usage.
+			</Property>	
+			<Property name="limited_usage" type="Boolean!">
+				The discount limited usage boolean.
+			</Property>	
+			<Property name="one_time_usage_per_customer" type="Boolean!">
+				The discount one time usage per customer boolean.
+			</Property>
+			<Property name="tags" type="[String!]!">
+				The discount tags.
+			</Property>	
+			<Property name="active" type="Boolean!">
+				The discount active boolean.
+			</Property>	
+			<Property name="product_ids" type="[ID!]!">
+				The discount product ids.
+			</Property>	
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount was created.
+			</Property>
+			<Property name="started_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount will start.
+			</Property>
+			<Property name="expired_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the discount will expire.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			query DiscountsQuery($first: Int, $after: String, $query: String!){
+				discounts(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+					edges{
+						node{
+							id
+							name
+							description
+							...
+						}
+					}
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## InputDiscount
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="code" type="String!">
+				The discount code.
+			</Property>
+			<Property name="value" type="Float!">
+				The discount value.
+			</Property>
+			<Property name="type" type="DiscountType!">
+				The discount type.
+				```
+				enum DiscountType {
+					percentage
+					fixed
+				}
+				```
+			</Property>
+			<Property name="usage_limit" type="Int!">
+				The discount usage limit.
+			</Property>
+			<Property name="active" type="Boolean">
+				The discount active boolean.
+			</Property>	
+			<Property name="one_time_usage_per_customer" type="Boolean!">
+				The discount one time usage per customer option.
+			</Property>
+			<Property name="limited_usage" type="Boolean!">
+				The discount limited usage option.
+			</Property>	
+			<Property name="tags" type="[String!]">
+				The discount tags.
+			</Property>	
+			<Property name="product_ids" type="[ID!]">
+				The discount product ids.
+			</Property>	
+			<Property name="started_at" type="TimeStamp">
+				Timestamp of when the discount will start.
+			</Property>
+			<Property name="expired_at" type="TimeStamp">
+				Timestamp of when the discount will expire.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputUpdateDiscount
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="code" type="String">
+				The discount code.
+			</Property>
+			<Property name="value" type="Float">
+				The discount value.
+			</Property>
+			<Property name="type" type="DiscountType">
+				The discount type.
+				```
+				enum DiscountType {
+					percentage
+					fixed
+				}
+				```
+			</Property>
+			<Property name="usage_limit" type="Int">
+				The discount usage limit.
+			</Property>
+			<Property name="active" type="Boolean">
+				The discount active option.
+			</Property>	
+			<Property name="one_time_usage_per_customer" type="Boolean">
+				The discount one time usage per customer option.
+			</Property>
+			<Property name="limited_usage" type="Boolean">
+				The discount limited usage option.
+			</Property>	
+			<Property name="tags" type="[String!]">
+				The discount tags.
+			</Property>	
+			<Property name="product_ids" type="[ID!]">
+				The discount product ids.
+			</Property>	
+			<Property name="started_at" label="TimeStamp" route='/other#timestamp'>
+				Timestamp of when the discount will start.
+			</Property>
+			<Property name="expired_at" label="TimeStamp" route='/other#timestamp'>
+				Timestamp of when the discount will expire.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## updateDiscountMutationInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the discount.
+			</Property>
+			<Property name="node" label="InputUpdateDiscount!" route="/discounts/types#input-update-discount">
+				The discount node.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The discount client mutation id.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($input: updateDiscountMutationInput!) {
+				updateDiscount(input: $input){
+					# updateDiscountMutationPayload type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## createDiscountMutationInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="node" label="InputDiscount!" route="/discounts/types#input-discount">
+				The discount node.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The discount client mutation id.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+			```
+			mutation mutationName($input: createDiscountMutationInput!) {
+				createDiscount(input: $input){
+					# createDiscountMutationPayload type fields
+				}
+			}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## updateDiscountMutationPayload
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="node" label="Discount" route="/discounts/types#discount">
+				The discount node.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The discount client mutation id.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## createDiscountMutationPayload
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="node" label="Discount!" route="/discounts/types#discount">
+				The discount node.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The discount client mutation id.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+
+---
+
+## DiscountConnection
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="pageInfo" type="PageInfo!">
+				Discount connection page info.
+				```
+				type PageInfo {
+					hasNextPage: Boolean!
+					hasPreviousPage: Boolean!
+					startCursor: String
+					endCursor: String
+				}
+				```
+			</Property>
+			<Property name="edges" type="[DiscountEdge]">
+				The Discount connection edges.
+				```
+				type DiscountEdge {
+					node: Discount
+					cursor: String!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+</Row>
