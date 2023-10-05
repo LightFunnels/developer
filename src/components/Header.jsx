@@ -68,7 +68,6 @@ export const Header = forwardRef(function Header({ className }, ref) {
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
             <TopLevelNavItem href="mailto:support@lightfunnels.com">Support</TopLevelNavItem>
           </ul>
         </nav>
@@ -79,7 +78,7 @@ export const Header = forwardRef(function Header({ className }, ref) {
         </div>
         <div className="hidden min-[416px]:contents">
           <Button>
-						<Link target="_blank" href="https://app.lightfunnels.com/">Get started</Link>
+						<Link target="_blank" href="https://lightfunnels.com/">Get started</Link>
 					</Button>
         </div>
       </div>
