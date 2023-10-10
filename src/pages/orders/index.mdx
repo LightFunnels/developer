@@ -41,7 +41,7 @@ These endpoints allow you to retrieve, create, update, and delete Order(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
 			```
 			query ordersQuery($first: Int, $after: String, $query: String!){
 				orders(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -124,7 +124,7 @@ These endpoints allow you to retrieve, create, update, and delete Order(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
     ```
 		query orderQuery($id: ID!){
 			node(id: $id){
@@ -181,7 +181,7 @@ These endpoints allow you to retrieve, create, update, and delete Order(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
     ```
     mutation updateOrderMutation($node: InputOrder!, $id: ID!){
 			updateOrder(node: $node, id: $id){
@@ -242,7 +242,7 @@ These endpoints allow you to retrieve, create, update, and delete Order(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
     ```
     mutation updateOrderMutation($id: ID!, $reason: String!, $notifyCustomer: Boolean!, $refund: Boolean!){
 			cancelOrder(id: $id, reason: $reason, notifyCustomer: $notifyCustomer, refund: $refund){

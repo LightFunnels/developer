@@ -21,7 +21,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
 			```
 			query AccountQuery{
 				account{
@@ -79,7 +79,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
 			```
 			mutation mutationName($node: StoreInput!) {
 				createStore(node: $node){
@@ -135,7 +135,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
     ```
 		query StoreQuery($id: ID!){
 			node(id: $id){
@@ -188,7 +188,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
 
     ```
     mutation updateStoreMutation($node: StoreUpdateInput!, $uid: ID!){
@@ -238,7 +238,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api2">
+    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
     ```
 		mutation deleteStoresMutation($uids: [ID!]!){
 			deleteStore(uids: $uids){
