@@ -58,7 +58,7 @@ This list contains all query and input types for the segment endpoints.
 		</Properties>
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query SegmentsQuery($first: Int, $after: String, $query: String!){
 				segments(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -113,7 +113,7 @@ This list contains all query and input types for the segment endpoints.
 		</Properties>
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($node: SegmentInput!) {
 				createSegment(node: $node){

@@ -36,7 +36,7 @@ These endpoints allow you to retrieve, create, update, and delete Collection(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query collectionsQuery($first: Int, $after: String, $query: String!){
 				collections(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -107,7 +107,7 @@ These endpoints allow you to retrieve, create, update, and delete Collection(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($node: CollectionInput!) {
 				createCollection(node: $node){
@@ -165,7 +165,7 @@ These endpoints allow you to retrieve, create, update, and delete Collection(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		query collectionQuery($id: ID!){
 			node(id: $id){
@@ -231,7 +231,7 @@ These endpoints allow you to retrieve, create, update, and delete Collection(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
     mutation updateCollectionMutation($node: CollectionUpdateInput!, $id: ID!){
@@ -293,7 +293,7 @@ These endpoints allow you to retrieve, create, update, and delete Collection(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		mutation deleteCollectionsMutation($ids: [ID!]!){
 			deleteCollections(ids: $ids){

@@ -37,7 +37,7 @@ These endpoints allow you to retrieve, create, update, and delete Review(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query reviewsQuery($first: Int, $after: String, $query: String!){
 				reviews(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -123,7 +123,7 @@ These endpoints allow you to retrieve, create, update, and delete Review(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($product_id: ID!, $node: InputReview!) {
 				createReview(product_id: $product_id, node: $node){
@@ -180,7 +180,7 @@ These endpoints allow you to retrieve, create, update, and delete Review(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		query reviewQuery($id: ID!){
 			node(id: $id){
@@ -245,7 +245,7 @@ These endpoints allow you to retrieve, create, update, and delete Review(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
     mutation updateReviewMutation($node: InputUpdateReview!, $id: ID!){
@@ -306,7 +306,7 @@ These endpoints allow you to retrieve, create, update, and delete Review(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		mutation deleteReviewsMutation($items: [ID!]!){
 			deleteReviews(items: $items){

@@ -40,7 +40,7 @@ These endpoints allow you to retrieve, create, update, and delete Product(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query productsQuery($first: Int, $after: String, $query: String!){
 				products(query: "order_by:id order_dir:desc last_month", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -114,7 +114,7 @@ These endpoints allow you to retrieve, create, update, and delete Product(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($node: InputProduct!) {
 				createProduct(node: $node){
@@ -163,7 +163,7 @@ These endpoints allow you to retrieve, create, update, and delete Product(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		query productQuery($id: ID!){
 			node(id: $id){
@@ -222,7 +222,7 @@ These endpoints allow you to retrieve, create, update, and delete Product(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
     mutation updateProductMutation($node: InputUpdateProduct!, $id: ID!){
@@ -275,7 +275,7 @@ These endpoints allow you to retrieve, create, update, and delete Product(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		mutation deleteProductsMutation($items: [ID!]!){
 			deleteProducts(items: $items){

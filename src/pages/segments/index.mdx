@@ -36,7 +36,7 @@ These endpoints allow you to retrieve, create, update, and delete Segment(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query SegmentsQuery($first: Int, $after: String, $query: String!){
 				segments(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -100,7 +100,7 @@ These endpoints allow you to retrieve, create, update, and delete Segment(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($node: SegmentInput!) {
 				createSegment(node: $node){
@@ -145,7 +145,7 @@ These endpoints allow you to retrieve, create, update, and delete Segment(s).
 		</Properties>
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		query SegmentQuery($id: ID!){
 			node(id: $id){
@@ -199,7 +199,7 @@ These endpoints allow you to retrieve, create, update, and delete Segment(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
     mutation updateSegmentMutation($node: SegmentInput!, $id: ID!){
@@ -249,7 +249,7 @@ These endpoints allow you to retrieve, create, update, and delete Segment(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		mutation deleteSegmentsMutation($items: [ID!]!){
 			deleteSegments(items: $items){

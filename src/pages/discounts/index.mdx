@@ -36,7 +36,7 @@ These endpoints allow you to retrieve, create, update, and delete Discount(s).
 
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query DiscountsQuery($first: Int, $after: String, $query: String!){
 				discounts(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
@@ -116,7 +116,7 @@ These endpoints allow you to retrieve, create, update, and delete Discount(s).
 		
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			mutation mutationName($input: createDiscountMutationInput!) {
 				createDiscount(input: $input){
@@ -167,7 +167,7 @@ These endpoints allow you to retrieve, create, update, and delete Discount(s).
 		</Properties>
   </Col>
   <Col sticky>
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		query DiscountQuery($id: ID!){
 			node(id: $id){
@@ -221,7 +221,7 @@ These endpoints allow you to retrieve, create, update, and delete Discount(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="Post" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
     mutation updateDiscountMutation($input: updateDiscountMutationInput!){
@@ -274,7 +274,7 @@ These endpoints allow you to retrieve, create, update, and delete Discount(s).
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="https://api.lightfunnels.com/v2">
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
 		mutation deleteDiscountsMutation($items: [ID!]!){
 			deleteDiscounts(items: $items){
