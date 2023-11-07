@@ -5,7 +5,7 @@ export function MagnifyingGlassIcon(props) {
       <path
         fill="none"
         stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
         d="m13 13 4.5 4.5m-9-3a6 6 0 1 1 0-12 6 6 0 0 1 0 12Z"
       />
     </svg>

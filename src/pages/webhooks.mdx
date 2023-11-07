@@ -78,11 +78,23 @@ if(localyCalculatedHmac != hmac){
 <Row>
 	<Col>
     <Properties>
-      <Property name="order/created">
+      <Property name="New order" type="order/created">
         A new order was created.
       </Property>
-			<Property name="order/confirmed">
+			<Property name="Order confirmation sent" type="order/confirmed">
         Order confirmation was sent.
+      </Property>
+			<Property name="Order fulfillment update" type="order/fulfilled">
+        Order fulfillment update.
+      </Property>
+			<Property name="Order cancelled" type="order/cancelled">
+        Order cancelled.
+      </Property>
+			<Property name="Order uncancelled" type="order/uncancelled">
+        Order uncancelled.
+      </Property>
+			<Property name="Order refunded" type="order/refunded">
+        Order refunded.
       </Property>
 		</Properties>
 	</Col>
@@ -101,10 +113,10 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-			<Property name="payment/created">
+			<Property name='New payment' type="payment/created">
 				A new payment was created.
       </Property>
-      <Property name="payment/paid">
+      <Property name='Paid payment' type="payment/paid">
       	Paid payment.
       </Property>
 			{/* ### Fields 
@@ -129,7 +141,7 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-      <Property name="order-item/created">
+      <Property name='New order item' type="order-item/created">
         A new order item was created. 
       </Property>
 			{/* ### Fields 
@@ -153,7 +165,7 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-			<Property name="contact-form/created">
+			<Property name='New contact form' type="contact-form/created">
         A new contact form was created.
       </Property>
 		</Properties>
@@ -173,10 +185,10 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-      <Property name="contact/signup">
+      <Property name='New signup created' type="contact/signup">
         A new sign up was made.
       </Property>
-			<Property name="contact/updated">
+			<Property name='Contact updated' name="contact/updated">
         An existing customer was updated.
       </Property>
 		</Properties>
@@ -201,10 +213,10 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-      <Property name="checkout/created">
+      <Property name='New checkout' type="checkout/created">
         A new checkout was created.
       </Property>
-			<Property name="checkout/updated">
+			<Property name='Checkout updated' type="checkout/updated">
 				An existing checkout was updated.
       </Property>
 		</Properties>
@@ -228,13 +240,13 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-     	<Property name="product/updated">
+     	<Property name='Product updated' type="product/updated">
         An existing product was updated.
       </Property>
-      <Property name="product/created">
+      <Property name='Product created' type="product/created">
         A new product form was created.
       </Property>
-			<Property name="product/deleted">
+			<Property name='Delete product' type="product/deleted">
         A product was successfully deleted.
       </Property>
 		</Properties>
@@ -250,13 +262,13 @@ if(localyCalculatedHmac != hmac){
 
 	<Col>	
     <Properties>
-     <Property name="funnel/updated">
+     <Property name='Update funnel' type="funnel/updated">
         An existing funnel was updated.
       </Property>
-      <Property name="funnel/created">
+      <Property name='Create funnel' type="funnel/created">
         A new funnel was created.
       </Property>
-			<Property name="funnel/deleted">
+			<Property name='Delete funnel' type="funnel/deleted">
         A funnel was successfully deleted.
       </Property>
 		</Properties>
