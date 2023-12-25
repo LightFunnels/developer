@@ -39,17 +39,11 @@ These endpoints allow you to retrieve, create, update, and delete Bundle(s).
     <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
 			```
 			query BundlesQuery($first: Int, $after: String, $query: String!){
-				priceBundles(query: "order_by:id order_dir:desc", after: "WzVE4OTA5LDEe/4OTA5XQ==", first: 10){
+				priceBundles(query: $query, after: $after, first: $first){
 					edges{
 						node{
-							id
 							label
-							created_at
 							items {
-								id
-								discount_value
-								quantity
-								discount_type
 								label
 							}
 						}
@@ -64,34 +58,40 @@ These endpoints allow you to retrieve, create, update, and delete Bundle(s).
     	```
     </CodeGroup>
     ```json {{ title: 'Response' }}
-    {
+		{
 			"data": {
-				"edges": [
-					{
-						"node": {
-							"created_at": "a few seconds ago",
-							"id": "pb_phvLG7yxd4_V3ga-XliGl",
-							"label": "Bundle test",
-							"items": [
-								{
-									"id": "off_UMDqtpjaSAng-vMLuKr8K",
-									"discount_value": 0,
-									"quantity": 1,
-									"discount_type": "item",
-									"label": "Buy 1 item only"
-								}
-							],
-							"cursor": "WzVE4OTA5LDEe/4OTA5XQ==",
-							"__typename": "PriceBundle"
-						}
+				"priceBundles": {
+					"edges": [
+						{
+								"node": {
+										"label": "Test Bundles",
+										"items": [
+											{
+												"label": "Buy 1 item only"
+											}
+										]
+								},
+								"cursor": "WyJwYl9WODdGVG4yTTNhYWs5eWg4bVRmR18iLCJwYl9WODdGVG4yTTNhYWs5eWg4bVRmR18iXQ=="
+						},
+						{
+								"node": {
+										"label": "Bundle test",
+										"items": [
+											{
+												"label": "Test Bundle"
+											}
+										]
+								},
+								"cursor": "WyJwYl9zRVNCYnN3SzQxZWZ4UkpvMHVOZFYiLCJwYl9zRVNCYnN3SzQxZWZ4UkpvMHVOZFYiXQ=="
+						},
+					],
+					"pageInfo": {
+						"endCursor": "WyJwYl9GUjFwbzlnWE92ZHd5d1o5SkYtQ3IiLCJwYl9GUjFwbzlnWE92ZHd5d1o5SkYtQ3IiXQ==",
+						"hasNextPage": false
 					}
-				],
-				"pageInfo": {
-					"endCursor": "WzE5OTY4LDE5OTY4XQ==",
-					"hasNextPage": false
 				}
 			}
-		}
+		}		
     ```
   </Col>
 </Row>
@@ -123,19 +123,27 @@ These endpoints allow you to retrieve, create, update, and delete Bundle(s).
 			```
 			mutation mutationName($node: InputPriceBundle!) {
 				createPriceBundle(node: $node){
-					# PriceBundle type fields
+					id 
+					label
+					items {
+						label
+						quantity
+						discount_value
+						discount_type
+					}
 				}
 			}
 			```
     </CodeGroup>
     ```json {{ title: 'Response' }}
     {
-			"data": {
-				"createBundle": {
-					"created_at": "a few seconds ago",
-					"id": "pb_phvLG7yxd4_V3ga-XliGl",
-					"label": "Bundle test"
-					...
+			"node" : {
+				"label": "Bundle test",
+				"items": {
+						"label": "Test",
+						"quantity": 1,
+						"discount_value": 10,
+						"discount_type" : "percentage"
 				}
 			}
 		}
@@ -153,14 +161,14 @@ These endpoints allow you to retrieve, create, update, and delete Bundle(s).
 		### Arguments 
 		<Properties> 
 			<Property name="id" type="ID!">
-				The PriceBundle id.
+				Bundle id.
 			</Property>
 		</Properties>	
 
 		### Fields 
 		<Properties>	
 			<Property label="PriceBundle!" route="/bundles/types#price-bundle">
-				The PriceBundle! query type.
+				Bundle query type.
 			</Property>
 		</Properties>
   </Col>
@@ -203,17 +211,17 @@ These endpoints allow you to retrieve, create, update, and delete Bundle(s).
 		### Arguments 
 		<Properties> 
 			<Property name="id" type="ID!">
-				The PriceBundle id.
+				Bundle id.
 			</Property>
 			<Property name="node" label="InputUpdatePriceBundle!" route="/bundles/types#input-update-price-bundle">
-				The PriceBundle node.
+				Bundle node.
 			</Property>
 		</Properties>
 
 		### Fields 
 		<Properties>	
 			<Property label="PriceBundle!" route="/bundles/types#price-bundle">
-				The PriceBundle! query type.
+				Bundle query type.
 			</Property>
 		</Properties>
 
