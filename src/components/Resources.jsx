@@ -3,10 +3,11 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 
 import { GridPattern } from '@/components/GridPattern'
 import { Heading } from '@/components/Heading'
-import { ChatBubbleIcon } from '@/components/icons/ChatBubbleIcon'
-import { EnvelopeIcon } from '@/components/icons/EnvelopeIcon'
-import { UserIcon } from '@/components/icons/UserIcon'
-import { UsersIcon } from '@/components/icons/UsersIcon'
+// import { ChatBubbleIcon } from '@/components/icons/ChatBubbleIcon'
+// import { EnvelopeIcon } from '@/components/icons/EnvelopeIcon'
+import { BoltIcon } from '@/components/icons/BoltIcon'
+// import { UsersIcon } from '@/components/icons/UsersIcon'
+// import { BoltIcon } from './icons/BoltIcon'
 
 const resources = [
   {
@@ -14,7 +15,7 @@ const resources = [
     name: 'Bundles',
     description:
       "Retrieve, create, update, and delete bundles.",
-    icon: UserIcon,
+    icon: BoltIcon,
     pattern: {
       y: 16,
       squares: [
@@ -28,7 +29,7 @@ const resources = [
     name: 'Collections',
     description:
       "Retrieve, create, update, and delete collections.",
-    icon: ChatBubbleIcon,
+    icon: BoltIcon,
     pattern: {
       y: -6,
       squares: [
@@ -42,7 +43,7 @@ const resources = [
     name: 'Customers',
     description:
       "Retrieve, create, update, and delete customers.",
-    icon: EnvelopeIcon,
+    icon: BoltIcon,
     pattern: {
       y: 32,
       squares: [
@@ -56,7 +57,7 @@ const resources = [
     name: 'Discounts',
     description:
       "Retrieve, create, update, or delete discounts.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -67,7 +68,7 @@ const resources = [
     name: 'Funnels',
     description:
       "Retrieve, create, update, or delete funnels.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -78,7 +79,7 @@ const resources = [
     name: 'Orders',
     description:
       "Retrieve, create, update, or delete orders.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -89,7 +90,7 @@ const resources = [
     name: 'Products',
     description:
       "Retrieve, create, update, or delete products.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -100,7 +101,7 @@ const resources = [
     name: 'Reviews',
     description:
       "Retrieve, create, update, or delete reviews.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -111,7 +112,7 @@ const resources = [
     name: 'Segments',
     description:
       "Retrieve, create, update, or delete segments.",
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
@@ -122,7 +123,7 @@ const resources = [
     name: 'Stores',
     description:
       'Retrieve, create, update, or delete stores.',
-    icon: UsersIcon,
+    icon: BoltIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],

@@ -8,7 +8,7 @@ You'll need to authenticate your requests in order to read or write to any priva
 ## The access token
 Think of the access token as a password that lets your app perform actions on an account.
 
-Your app will have a different access token to each account that you want to access. The access token helps identify which account you are trying to access as well as what actions you are allowed to take on the account.
+Your app will have a different access token to each account that you want to access. The access token helps identify which account you are trying to access as well as what [actions (see scopes)](/scopes) you are allowed to take on the account.
 
 ## Getting an access token
 
@@ -32,26 +32,27 @@ To create a consent screen you will need the following:
 - `client ID` that you will get after creating your app. Example: `9461026524765762404265764243`
 - A comma separated list of [scopes](/scopes) that you want to get the permission for. Example `products,orders`
 - `Redirect URI` where the user will be redirected after they accept the permissions. Example `https://yourapp.com/redirect`
-- The `account ID` that is passed to your app in the query string. Example `1234`
+- Optional: `state` parameter that will be returned to you in the redirect URI. Example `123`.
 
+**Important:** The `redirect URI` must be whitelisted in your app configuration.
 
 Using the example values above, this is what your consent screen URL would look like:
 
 ```text {{ title: 'Example consent screen URL' }}
-https://app.lightfunnels.com/admin/oauth?client_id=9461026524765762404265764243&redirect_uri=https://yourapp.com/redirect&scope=products,orders&account-id=1234&state=123&response_type=code
+https://app.lightfunnels.com/admin/oauth?client_id=9461026524765762404265764243&redirect_uri=https://yourapp.com/redirect&scope=products,orders&state=123&response_type=code
 ```
 
 ## Step 2 - Getting your access token
 
 Once the user accepts the requested permissions on the consent screen, they will get redirected to the `redirect URI` that you used in Step 1, with an authorization `code` variable added in the query string.
 
-Using the authorization `code` variable, combined with the `client ID` and `client secret`, you can request your permanent `access token` by making JSON post request:
+Using the authorization `code` variable, combined with the `client ID` and `client secret`, you can request your permanent `access token` by making a JSON post request:
 
 ``` json {{ title: 'POST - https://api.lightfunnels.com/oauth/access'}}
 {
     "client_id" : "{{client_id}}",
     "client_secret" : "{{client_secret}}",
-    "code" : "the authorization code"
+    "code" : "the authorization code from the query string"
 }
 ```
 ``` json {{ title: 'Response example'}}
@@ -62,9 +63,11 @@ Using the authorization `code` variable, combined with the `client ID` and `clie
 }
 ```
 
+## Important notes
+- While testing, the authorization code will only work once. If you need to test again, you will need to go through the consent screen again.
+- The client secret is private and should never be shared.
+- The access token is permanent and should be saved in your database. You will need it for all your requests.
 
 
 
-
-Always keep your token safe and reset it if you suspect it has been compromised.
 

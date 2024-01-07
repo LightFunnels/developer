@@ -10,10 +10,12 @@ Welcome to the Lightfunnels GraphQL API documentation! This page will provide yo
 Before you start using the Lightfunnels GraphQL API, you will need the following:
 
 - An active Lightfunnels account. You can [sign up for a free trial here](https://app.lightfunnels.com/admin/auth/signup).
-- An `client ID` and `client secret`. You can find these under the "Configuration" tab of your app.
-- Basic familiarity with [GraphQL](https://graphql.org/). 
+- A `client ID` and `client secret`. You can find these under the "Configurations" tab of your app.
+- Basic familiarity with [GraphQL](https://graphql.org/).
 
 If you are not familiar with GraphQL, do not worry, you can find a list done for you queries and mutations on our [Postman collection](https://god.gw.postman.com/run-collection/16831799-560b18e3-2697-46e4-9ac7-1933d463fb37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16831799-560b18e3-2697-46e4-9ac7-1933d463fb37%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51). If you want to learn more about GraphQL, we recommend [this tutorial](https://www.howtographql.com/) to get started.
+
+---
 
 ## Making a Query
 To make a GraphQL query using the Lightfunnels API, you will need to send an HTTP POST request to the API endpoint with the following parameters:
@@ -26,6 +28,8 @@ Parameters:
 - `query`: The GraphQL query, encoded as a string
 - `variables` (optional): A JSON object containing variables for the query
 
+---
+
 ### Authorization
 You should also include your API `access token` in the Authorization header of the request as follows:
 ```text {{ title: 'Authorization header' }}
@@ -33,47 +37,18 @@ Authorization: Bearer <your access token>
 ```
 Learn how to get your access token on the [Access Token page](/authentication) {{ className: 'lead' }}
 
+---
+
 ## Apps
 
-To have access your app, click the "Install app" button on the top right corner of your app page on the [Partners area](https://partners.lightfunnels.com/).
+To access your app, click the "Install app" button on the top right corner of your app page on the [Partners area](https://partners.lightfunnels.com/). This will take you to your Lightfunnels dashboard where your app is located. You can also access your app directly by going to:
 
-This will take you to your Lightfunnels dashboard where your app is located. You can also access your app directly by going to `https://app.lightfunnels.com/admin/apps/<your client id>`.
-
-On this page, your app URL will load inside of an iframe. You can also choose to have your app load outside of the Lightfunnels dashboard by checking the "External" checkbox on the "Configuration" tab of your app.
-
-### Endpoint
-
-The GraphQL API endpoint for all your queries is:
-
-```text {{ title: 'GraphQL endpoint' }}
-https://services.lightfunnels.com/api/v2
+```
+https://app.lightfunnels.com/admin/apps/{your client id}
 ```
 
-## Query Example
-Here is an example of a GraphQL query to get the title of a product with the id of `1`:
+On this page, your app URL will load inside of an iframe. You can also choose to have your app load outside of the Lightfunnels dashboard by checking the "External" checkbox in your app configuration.
 
-
-```graphql {{ title: 'Example query' }}
-query getProduct{
-    product(id: 1){
-        title
-    }
-}
-```
-
-Example response:
-
-```json {{ title: 'Example query' }}
-{
-    "data": {
-        "product": {
-            "title": "Awesome Product Example"
-        }
-    }
-}
-```
-
-Learn more about GraphQL [queries and mutations here](https://graphql.org/learn/queries/) {{ className: 'lead' }}
 
 ---
 

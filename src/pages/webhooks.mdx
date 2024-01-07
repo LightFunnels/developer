@@ -1,3 +1,5 @@
+import { createDomMotionComponent } from "framer-motion"
+
 export const description =
   'In this guide, we will look at how to register and consume webhooks to integrate your app with Lightfunnels.'
 
@@ -31,7 +33,7 @@ scalar WebhookSettings
 ```json {{ title: 'GraphQL Variables'}}
 {
     "node": {
-        "type": "order/created",
+        "type": "order/confirmed",
         "url": "https://yourapp.com/webhooks/order-created/{{account-id}}",
         "settings": {}
     }
@@ -45,29 +47,53 @@ The `type` property refers to the event that you would like to listen to. Refer 
 Note that in the above, we pass the `account ID` to the URL so your app knows to which account the webhook call corresponds to. This refers to the ID of the account in your own database.
 </Note>
 
-In this example, we used the `order/created` event. Now, whenever a new order is created, a webhook is fired off and your app receives all the information related to the new order. In the next section, we'll look at how to consume webhooks.
+In this example, we used the `order/confirmed` event. Now, whenever a new order is made, a webhook is fired off and your app receives all the information related to the new order. In the next section, we'll look at how to consume webhooks.
 
 ## Consuming webhooks
 
-When your app receives a webhook request from Lightfunnels, you should verify the authenticity of the request by validating the `lightfunnels-hmac` from the header using your `client secret`.
+When your app receives a webhook request from Lightfunnels, you should verify the authenticity of the request by validating the `lightfunnels-hmac` property from the header using your `client secret`.
 
 Here is an exampe code on how to authenticate the request using Note.js.
 
 ```js
 import crypto from "crypto";
 
-// calculate the hmac
-const localyCalculatedHmac = crypto
-    .createHmac("sha256", CLIENT_SECRET)
-    .update(event.body!, "utf8")
+// This is an example of a webhook handler implemented in Node.js
+const webhookHandler = async (req, res) => {
+    try {
+        if (!await verifyWebhook(req)) {
+            return res.status(403).send("Invalid webhook");
+        }
+
+		// Webhook is valid, continue with your logic here
+
+	} catch (error) {
+		console.log(error);
+		return res.status(500).send("Internal server error");
+	}
+}
+
+// This function verifies the webhook using the lightfunnels-hmac header
+const verifyWebhook = async (req) => {
+
+    // calculate the hmac
+    const localyCalculatedHmac = crypto
+    .createHmac("sha256", process.env.LF_APP_SECRET)
+    .update(JSON.stringify(req.body), "utf8")
     .digest("base64");
 
-// check if the hmac is the same as the one in the lightfunnels-hmac header
-const hmac = event.headers["lightfunnels-hmac"];
-if(localyCalculatedHmac != hmac){
-  // this webhook is fishy, abort!
+    // check if the hmac is the same as the one in the lightfunnels-hmac header
+    const hmac = req.headers["lightfunnels-hmac"];
+    if(localyCalculatedHmac != hmac){
+        // this webhook is fishy, abort!
+        return false;
+    }
+
+    return true;
 }
 ```
+
+
 
 ---
 
@@ -75,26 +101,27 @@ if(localyCalculatedHmac != hmac){
 
 {/* order/created, order/confirmed, payment/created, payment/paid, order-item/created, contact-form/created, contact/signup, contact/updated, checkout/created, checkout/updated, product/updated, product/created, product/deleted, funnel/updated, funnel/created, funnel/deleted */}
 
+# Order events
 <Row>
 	<Col>
     <Properties>
       <Property name="New order" type="order/created">
-        A new order was created.
+        This webhook is fired as soon as an order is created. Note that this may not include all items as it's fired before the customer is done purchasing the upsells & downsells.
       </Property>
 			<Property name="Order confirmation sent" type="order/confirmed">
-        Order confirmation was sent.
+        This webhook is useful for getting all the order information including the upsells and downsells once the customer is done purchasing.
       </Property>
 			<Property name="Order fulfillment update" type="order/fulfilled">
-        Order fulfillment update.
+        This webhook is fired when the order fulfillment status is updated.
       </Property>
 			<Property name="Order cancelled" type="order/cancelled">
-        Order cancelled.
+        This webhook is fired when the order is cancelled.
       </Property>
 			<Property name="Order uncancelled" type="order/uncancelled">
-        Order uncancelled.
+        This webhook is fired when the order is uncancelled.
       </Property>
 			<Property name="Order refunded" type="order/refunded">
-        Order refunded.
+        This webhook is fired when the order is refunded.
       </Property>
 		</Properties>
 	</Col>
@@ -109,36 +136,8 @@ if(localyCalculatedHmac != hmac){
 				"total": 29.99,
 			}
 		```
-	</Col>	
-
-	<Col>	
-    <Properties>
-			<Property name='New payment' type="payment/created">
-				A new payment was created.
-      </Property>
-      <Property name='Paid payment' type="payment/paid">
-      	Paid payment.
-      </Property>
-			{/* ### Fields 
-			<Property name='payment' label="Payment" route="/orders/types#payment">
-				Payment fields.
-      </Property> */}
-		</Properties>
 	</Col>
-	<Col>	
-    ```json {{ 'title': 'Payment payload' }}
-			{
-				"id": 0,
-				"order_id": 0,
-				"paid": 20,
-				"refunded": 0,
-				"net_payment": 20,
-				"discount_value": 0,
-				"total": 20,
-			}
-		```
-	</Col>
-
+	
 	<Col>	
     <Properties>
       <Property name='New order item' type="order-item/created">
@@ -161,14 +160,45 @@ if(localyCalculatedHmac != hmac){
 				"type": "VariantSnapshot",
 			}
 		```
+	</Col>	
+	</Row>
+
+---
+
+## Payment events
+
+<Row>
+	<Col>
+    <Properties>
+		<Property name='New payment' type="payment/created">
+				A new payment was created.
+		</Property>
+		<Property name='Paid payment' type="payment/paid">
+      	Paid payment.
+      	</Property>
+	</Properties>
 	</Col>
 
 	<Col>	
+    ```json {{ 'title': 'Payment payload' }}
+			{
+				"id": 0,
+				"order_id": 0,
+				"paid": 20,
+				"refunded": 0,
+				"net_payment": 20,
+				"discount_value": 0,
+				"total": 20,
+			}
+		```
+	</Col>
+
+	<Col>
     <Properties>
-			<Property name='New contact form' type="contact-form/created">
-        A new contact form was created.
-      </Property>
-		</Properties>
+		<Property name='New contact form' type="contact-form/created">
+       	 A new contact form was created.
+      	</Property>
+	</Properties>
 	</Col>
 	<Col>	
     ```json {{ 'title': 'Contact form payload' }}
@@ -282,52 +312,4 @@ if(localyCalculatedHmac != hmac){
 		```
 	</Col>
 </Row>
-
----
-
-## Security
-
-To know for sure that a webhook was, in fact, sent by Lightfunnels instead of a malicious actor, you can verify the request signature. Each webhook request contains a header named `x-Lightfunnels-signature`, and you can verify this signature by using your secret webhook key. The signature is an HMAC hash of the request payload hashed using your secret key. Here is an example of how to verify the signature in your app:
-
-<CodeGroup title="Verifying a request">
-
-```js
-const signature = req.headers['x-Lightfunnels-signature']
-const hash = crypto.createHmac('sha256', secret).update(payload).digest('hex')
-
-if (hash === signature) {
-  // Request is verified
-} else {
-  // Request could not be verified
-}
-```
-
-```python
-from flask import request
-import hashlib
-import hmac
-
-signature = request.headers.get("x-Lightfunnels-signature")
-hash = hmac.new(bytes(secret, "ascii"), bytes(payload, "ascii"), hashlib.sha256)
-
-if hash.hexdigest() == signature:
-    # Request is verified
-else:
-    # Request could not be verified
-```
-
-```php
-$signature = $request['headers']['x-Lightfunnels-signature'];
-$hash = hash_hmac('sha256', $payload, $secret);
-
-if (hash_equals($hash, $signature)) {
-  // Request is verified
-} else {
-  // Request could not be verified
-}
-```
-
-</CodeGroup>
-
-If your generated signature matches the `x-Lightfunnels-signature` header, you can be sure that the request was truly coming from Lightfunnels. It's essential to keep your secret webhook key safe — otherwise, you can no longer be sure that a given webhook was sent by Lightfunnels. Don't commit your secret webhook key to GitHub!
 
