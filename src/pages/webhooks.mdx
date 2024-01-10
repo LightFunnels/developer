@@ -102,6 +102,7 @@ const verifyWebhook = async (req) => {
 {/* order/created, order/confirmed, payment/created, payment/paid, order-item/created, contact-form/created, contact/signup, contact/updated, checkout/created, checkout/updated, product/updated, product/created, product/deleted, funnel/updated, funnel/created, funnel/deleted */}
 
 # Order events
+
 <Row>
 	<Col>
     <Properties>
@@ -175,7 +176,7 @@ const verifyWebhook = async (req) => {
 
 ---
 
-## Payment events
+# Payment events
 
 <Row>
 	<Col>
@@ -203,7 +204,13 @@ const verifyWebhook = async (req) => {
 			}
 		```
 	</Col>
+</Row>
 
+---
+
+# Contact events
+
+<Row>
 	<Col>
     <Properties>
 			<Property name='New contact form' type="contact-form/created">
@@ -253,7 +260,13 @@ const verifyWebhook = async (req) => {
 			}
 		```
 	</Col>
+</Row>
 
+---
+
+# Checkout events
+
+<Row>
 	<Col>	
     <Properties>
       <Property name='New checkout' type="checkout/created">
@@ -281,7 +294,13 @@ const verifyWebhook = async (req) => {
 			}
 		```
 	</Col>
+</Row>
 
+---
+
+# Product events
+
+<Row>
 	<Col>	
     <Properties>
      	<Property name='Product updated' type="product/updated">
@@ -303,7 +322,13 @@ const verifyWebhook = async (req) => {
 			}
 		```
 	</Col>
+</Row>
 
+---
+
+# Funnel events
+
+<Row>
 	<Col>	
     <Properties>
      <Property name='Update funnel' type="funnel/updated">
