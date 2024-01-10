@@ -9,13 +9,13 @@ export function UserIcon(props) {
       />
       <path
         fill="none"
-        strokeLinecap="round"
+        strokeLinecapp="round"
         strokeLinejoin="round"
         d="M10 .5a9.5 9.5 0 0 1 5.598 17.177A9.458 9.458 0 0 1 10 19.5a9.458 9.458 0 0 1-5.598-1.823A9.5 9.5 0 0 1 10 .5Z"
       />
       <path
         fill="none"
-        strokeLinecap="round"
+        strokeLinecapp="round"
         strokeLinejoin="round"
         d="M4.402 17.677C5.534 15.177 7.617 13.5 10 13.5s4.466 1.677 5.598 4.177M10 5.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
       />

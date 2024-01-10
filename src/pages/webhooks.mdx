@@ -97,7 +97,7 @@ const verifyWebhook = async (req) => {
 
 ---
 
-## Event types
+{/* ## Event types */}
 
 {/* order/created, order/confirmed, payment/created, payment/paid, order-item/created, contact-form/created, contact/signup, contact/updated, checkout/created, checkout/updated, product/updated, product/created, product/deleted, funnel/updated, funnel/created, funnel/deleted */}
 
@@ -127,17 +127,26 @@ const verifyWebhook = async (req) => {
 	</Col>
 	<Col>
 		```json {{ 'title': 'Order payload' }}
-			{
-				"id": 0,
-				"phone": "",
-				"name": "210",
-				"email": "no-reply@lightfunnels.com",
-				"sub_total": 33.39,
-				"total": 29.99,
+		{
+			"node":{
+				"id":"1",
+				"__typename":"Order",
+				"_id":12345,
+				"account_id":"acc_CquDNesAvtWZtd8",
+				"total":150.00,
+				"subtotal":120.00,
+				"discount_value":20.00,
+				"normal_discount_value":10.00,
+				"bundle_discount_value":10.00,
+				"name":"John Doe",
+				"notes":"Deliver before weekend",
+				"email":"johndoe@example.com",
+				"phone":"123-456-7890"
+				...
 			}
+		}
 		```
 	</Col>
-	
 	<Col>	
     <Properties>
       <Property name='New order item' type="order-item/created">
@@ -157,7 +166,8 @@ const verifyWebhook = async (req) => {
 				"title": "New T-shirt",
 				"sku": "nts",
 				"financial_status": "paid",
-				"type": "VariantSnapshot",
+				"type": "VariantSnapshot"
+				...
 			}
 		```
 	</Col>	
@@ -188,17 +198,18 @@ const verifyWebhook = async (req) => {
 				"refunded": 0,
 				"net_payment": 20,
 				"discount_value": 0,
-				"total": 20,
+				"total": 20
+				...
 			}
 		```
 	</Col>
 
 	<Col>
     <Properties>
-		<Property name='New contact form' type="contact-form/created">
-       	 A new contact form was created.
-      	</Property>
-	</Properties>
+			<Property name='New contact form' type="contact-form/created">
+				A new contact form was created.
+			</Property>
+		</Properties>
 	</Col>
 	<Col>	
     ```json {{ 'title': 'Contact form payload' }}
@@ -209,6 +220,7 @@ const verifyWebhook = async (req) => {
 				"email": "no-reply@lightfunnels.com",
 				"first_name": "Elhanan",
 				"last_name": "Aljoša"
+				...
 			}
 		```
 	</Col>
@@ -236,7 +248,8 @@ const verifyWebhook = async (req) => {
 				"tags": [
 					"tag1",
 					"tag2"
-				],
+				]
+				...
 			}
 		```
 	</Col>
@@ -263,7 +276,8 @@ const verifyWebhook = async (req) => {
 				"last_name": "Aljoša",
 				"email": "no-reply@lightfunnels.com",
 				"funnel_id": 0,
-				"step_id": 0,
+				"step_id": 0
+				...
 			}
 		```
 	</Col>

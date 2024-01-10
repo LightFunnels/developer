@@ -11,7 +11,7 @@ function MenuIcon(props) {
     <svg
       viewBox="0 0 10 9"
       fill="none"
-      strokeLinecap="round"
+      strokeLinecapp="round"
       aria-hidden="true"
       {...props}
     >
@@ -25,7 +25,7 @@ function XIcon(props) {
     <svg
       viewBox="0 0 10 9"
       fill="none"
-      strokeLinecap="round"
+      strokeLinecapp="round"
       aria-hidden="true"
       {...props}
     >
