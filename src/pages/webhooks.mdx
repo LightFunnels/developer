@@ -352,3 +352,26 @@ const verifyWebhook = async (req) => {
 	</Col>
 </Row>
 
+---
+
+# App events
+
+<Row>
+	<Col>	
+    <Properties>
+     <Property name='Uninstall app' type="app/uninstalled">
+       	An app was successfully uninstalled.
+      </Property>
+		</Properties>
+	</Col>
+	<Col>	
+    ```json {{ 'title': 'App payload' }}
+			{
+				node:{
+					"id": "some id"
+				}
+			}
+		```
+	</Col>
+</Row>
+
