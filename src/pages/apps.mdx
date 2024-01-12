@@ -1,0 +1,94 @@
+import { createDomMotionComponent } from "framer-motion"
+
+export const description =
+  'In this guide, we will look at how to register and consume webhooks to integrate your app with Lightfunnels.'
+
+# Apps
+
+In this guide, we will look at how to create charges for your app in Lightfunnels.
+
+---
+
+## Create app charges
+
+To create an app charge, you need to use the following GraphQL mutation:
+
+<Row>
+  <Col>
+    This query allows you to retrieve all stores on your account.
+		### Arguments 
+		<Properties> 
+			<Property type="createAppChargeInput!">
+				The createAppChargeInput type.
+				```
+				input createAppChargeInput {
+					node: AppChargeInput!
+					clientMutationId: String
+				}
+
+				input AppChargeInput {
+					price: Float!
+					return_url: String!
+					name: String!
+					recurring: AppChargeInterval
+					trial: Int!
+					plan_id: ID!
+				}
+
+				enum AppChargeInterval {
+					month
+				}
+				```
+			</Property>
+		</Properties>
+		### Fields 
+		<Properties>	
+			<Property type='createAppChargePayload'>
+				The createAppChargePayload type.
+				```
+				type createAppChargePayload {
+					appCharge: AppCharge
+					clientMutationId: String
+				}
+				type AppCharge implements Node {
+					id: ID!
+					price: Float!
+					name: String!
+					return_url: String!
+					trial: Int!
+					url: String!
+					started_at(format: String = "YYYY-MM-DD HH:mm:ss"): TimeStamp
+					ended_at(format: String = "YYYY-MM-DD HH:mm:ss"): TimeStamp
+					recurring: AppChargeInterval
+					app_client_id: String!
+				}
+				```
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```graphql {{ title: 'GraphQL Query' }}
+			# Mutation
+			mutation createAppChargeMutation($input: createAppChargeInput!) {
+				createAppCharge(input: $input) {
+					createAppChargePayload type fields
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"node": {
+				"appCharge": {
+					"id": "some id",
+					"price": 25.99,
+					"name": "basic",
+					"started_at": "2024-01-12 15:56:23"
+				},
+			}
+		}
+    ```
+  </Col>
+</Row>

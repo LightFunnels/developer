@@ -7,6 +7,12 @@ const guides = [
     name: 'Authentication',
     description: 'Learn how to authenticate your API requests.',
   },
+	{
+    href: '/apps',
+    name: 'Apps',
+    description:
+      'Learn how to programmatically configure apps.',
+  },
   {
     href: '/pagination',
     name: 'Pagination',

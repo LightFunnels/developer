@@ -195,6 +195,7 @@ export const navigation = [
       { title: 'Errors', href: '/errors' },
       { title: 'Webhooks', href: '/webhooks' },
       { title: 'Pagination', href: '/pagination' },
+      { title: 'Apps', href: '/apps' },
     ],
   },
   {
