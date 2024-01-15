@@ -1,0 +1,166 @@
+export const description =
+  'On this page, we’ll dive into the different app types.'
+
+# App types
+
+---
+
+## AppCharges
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="list" label="[AppCharge!]!" route='/apps/types#app-charge'>
+				The app charges list.
+			</Property>	
+		</Properties>
+  </Col>
+	<Col sticky>
+		<CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```graphql {{ title: 'GraphQL Query' }}
+				# Query
+				query AppChargeQuery{
+				appCharges{
+					list {
+						# AppCharge type fields
+					}
+				}
+			}
+			```
+		</CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## AppCharge
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the app charge.
+			</Property>
+			<Property name="price" type="Float!">
+				The app charge amount.
+			</Property>
+			<Property name="name" type="String!">
+				The app charge name (plan name).
+			</Property>
+			<Property name="return_url" type="String!">
+				The app charge return url.
+			</Property>
+			<Property name="trial" type="Int!">
+				The app charge trial days.
+			</Property>
+			<Property name="url" type="String!">
+				The app charge url.
+			</Property>
+			<Property name="started_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the app charge initiated.
+			</Property>
+			<Property name="ended_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the app charge ended.
+			</Property>
+			<Property name="recurring" label="AppChargeInterval" route="/apps#app-charge-interval">
+				The app charge recurring type.
+			</Property>
+			<Property name="app_client_id" type="String!">
+				The app client id.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## AppChargeInput
+
+<Row>
+	<Col>
+		<Properties>
+			<Property name="price" type="Float!">
+				The app charge amount.
+			</Property>
+			<Property name="return_url" type="String!">
+				The app charge return url.
+			</Property>
+			<Property name="name" type="String!">
+				The app charge name (plan name).
+			</Property>
+			<Property name="recurring" label="AppChargeInterval" route="/apps#app-charge-interval">
+				The app charge recurring type.
+			</Property>
+			<Property name="trial" type="Int!">
+				The app charge trial days.
+			</Property>
+			<Property name="plan_id" type="ID!">
+				The app plan id.
+			</Property>
+		</Properties>
+	</Col>
+</Row>
+
+---
+
+## createAppChargeInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="node" label="AppChargeInput!" route="/apps#types#app-charge-input">
+				The app charge object node.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The app charge client mutation id.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```graphql {{ title: 'GraphQL Mutation' }}
+				# Mutation
+				mutation createAppChargeMutation($input: createAppChargeInput!) {
+					createAppCharge(input: $input) {
+						createAppChargePayload type fields
+					}
+				}
+			```
+    </CodeGroup>
+  </Col>
+</Row>
+
+---
+
+## createAppChargePayload
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="appCharge" label="AppCharge" route="/apps#app-charge">
+				The app charge type.
+			</Property>
+			<Property name="clientMutationId" type="String">
+				The app charge mutation id.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## AppChargeInterval
+
+<Row>
+  <Col>
+		<Properties> 
+			<Property name="AppChargeInterval" type="enum">
+				The app charge interval (defaults to month).
+			</Property>
+		</Properties>
+  </Col>
+</Row>

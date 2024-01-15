@@ -9,7 +9,7 @@ const guides = [
   },
 	{
     href: '/apps',
-    name: 'Apps',
+    name: 'Charging for your app',
     description:
       'Learn how to programmatically configure apps.',
   },
