@@ -43,7 +43,7 @@ To create an app charge, you need to use the following GraphQL mutation:
     {
 			"node": {
 				"appCharge": {
-					"id": "id of the account that uninstalled the app",
+					"id": "charge id",
 					"price": 25.99,
 					"name": "basic",
 					"started_at": "2024-01-12 15:56:23"
@@ -92,7 +92,7 @@ To get your app charges, you need to use the following GraphQL query:
     ```json {{ title: 'Response' }}
 		{
 			"appCharges": {
-				"id": "id of the account that uninstalled the app",
+				"id": "charge id",
 				"price": 25.99,
 				"name": "basic",
 				"started_at": "2024-01-12 15:56:23"
