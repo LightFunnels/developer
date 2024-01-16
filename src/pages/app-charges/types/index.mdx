@@ -11,7 +11,7 @@ export const description =
   <Col>
 		### Fields
 		<Properties> 
-			<Property name="list" label="[AppCharge!]!" route='/apps/types#app-charge'>
+			<Property name="list" label="[AppCharge!]!" route='/app-charges/types#app-charge'>
 				The app charges list.
 			</Property>	
 		</Properties>
@@ -64,7 +64,7 @@ export const description =
 			<Property name="ended_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the app charge ended.
 			</Property>
-			<Property name="recurring" label="AppChargeInterval" route="/apps#app-charge-interval">
+			<Property name="recurring" label="AppChargeInterval" route="/app-charges#app-charge-interval">
 				The app charge recurring type.
 			</Property>
 			<Property name="app_client_id" type="String!">
@@ -90,7 +90,7 @@ export const description =
 			<Property name="name" type="String!">
 				The app charge name (plan name).
 			</Property>
-			<Property name="recurring" label="AppChargeInterval" route="/apps#app-charge-interval">
+			<Property name="recurring" label="AppChargeInterval" route="/app-charges#app-charge-interval">
 				The app charge recurring type.
 			</Property>
 			<Property name="trial" type="Int!">
@@ -111,7 +111,7 @@ export const description =
   <Col>
 		### Fields
 		<Properties> 
-			<Property name="node" label="AppChargeInput!" route="/apps#types#app-charge-input">
+			<Property name="node" label="AppChargeInput!" route="/app-charges#types#app-charge-input">
 				The app charge object node.
 			</Property>
 			<Property name="clientMutationId" type="String">
@@ -141,7 +141,7 @@ export const description =
   <Col>
 		### Fields
 		<Properties> 
-			<Property name="appCharge" label="AppCharge" route="/apps#app-charge">
+			<Property name="appCharge" label="AppCharge" route="/app-charges#app-charge">
 				The app charge type.
 			</Property>
 			<Property name="clientMutationId" type="String">

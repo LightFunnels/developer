@@ -1,0 +1,68 @@
+export const description =
+  'In this guide, we will look at how to handle charges for your app in Lightfunnels.'
+
+# Guide to Charging for Your Apps
+
+In this guide, we'll walk you through the process of handling app charges in Lightfunnels.
+
+## Overview
+
+Charging for your apps in Lightfunnels is a straightforward process. Here are the key points to keep in mind:
+
+- **One Active Charge Per Account:**
+  - At any given time, an app can have only one active charge per user account.
+
+- **Automatic Deactivation:**
+  - Activating a new charge will automatically deactivate any previous charges associated with the user's account.
+
+- **Free Trial Recommendation:**
+  - For a positive user experience, it is highly recommended to include a free trial period with your charge.
+
+---
+
+## Create a New Charge
+
+To create a new charge for your app, you'll need to use the "createAppChargeMutation" GraphQL mutation. 
+
+1. **Explore Mutation Details:**
+   - Visit [Create App Charges](/app-charges#create-app-charges) to learn about the "createAppChargeMutation" GraphQL mutation.
+
+2. **Utilize Postman Playground:**
+   - Use Postman Playground to experiment with the mutation and understand its parameters.
+	 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/16831799-560b18e3-2697-46e4-9ac7-1933d463fb37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16831799-560b18e3-2697-46e4-9ac7-1933d463fb37%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51)
+
+3. **Implement in Your App:**
+   - Integrate the mutation into your app's backend to initiate new charges seamlessly.
+
+---
+
+## Query App Charges
+
+To retrieve information about all charges associated with your app, use the "appCharges" GraphQL query. 
+
+1. **Review Query Details:**
+   - Visit [List All App Charges](/app-charges#list-all-app-charges) to understand the "appCharges" GraphQL query.
+
+2. **Use Postman Playground:**
+   - Utilize Postman Playground to run the query and explore the response structure.
+	 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/16831799-560b18e3-2697-46e4-9ac7-1933d463fb37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16831799-560b18e3-2697-46e4-9ac7-1933d463fb37%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51)
+
+3. **Integrate in Your App:**
+   - Implement the query into your app's frontend or backend to display a list of all app charges.
+
+---
+
+## Best Practices
+
+1. **Communicate Changes:**
+   - Notify users when a new charge is activated, explaining the benefits and any trial period.
+
+2. **User-Friendly Trials:**
+   - Ensure that your charges include a free trial to encourage user engagement and satisfaction.
+
+3. **Regularly Update:**
+   - Stay informed about Lightfunnels API updates and regularly update your app to leverage new features.
+
+By following this guide, you can effectively manage charges for your apps using the Lightfunnels Developer API. 
+For more detailed information on creating charges or querying app charges, refer to the provided links. 
+If you have further questions or need assistance, contact us at support@lightfunnels.com.

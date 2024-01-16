@@ -10,6 +10,20 @@ import { BoltIcon } from '@/components/icons/BoltIcon'
 // import { BoltIcon } from './icons/BoltIcon'
 
 const resources = [
+	{
+    href: '/app-carges',
+    name: 'App charges',
+    description:
+      "Retrieve, create, app charges.",
+    icon: BoltIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
   {
     href: '/bundles',
     name: 'Bundles',

@@ -195,13 +195,13 @@ export const navigation = [
       { title: 'Errors', href: '/errors' },
       { title: 'Webhooks', href: '/webhooks' },
       { title: 'Pagination', href: '/pagination' },
-      { title: 'Charging for your app', href: '/apps' },
+      { title: 'Charging for your app', href: '/charges' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      // { title: 'Apps', href: '/apps' },
+      { title: 'App charges', href: '/app-charges' },
       { title: 'Bundles', href: '/bundles' },
       { title: 'Collections', href: '/collections' },
       { title: 'Customers', href: '/customers' },
@@ -217,7 +217,7 @@ export const navigation = [
 	{
     title: 'GraphQL types',
     links: [
-      { title: 'Apps', href: '/apps/types' },
+      { title: 'App charges', href: '/app-charges/types' },
       { title: 'Bundles', href: '/bundles/types' },
       { title: 'Collections', href: '/collections/types' },
       { title: 'Customers', href: '/customers/types' },

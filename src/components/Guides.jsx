@@ -8,10 +8,10 @@ const guides = [
     description: 'Learn how to authenticate your API requests.',
   },
 	{
-    href: '/apps',
+    href: '/charges',
     name: 'Charging for your app',
     description:
-      'Learn how to programmatically configure apps.',
+      'Learn how to handle app charges.',
   },
   {
     href: '/pagination',
