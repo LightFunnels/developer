@@ -20,19 +20,36 @@ Charging for your apps in Lightfunnels is a straightforward process. Here are th
 
 ---
 
-## Create a New Charge
+## Create a New App Charge
+
+In this guide, we'll cover the steps to create a charge for your app using GraphQL.
+
+## Step 1: Create a Charge
 
 To create a new charge for your app, you'll need to use the "createAppChargeMutation" GraphQL mutation. 
 
-1. **Explore Mutation Details:**
+ **Explore Mutation Details:**
    - Visit [Create App Charges](/app-charges#create-app-charges) to learn about the "createAppChargeMutation" GraphQL mutation.
 
-2. **Utilize Postman Playground:**
-   - Use Postman Playground to experiment with the mutation and understand its parameters.
-	 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/16831799-560b18e3-2697-46e4-9ac7-1933d463fb37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16831799-560b18e3-2697-46e4-9ac7-1933d463fb37%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51)
+## Step 2: Obtain Charge URL
 
-3. **Implement in Your App:**
-   - Integrate the mutation into your app's backend to initiate new charges seamlessly.
+Once you've created the charge, the response will contain a URL. Extract this URL from the response payload.
+
+## Step 3: Redirect User to Accept Charge
+
+Send the user to the obtained charge URL. This can typically be done by redirecting the user's browser to the URL.
+
+## Step 4: Redirect User Upon Charge Acceptance or Denial
+
+Upon the user's acceptance or denial of the charge, they will automatically be redirected to the specified return_url that was provided in the charge creation process.
+
+## Step 5: Check Charge Status
+
+To check whether the user has accepted the charge, you may need to implement a polling mechanism or use a webhook to receive updates.
+
+Alternatively, you can query the charge status using the following GraphQL query:
+
+   - Visit [App charges query](/app-charges#list-all-app-charges) to understand the "appCharges" GraphQL query.
 
 ---
 
