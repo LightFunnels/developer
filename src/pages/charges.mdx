@@ -43,9 +43,12 @@ Send the user to the obtained charge URL. This can typically be done by redirect
 
 Upon the user's acceptance or denial of the charge, they will automatically be redirected to the specified return_url that was provided in the charge creation process.
 
-## Step 5: Check Charge Status
+## Step 5: Check Charge Status Timestamp
 
-You can query the charge status using the following GraphQL query:
+Discover the exact moment a user accepts the charge by capturing the timestamp. 
+Otherwise, the `accepted_at` timestamp will be null. 
+
+You can retrieve it using the following GraphQL query:
 
    - Visit [App charge query](/app-charges#get-an-app-charge) to understand the "appCharge" GraphQL query.
 
