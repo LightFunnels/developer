@@ -45,29 +45,17 @@ Upon the user's acceptance or denial of the charge, they will automatically be r
 
 ## Step 5: Check Charge Status
 
-To check whether the user has accepted the charge, you may need to implement a polling mechanism or use a webhook to receive updates.
+You can query the charge status using the following GraphQL query:
 
-Alternatively, you can query the charge status using the following GraphQL query:
-
-   - Visit [App charges query](/app-charges#list-all-app-charges) to understand the "appCharges" GraphQL query.
+   - Visit [App charge query](/app-charges#get-an-app-charge) to understand the "appCharge" GraphQL query.
 
 ---
 
-## Query App Charges
+# Helpful resources
 
-To retrieve information about all charges associated with your app, use the "appCharges" GraphQL query. 
+For more detailed information on creating charges or querying app charges, refer to the provided links, Alternatively
+you can use our provided Postman collection, simply fork it get access to ready to use queries.
 
-1. **Review Query Details:**
-   - Visit [List All App Charges](/app-charges#list-all-app-charges) to understand the "appCharges" GraphQL query.
-
-2. **Use Postman Playground:**
-   - Utilize Postman Playground to run the query and explore the response structure.
 	 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/16831799-560b18e3-2697-46e4-9ac7-1933d463fb37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16831799-560b18e3-2697-46e4-9ac7-1933d463fb37%26entityType%3Dcollection%26workspaceId%3Dfa9c0249-aba8-4d8f-8378-47dad60c4b51)
 
-3. **Integrate in Your App:**
-   - Implement the query into your app's frontend or backend to display a list of all app charges.
-
----
-
-For more detailed information on creating charges or querying app charges, refer to the provided links. 
 If you have further questions or need assistance, contact us at support@lightfunnels.com.

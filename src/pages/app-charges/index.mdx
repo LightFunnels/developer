@@ -101,3 +101,51 @@ To get your app charges, you need to use the following GraphQL query:
     ```
   </Col>
 </Row>
+
+---
+
+## Get an app charge	
+
+To get an app charge, you need to use the following GraphQL query:
+
+<Row>
+  <Col>
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The app charge id.
+			</Property>
+		</Properties>	
+		### Fields 
+		<Properties>	
+			<Property label="AppCharge" route="/app-charges/types#app-charge">
+				The AppCharge query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```
+			query appChargeQuery($id: ID!) {
+				appCharge(id: $id){
+					id
+					price
+					name
+					started_at
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+		{
+			"appCharge": {
+				"id": "charge id",
+				"price": 25.99,
+				"name": "basic",
+				"started_at": "2024-01-12 15:56:23"
+			}
+		}		
+    ```
+  </Col>
+</Row>
