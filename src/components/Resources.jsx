@@ -11,7 +11,7 @@ import { BoltIcon } from '@/components/icons/BoltIcon'
 
 const resources = [
 	{
-    href: '/app-carges',
+    href: '/app-charges',
     name: 'App charges',
     description:
       "Retrieve, create, app charges.",
