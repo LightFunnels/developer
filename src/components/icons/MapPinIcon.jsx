@@ -9,7 +9,7 @@ export function MapPinIcon(props) {
       />
       <path
         fill="none"
-        strokeLinecapp="round"
+        strokelinecapp="round"
         strokeLinejoin="round"
         d="M4.5 8a5.5 5.5 0 1 1 11 0c0 3.038-5.5 9.5-5.5 9.5S4.5 11.038 4.5 8Z"
       />

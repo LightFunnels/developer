@@ -7,7 +7,7 @@ export function PackageIcon(props) {
       />
       <path
         fill="none"
-        strokeLinecapp="round"
+        strokelinecapp="round"
         strokeLinejoin="round"
         d="m2.5 5.5 7.5 4m-7.5-4v9l7.5 4m-7.5-13 7.5-4 7.5 4m-7.5 4v9m0-9 7.5-4m-7.5 13 7.5-4v-9m-11 6 .028-3.852L13.5 3.5"
       />

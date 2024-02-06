@@ -13,7 +13,7 @@ export function FolderIcon(props) {
       />
       <path
         fill="none"
-        strokeLinecapp="round"
+        strokelinecapp="round"
         strokeLinejoin="round"
         d="m11.5 5.5-1.406-2.11A2 2 0 0 0 8.43 2.5H4.5a2 2 0 0 0-2 2v1h9Zm0 0h2"
       />
