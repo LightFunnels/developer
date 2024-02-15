@@ -15,7 +15,6 @@ This list contains all query and input types for the order endpoints.
 			<Property name="id" type="ID!">
 				Unique identifier for the product.
 			</Property>
-
 			<Property name="_id" type="Int!">
 				Unique number identifier for the product.
 			</Property>
@@ -32,25 +31,25 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the order was cancelled.
 			</Property>
 			<Property name="email" type="Email!">
-				The customer email address.
+				Customer email address.
 				```
 				scalar Email
 				```
 			</Property>
 			<Property name="phone" type="Phone!">
-				The customer phone number.
+				Customer phone number.
 				```
 				scalar Phone
 				```
 			</Property>
 			<Property name="name" type="String!">
-				The customer name.
+				Customer name.
 			</Property>
 			<Property name="notes" type="String">
-				The order notes.
+				Order notes.
 			</Property>
 			<Property name="financial_status" type="OrderFinancialStatus!">
-				The order financial status.
+				Order financial status.
 				```
 				enum OrderFinancialStatus {
 					pending
@@ -61,7 +60,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="fulfillment_status" type="OrderFulfillmentStatus!">
-				The order fulfillment status.
+				Order fulfillment status.
 				```
 				enum OrderFulfillmentStatus {
 					unfulfilled
@@ -71,7 +70,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="client_details" type="ClientDetails!">
-				The customer client details.
+				Customer client details.
 				```
 				type ClientDetails {
 					ip: String
@@ -81,85 +80,85 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="custom" type="CustomFields!">
-				The order custom fields.
+				Order custom fields.
 				```
 				scalar CustomFields
 				```
 			</Property>
 			<Property name="tags" type="[String!]!">
-				The order tags. 
+				Order tags. 
 			</Property>
 			<Property name="discount_value" type="Float!">
-				The order discount value. 
+				Order discount value. 
 			</Property>
 			<Property name="bundle_discount_value" type="Float!">
-				The order bundle discount value.
+				Order bundle discount value.
 			</Property>
 			<Property name="normal_discount_value" type="Float!">
-				The order normal discount value.
+				Order normal discount value.
 			</Property>
 			<Property name="total" type="Float!">
-				The order total cost.
+				Order total cost.
 			</Property>
 			<Property name="shipping" type="Float!">
-				The order shipping cost.
+				Order shipping cost.
 			</Property>
 			<Property name="subtotal" type="Float!">
-				The order subtotal.
+				Order subtotal.
 			</Property>
 			<Property name="payments" label="[Payment!]!" route="/orders/types#payment">
-				The order payments.
+				Order payments.
 			</Property>
 			<Property name="refunded_amount" type="Float!">
-				The order refunded amount.
+				Order refunded amount.
 			</Property>
 			<Property name="refundable" type="Float!">
-				The order refundable amount.
+				Order refundable amount.
 			</Property>
 			<Property name="net_payment" type="Float!">
-				The order net payment amount.
+				Order net payment amount.
 			</Property>
 			<Property name="paid_by_customer" type="Float!">
-				The order amount paid by customer.
+				Order amount paid by customer.
 			</Property>
 			<Property name="original_total" type="Float!">
-				The order original total cost.
+				Order original total cost.
 			</Property>
 			<Property name="shipping_address" label="Address" route="/customers/types#address">
-				The customer shipping address.
+				Customer shipping address.
 			</Property>
 			<Property name="billing_address" label="Address" route="/customers/types#address">
-				The customer billing address.
+				Customer billing address.
 			</Property>
 			<Property name="customer" label="Customer!"  route="/customers/types#customer">
-				The customer details.
+				Customer details.
 			</Property>
 			<Property name="customer_full_name" type="String">
-				The customer full name.
+				Customer full name.
 			</Property>
 			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
-				The order items union type.
+				Order items union type.
 			</Property>
 			<Property name='checkout' label="Checkout" route="/orders/types#checkout">
-				The order checkout details.
+				Order checkout details.
 			</Property>
 			<Property name="test" type="Boolean!">
-				The order test option.
+				Order test option.
 			</Property>
 			<Property name="nextOrderID" type="ID">
 				The next order id.
 			</Property>
 			<Property name="prevOrderID" type="ID">
-				The previous order id.
+				Previous order id.
 			</Property>
 			<Property name="link" type="String">
-				The order link.
+				Order link.
 			</Property>
 			<Property name="currency" type="String!">
-				The order currency.
+				Order currency.
 			</Property>
 			<Property name="utm" type="[Utm!]">
-				The order utm.
+				Order utm.
 				```
 				type Utm {
 					v: String!
@@ -206,40 +205,40 @@ This list contains all query and input types for the order endpoints.
 		### Fields
 		<Properties> 
 			<Property name="notes" type="String">
-				The order notes.
+				Order notes.
 			</Property>
 			<Property name="archived" type="Boolean">
 				The archived option.
 			</Property>
 			<Property name="shipping_address" label="InputAddress" route="/customers/types#input-address">
-				The customer shipping address.
+				Customer shipping address.
 			</Property>
 			<Property name="billing_address" label="InputAddress" route="/customers/types#input-address">
-				The customer billing address.
+				Customer billing address.
 			</Property>
 			<Property name="email" type="String">
-				The customer email address.
+				Customer email address.
 			</Property>
 			<Property name="phone" type="String">
-				The customer phone number.
+				Customer phone number.
 			</Property>
 			<Property name="sync_customer_details" type="Boolean">
-				The order sync customer detail boolean.
+				Order sync customer detail boolean.
 			</Property>
 			<Property name="items" type="[ID!]">
-				The order items.
+				Order items.
 			</Property>
 			<Property name="variants" type="[Int!]">
-				The order variants.
+				Order variants.
 			</Property>
 			<Property name="custom" type="CustomFields">
-				The order custom fields.
+				Order custom fields.
 				```
 				scalar CustomFields
 				```
 			</Property>
 			<Property name="tags" type="[String!]">
-				The order tags. 
+				Order tags. 
 			</Property>
 		</Properties>
   </Col>
@@ -277,19 +276,19 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the payment was created.
 			</Property>
 			<Property name="discount_snapshot" label="DiscountSnapshot" route="/orders/types#discount-snapshot">
-				The payment discount snapshot.
+				Payment discount snapshot.
 			</Property>
 			<Property name="price_bundle_snapshot" label="[PriceBundleSnapshot!]!" route="/bundles/types#price-bundle-snapshot">
-				The payment price bundle snapshot.
+				Payment price bundle snapshot.
 			</Property>
 			<Property name="total" type="Float!">
-				The payment total.
+				Payment total.
 			</Property>
 			<Property name="sub_total" type="Float!">
-				The payment subtotal.
+				Payment subtotal.
 			</Property>
 			<Property name="refunds" type="[Refund]">
-				The payment refunds.
+				Payment refunds.
 				```
 				type Refund {
 					id: ID!
@@ -300,25 +299,25 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="refunded" type="Float!">
-				The payment refunded amount.
+				Payment refunded amount.
 			</Property>
 			<Property name="refundable" type="Float!">
-				The payment refundable amount.
+				Payment refundable amount.
 			</Property>
 			<Property name="paid" type="Float!">
-				The payment paid amount.
+				Payment paid amount.
 			</Property>
 			<Property name="paid_at" label="TimeStamp" route='/other#timestamp'>
 				Timestamp of when the payment was paid.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				The payment discount value.
+				Payment discount value.
 			</Property>
 			<Property name="source" label="Source!" route="/orders/types#source">
-				The payment source.
+				Payment source.
 			</Property>
 			<Property name="shipping" type="Shipping">
-				The payment shipping information.
+				Payment shipping information.
 				```
 				type Shipping {
 					id: ID!
@@ -330,10 +329,10 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="paymentMethodLabel" type="String!">
-				The payment method label.
+				Payment method label.
 			</Property>
 			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
-				The payment financial status.
+				Payment financial status.
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -342,7 +341,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
-				The order items union type.
+				Order items union type.
 			</Property>
 		</Properties>
   </Col>
@@ -355,7 +354,7 @@ This list contains all query and input types for the order endpoints.
 <Row>
   <Col>
 	<Properties> 
-		The ProductVariantSnapshotOrOrderBumpSnapshot type can be either
+		ProductVariantSnapshotOrOrderBumpSnapshot type can be either
 		<Property label="VariantSnapshot" route="/orders/types#variant-snapshot"></Property> 
 		or
 		<Property label="OrderBumpSnapshot" route="/orders/types#order-bump-snapshot"></Property>
@@ -381,16 +380,16 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the discount snapshot.
 			</Property>
 			<Property name="code" type="String">
-				The discount snapshot code.
+				Discount snapshot code.
 			</Property>
 			<Property name="value" type="Float">
-				The discount snapshot value.
+				Discount snapshot value.
 			</Property>
 			<Property name="discount_result" type="Float">
-				The discount snapshot result.
+				Discount snapshot result.
 			</Property>
 			<Property name="type" type="DiscountType">
-				The discount snapshot type.
+				Discount snapshot type.
 				```
 				enum DiscountType {
 					percentage
@@ -423,10 +422,10 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the payment source.
 			</Property>
 			<Property name="order" label="Order!" route="/orders/types#order">
-				The payment source order.
+				Payment source order.
 			</Property>
 			<Property name="payment_gateway" label="PaymentGateway!" route="/other#payment-gateway">
-				The payment gateway.
+				Payment gateway.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the payment source was updated.
@@ -450,7 +449,7 @@ This list contains all query and input types for the order endpoints.
 				Unique identifier for the variant snapshot.
 			</Property>
 			<Property name="groupID" type="String!">
-				The variant snapshot group id.
+				Variant snapshot group id.
 			</Property>
 			<Property name="_id" type="Int!">
 				Unique number identifier for the variant snapshot.
@@ -465,19 +464,19 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the variant snapshot was removed.
 			</Property>
 			<Property name="title" type="String!">
-				The variant snapshot title.
+				Variant snapshot title.
 			</Property>
 			<Property name="sku" type="String!">
-				The variant snapshot sku.
+				Variant snapshot sku.
 			</Property>
 			<Property name="image" label="Image" route="/other#image">
-				The variant snapshot image.
+				Variant snapshot image.
 			</Property>
 			<Property name="price" type="Float!">
-				The variant snapshot price.
+				Variant snapshot price.
 			</Property>
 			<Property name="options" type="[OrderVariantOption!]!">
-				The orderbump snapshot options.
+				Orderbump snapshot options.
 				```
 				type OrderVariantOption {
 					id: String!
@@ -487,25 +486,25 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="tracking_number" type="String">
-				The variant snapshot tracking number.
+				Variant snapshot tracking number.
 			</Property>
 			<Property name="tracking_link" type="String">
-				The variant snapshot tracking link.
+				Variant snapshot tracking link.
 			</Property>
 			<Property name="carrier" type="String">
-				The variant snapshot carrier.
+				Variant snapshot carrier.
 			</Property>
-			<Property name="payment_id" type="Int!">
-				The variant snapshot payment id.
+			<Property name="payment_id" type="ID!">
+				Variant snapshot payment id.
 			</Property>
-			<Property name="refund_id" type="Int">
-				The variant snapshot refund id.
+			<Property name="refund_id" type="ID">
+				Variant snapshot refund id.
 			</Property>
-			<Property name="variant_id" type="Int">
-				The variant snapshot variant id.
+			<Property name="variant_id" type="ID">
+				Variant snapshot variant id.
 			</Property>
-			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
-				The variant snapshot fulfillment status.
+			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus!">
+				Variant snapshot fulfillment status.
 				```
 				enum VariantSnapshotItemFulfillmentStatus {
 					none
@@ -513,8 +512,8 @@ This list contains all query and input types for the order endpoints.
 				}
 				```
 			</Property>
-			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
-				The variant snapshot financial status.
+			<Property name="financial_status" type="VariantSnapshotFinancialStatus!">
+				Variant snapshot financial status.
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -523,13 +522,13 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="variant" label="ProductVariant" route="/products/types#product-variant">
-				The variant snapshot product variant.
+				Variant snapshot product variant.
 			</Property>
 			<Property name="payment" label="Payment!" route="/orders/types#payment">
-				The variant snapshot payment.
+				Variant snapshot payment.
 			</Property>
 			<Property name="customer_files" type="[CustomerFileGroup!]!">
-				The variant snapshot customer files.
+				Variant snapshot customer files.
 				```
 				type CustomerFileGroup {
 					name: String
@@ -541,6 +540,27 @@ This list contains all query and input types for the order endpoints.
 					key: String!
 				}
 				```
+			</Property>
+			<Property name="custom_options" label="[VariantSnapshotCustomOption!]!" route="/orders/types#customer-file-group">
+				Variant customer files.
+				```
+				type VariantSnapshotCustomOption {
+					key: String!
+					name: String!
+					type: CustomOptionType!
+					files: [VariantSnapshotCustomOptionFile!]
+					value: VariantSnapshotCustomOptionValue!
+				}
+
+				type VariantSnapshotCustomOptionFile {
+					url: String
+				}
+
+				scalar VariantSnapshotCustomOptionValue
+				```
+			</Property>
+			<Property name="file" label="File" route="/products/types#file">
+				Variant snapshot file.
 			</Property>
 		</Properties>
   </Col>
@@ -561,7 +581,7 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the orderbump snapshot.
 			</Property>
 			<Property name="groupID" type="String!">
-				The orderbump snapshot group id.
+				Orderbump snapshot group id.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the orderbump snapshot was updated.
@@ -573,43 +593,43 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the orderbump snapshot was removed.
 			</Property>
 			<Property name="title" type="String!">
-				The orderbump snapshot title.
+				Orderbump snapshot title.
 			</Property>
 			<Property name="sku" type="String!">
-				The orderbump snapshot sku.
+				Orderbump snapshot sku.
 			</Property>
 			<Property name="image" label="Image" route="/other#image">
-				The orderbump snapshot image.
+				Orderbump snapshot image.
 			</Property>
 			<Property name="price" type="Float!">
-				The orderbump snapshot price.
+				Orderbump snapshot price.
 			</Property>
 			<Property name="tracking_number" type="String">
-				The orderbump snapshot tracking number.
+				Orderbump snapshot tracking number.
 			</Property>
 			<Property name="tracking_link" type="String">
-				The orderbump snapshot tracking link.
+				Orderbump snapshot tracking link.
 			</Property>
 			<Property name="carrier" type="String">
-				The orderbump snapshot carrier.
+				Orderbump snapshot carrier.
 			</Property>
 			<Property name="payment_id" type="Int!">
-				The orderbump snapshot payment id.
+				Orderbump snapshot payment id.
 			</Property>
 			<Property name="refund_id" type="Int">
-				The orderbump snapshot refund id.
+				Orderbump snapshot refund id.
 			</Property>
 			<Property name="order_id" type="Int!">
-				The orderbump snapshot order id.
+				Orderbump snapshot order id.
 			</Property>
 			<Property name="product_id" type="Int">
-				The orderbump snapshot product id.
+				Orderbump snapshot product id.
 			</Property>
 			<Property name="product_uid" type="String!">
-				The orderbump snapshot product uid.
+				Orderbump snapshot product uid.
 			</Property>
 			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
-				The orderbump snapshot fulfillment status.
+				Orderbump snapshot fulfillment status.
 				```
 				enum VariantSnapshotItemFulfillmentStatus {
 					none
@@ -618,7 +638,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
-				The orderbump snapshot financial status.
+				Orderbump snapshot financial status.
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -627,10 +647,10 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="product" label="Product" route="/products/types#product">
-				The orderbump snapshot product.
+				Orderbump snapshot product.
 			</Property>
 			<Property name="payment" label="Payment!" route="/orders/types#payment">
-				The orderbump snapshot payment.
+				Orderbump snapshot payment.
 			</Property>
 		</Properties>
   </Col>
@@ -657,7 +677,7 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the checkout was created.
 			</Property>
 			<Property name="customer" type="CheckoutCustomer!">
-				The checkout customer.
+				Checkout customer.
 				```
 				type CheckoutCustomer {
 					first_name: String!
@@ -672,43 +692,43 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="variants" label="[CheckoutVariant!]!" route='/orders/types#checkout-variant'>
-				The checkout variants.
+				Checkout variants.
 			</Property>
 			<Property name="total" type="Float!">
-				The checkout total.
+				Checkout total.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				The checkout discount value.
+				Checkout discount value.
 			</Property>
 			<Property name="subtotal" type="Float">
-				The checkout subtotal.
+				Checkout subtotal.
 			</Property>
 			<Property name="email" type="String">
-				The checkout email.
+				Checkout email.
 			</Property>
 			<Property name="phone" type="String">
-				The checkout phone.
+				Checkout phone.
 			</Property>
 			<Property name="step" label="Step" route="/funnels/types#step">
-				The checkout step.
+				Checkout step.
 			</Property>
 			<Property name="link" type="String">
-				The checkout link.
+				Checkout link.
 			</Property>
 			<Property name="store" label="Store" route='/stores/types#store'>
-				The checkout store.
+				Checkout store.
 			</Property>
 			<Property name="funnel" label="Funnel" route='/funnels/types#funnel'>
-				The checkout funnel.
+				Checkout funnel.
 			</Property>
 			<Property name="currency" type="String!">
-				The checkout currency.
+				Checkout currency.
 			</Property>
 			<Property name="recovered" type="Boolean">
-				The checkout recovered option.
+				Checkout recovered option.
 			</Property>
 			<Property name="shipping_address" type="CheckoutAddress">
-				The checkout shipping address.
+				Checkout shipping address.
 				```
 				type CheckoutAddress {
 					first_name: String!
@@ -723,7 +743,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="billing_address" type="CheckoutAddress">
-				The checkout billing address.
+				Checkout billing address.
 				```
 				type CheckoutAddress {
 					first_name: String!
@@ -750,10 +770,10 @@ This list contains all query and input types for the order endpoints.
 		### Fields
 		<Properties> 
 			<Property name='variant' label='ProductVariant' route="/products/types#product-variant">
-				The checkout product variant.
+				Checkout product variant.
 			</Property>
 			<Property name="quantity" type="Int!">
-				The checkout variant quantity.
+				Checkout variant quantity.
 			</Property>
 		</Properties> 
   </Col>
