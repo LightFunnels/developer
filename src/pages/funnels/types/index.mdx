@@ -84,32 +84,20 @@ This list contains all query types for the funnel endpoints.
 				}
 				```
 			</Property>
-			<Property name="instructions" type="[Instruction!]!">
-				The funnel instructions.
-				```
-				scalar Instruction
-				```
-			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the funnel was updated.
 			</Property>
 			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the funnel was created.
 			</Property>
-			<Property name="meta" type="FunnelMeta!">
-				The funnel meta.
-				```
-				scalar FunnelMeta
-				```
+			<Property name="favicon" label="Image" route="/other#image">
+				The funnel favicon.
 			</Property>
-			<Property name="favicon_uid" type="ID">
-				The funnel favicon uid.
+			<Property name="favicon_id" type="ID">
+				The funnel favicon id.
 			</Property>
 			<Property name="preferred_domain" label="Domain" route="/other#domain">
 				The funnel preferred domain.
-			</Property>
-			<Property name="favicon" label="Image" route="/other#image">
-				The funnel favicon.
 			</Property>
 			<Property name="default_language" type="FunnelLanguage!">
 				The funnel default language.
@@ -126,27 +114,13 @@ This list contains all query types for the funnel endpoints.
 			<Property name="steps" label="[Step!]!" route="/funnels/types#step">
 				The funnel steps.
 			</Property>
-			<Property name="statistics" type="FunnelStatistics!">
+			<Property name="statistics" label="FunnelStatistics!" route="/funnels/types#funnel-statistics">
 				The funnel statistics.
 				```
-				type FunnelStatistics {
-					steps: [StepStatistics!]!
-				}
+				 # Arguments
 
-				type StepStatistics {
-					id: String!
-					visits: Int!
-					clicks: Int!
-					ctr: Float!
-					links: [StepLinkState!]!
-				}
-
-				type StepLinkState {
-					id: String!
-					ctr: Float!
-					visits: Int!
-					cvr: Float!
-				}
+				 startDate: String
+				 endDate: String
 				```
 			</Property>
 			<Property name="header_scripts" type="String">
@@ -658,4 +632,63 @@ This list contains all query types for the funnel endpoints.
 			```
 		</Properties> 
   </Col>
+</Row>
+
+--- 
+
+## FunnelStatistics
+
+<Row>
+	<Col>
+		<Properties> 
+			<Property name='steps' label='[StepStatistics!]!' route='/funnels/types#step-statistics'> 
+				Funnel statistics steps
+			</Property> 
+		</Properties> 
+	</Col>
+</Row>
+
+## StepStatistics
+
+<Row>
+	<Col>
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the funnel step statistics.
+			</Property>
+			<Property name='visits' type='Int!'> 
+				Funnel visits
+			</Property> 
+			<Property name='clicks' type='Int!'> 
+				Funnel clicks
+			</Property> 
+			<Property name='ctr' type='Float!'> 
+				Funnel click through rate 
+			</Property> 
+			<Property name='links' label='[StepLinkState!]!' route='/funnels/types#step-link-state'> 
+				Funnel step links
+			</Property> 
+		</Properties> 
+	</Col>
+</Row>
+
+## StepLinkState
+
+<Row>
+	<Col>
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the funnel step link state.
+			</Property>
+			<Property name='visits' type='Int!'> 
+				Funnel visits
+			</Property> 
+			<Property name='ctr' type='Float!'> 
+				Funnel click through rate 
+			</Property> 
+			<Property name='cvr' type='Float!'> 
+				Funnel conversion rate
+			</Property> 
+		</Properties> 
+	</Col>
 </Row>
