@@ -53,18 +53,6 @@ This list contains all query and inputs types for the collection endpoints.
 			</Property>
 			<Property name="result" type="[CollectionResult!]!">
 				The collection result.
-				```
-				type CollectionResult {
-					title: String!
-					price: Float!
-					thumbnail: String
-					compare_at_price: Float!
-					reviews_value: Float!
-					link: String!
-					funnel_uid: String!
-					cursor: String!
-				}
-				```
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the collection was updated.
@@ -104,9 +92,6 @@ This list contains all query and inputs types for the collection endpoints.
 			</Property>
 			<Property name="slug" type="String!">
 				The collection result slug.
-			</Property>
-			<Property name="product_id" type="Int!">
-				The collection result product id.
 			</Property>
 			<Property name="cursor" type="String!">
 				The collection result cursor.
