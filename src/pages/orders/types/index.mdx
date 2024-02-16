@@ -13,10 +13,13 @@ This list contains all query and input types for the order endpoints.
 		### Fields
 		<Properties> 
 			<Property name="id" type="ID!">
-				Unique identifier for the product.
+				Unique identifier for the Order.
 			</Property>
 			<Property name="_id" type="Int!">
-				Unique number identifier for the product.
+				Unique number identifier for the Order.
+			</Property>
+			<Property name="account_id" type="ID!">
+				Unique number identifier for the Order.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the order was updated.
