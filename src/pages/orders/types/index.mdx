@@ -541,8 +541,8 @@ This list contains all query and input types for the order endpoints.
 				}
 				```
 			</Property>
-			<Property name="custom_options" label="[VariantSnapshotCustomOption!]!" route="/orders/types#customer-file-group">
-				Variant customer files.
+			<Property name="custom_options" type="[VariantSnapshotCustomOption!]!">
+				Variant customer options.
 				```
 				type VariantSnapshotCustomOption {
 					key: String!
@@ -613,20 +613,14 @@ This list contains all query and input types for the order endpoints.
 			<Property name="carrier" type="String">
 				Orderbump snapshot carrier.
 			</Property>
-			<Property name="payment_id" type="Int!">
+			<Property name="payment_id" type="ID!">
 				Orderbump snapshot payment id.
 			</Property>
-			<Property name="refund_id" type="Int">
+			<Property name="refund_id" type="ID">
 				Orderbump snapshot refund id.
 			</Property>
-			<Property name="order_id" type="Int!">
-				Orderbump snapshot order id.
-			</Property>
-			<Property name="product_id" type="Int">
+			<Property name="product_id" type="ID!">
 				Orderbump snapshot product id.
-			</Property>
-			<Property name="product_uid" type="String!">
-				Orderbump snapshot product uid.
 			</Property>
 			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
 				Orderbump snapshot fulfillment status.
@@ -651,6 +645,9 @@ This list contains all query and input types for the order endpoints.
 			</Property>
 			<Property name="payment" label="Payment!" route="/orders/types#payment">
 				Orderbump snapshot payment.
+			</Property>
+			<Property name="file" label="File" route="/products/types#file">
+				Variant snapshot file.
 			</Property>
 		</Properties>
   </Col>
