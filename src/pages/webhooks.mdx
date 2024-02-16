@@ -25,11 +25,22 @@ mutation CreateWebhookMutation($node: WebhookInput!) {
 input WebhookInput {
   type: String!
   url: String!
+  version: WebhookVersion 
   settings: WebhookSettings!
 }
-
-scalar WebhookSettings
 ```
+
+```
+scalar WebhookSettings = {
+	segments_uids?: string[] | undefined;
+}
+
+enum WebhookVersion {
+  v1
+  v2
+}
+```
+
 ```json {{ title: 'GraphQL Variables'}}
 {
     "node": {
