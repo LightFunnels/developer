@@ -181,3 +181,59 @@ These endpoints allow you to retrieve, update your Account settings.
     ```
   </Col>
 </Row>
+
+---
+
+## Create Facebook Conversion API Integration
+
+<Row>
+  <Col>
+		### Arguments
+		<Properties> 
+			<Property name="node" type="FacebookConversionApi!">
+				Account facebook conversion API integration.
+        ```
+        input FacebookConversionApi {
+          token: String!
+          label: String!
+          pixels: [String!]!
+        }
+        ```
+			</Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+    ```
+    mutation CreateConversionApi($node: FacebookConversionApi!){
+      createConversionApiFacebookIntegration(node: $node) {
+        id
+        ...
+      }
+    }
+
+    Variables example:
+    {
+      label: "My capi integration",
+      token: "your facebook token",
+      pixels: ["pixel_1", "pixel_2"]
+    }
+    ```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+      "data": {
+        "account": {
+          "node": [
+            {
+              "id": "Your account ID"
+            }
+          ],
+          ...
+        }
+      }
+    }
+    ```
+  </Col>
+</Row>
+
