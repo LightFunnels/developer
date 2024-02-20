@@ -256,9 +256,7 @@ These endpoints allow you to retrieve, update your Account settings.
           details: IntegrationDetails
         }
 
-        scalar IntegrationDetails: {
-          pixels: [String]!
-        }
+        scalar IntegrationDetails
         ```
 			</Property>
     </Properties> 
@@ -272,9 +270,7 @@ These endpoints allow you to retrieve, update your Account settings.
           id
           label
           platform
-          details {
-            pixels
-          }
+          details
         }
       }
     }
