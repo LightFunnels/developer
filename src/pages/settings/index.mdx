@@ -239,3 +239,67 @@ These endpoints allow you to retrieve, update your Account settings.
   </Col>
 </Row>
 
+---
+
+## Retrieve Integrations
+
+<Row>
+  <Col>
+    <Properties>
+      <Property name="integrations" type="[Integration!]!">
+				Account integrations.
+        ```
+        type Integration implements Node {
+          id: ID!
+          platform: String!
+          label: String!
+          details: IntegrationDetails
+        }
+
+        scalar IntegrationDetails: {
+          pixels: [String]!
+        }
+        ```
+			</Property>
+    </Properties> 
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+    ```
+    query AccountQuery{
+      account {
+        integrations {
+          id
+          label
+          platform
+          details {
+            pixels
+          }
+        }
+      }
+    }
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "data": {
+        "account": {
+          "integrations": [
+            {
+              "id": "integration id",
+              "label": "testcapi",
+              "platform": "facebook"
+              "details": {
+                "pixels": ["some pixel id"]
+              },
+            }
+          ]
+          ...
+        }
+      }
+    }
+    ```
+  </Col>
+</Row>
+
