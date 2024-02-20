@@ -132,6 +132,17 @@ const resources = [
       squares: [[0, 1]],
     },
   },
+  {
+    href: '/settings',
+    name: 'Settings',
+    description:
+      "Retrieve, create, update, or delete settings.",
+    icon: BoltIcon,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
 	{
     href: '/stores',
     name: 'Stores',
