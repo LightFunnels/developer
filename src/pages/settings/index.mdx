@@ -299,3 +299,55 @@ These endpoints allow you to retrieve, update your Account settings.
   </Col>
 </Row>
 
+
+---
+
+## Remove Integration
+
+<Row>
+  <Col>
+		### Arguments
+		<Properties> 
+			<Property name="id" type="ID!">
+				Account integration id.
+			</Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+    ```
+    mutation removeIntegrationMutation($id: ID!){
+      removeIntegration(id: $id){
+        id
+        integrations{
+          id
+        }
+      }
+    }
+
+    Variables example:
+    {
+      "id": "integration id"
+    }
+    ```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+      "data": {
+        "account": {
+          "id": "Your account ID",
+          "integrations": [
+            {
+              "id": "integration id 1"
+            },
+            {
+              "id": "integration id 2"
+            }
+          ]
+          ...
+        }
+      }
+    }
+    ```
+  </Col>
+</Row>
