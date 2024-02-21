@@ -27,8 +27,8 @@ This list contains all query types for the funnel endpoints.
 			<Property name="slug" type="String!">
 				The funnel slug.
 			</Property>
-			<Property name="starting_step_uid" type="ID">
-				The funnel starting step uid.
+			<Property name="starting_step_id" type="ID">
+				The funnel starting step id.
 			</Property>
 			<Property name="published" type="Boolean!">
 				The funnel published option.
@@ -90,14 +90,23 @@ This list contains all query types for the funnel endpoints.
 			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the funnel was created.
 			</Property>
+			<Property name="template" label="Template" route="/other#template">
+				Funnel template.
+			</Property>
+			<Property name="destinationTemplate" label="Template" route="/other#template">
+				Funnel destination template.
+			</Property>
+			<Property name="preferred_domain" label="Domain" route="/other#domain">
+				The funnel preferred domain.
+			</Property>
+			<Property name="preferred_domain_id" type="ID">
+				The funnel preferred domain id.
+			</Property>
 			<Property name="favicon" label="Image" route="/other#image">
 				The funnel favicon.
 			</Property>
 			<Property name="favicon_id" type="ID">
 				The funnel favicon id.
-			</Property>
-			<Property name="preferred_domain" label="Domain" route="/other#domain">
-				The funnel preferred domain.
 			</Property>
 			<Property name="default_language" type="FunnelLanguage!">
 				The funnel default language.
@@ -106,7 +115,7 @@ This list contains all query types for the funnel endpoints.
 				```
 			</Property>
 			<Property name="languages" type="[FunnelLanguage!]!">
-				The funnel language.
+				The funnel languages.
 				```
 				scalar FunnelLanguage
 				```
@@ -478,8 +487,8 @@ This list contains all query types for the funnel endpoints.
 				scalar StepSettings
 				```
 			</Property>
-			<Property name="product_uid" type="ID">
-				The funnel step product uid.
+			<Property name="product_id" type="ID">
+				The funnel step product id.
 			</Property>
 			<Property name="funnel" type="Funnel">
 				The funnel type.
@@ -688,6 +697,119 @@ This list contains all query types for the funnel endpoints.
 			</Property> 
 			<Property name='cvr' type='Float!'> 
 				Funnel conversion rate
+			</Property> 
+		</Properties> 
+	</Col>
+</Row>
+
+---
+
+## Template
+
+<Row>
+	<Col>
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the funnel template.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier for the funnel template.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the funnel template.
+			</Property>
+			<Property name='name' type='String!'> 
+				Funnel template name
+			</Property> 
+			<Property name='thumbnail' type='String!'> 
+				Funnel template thumbnail
+			</Property> 
+			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the funnel template was updated.
+			</Property>
+			<Property name="created_at" label="TimeStamp!" route='/other#timestamp'>
+				Timestamp of when the funnel template was created.
+			</Property>
+			<Property name='pages' label='[TemplatePage!]!' route='/funnels/types#template-page'> 
+				Funnel template pages
+			</Property> 
+			<Property name='mobile_thumbnail' type='String!'> 
+				Funnel template mobile thumbnail
+			</Property> 
+			<Property name='desktop_thumbnail' type='String!'> 
+				Funnel template desktop thumbnail
+			</Property> 
+			<Property name='price' type='Float!'> 
+				Funnel template price
+			</Property> 
+			<Property name='description' type='String!'> 
+				Funnel template description
+			</Property> 
+			<Property name='tags' type='[String!]!'> 
+				Funnel template tags
+			</Property> 
+			<Property name='features' type='[Feature!]!'> 
+				Funnel template features
+				```
+				type Feature {
+					id: ID!
+					image: String!
+					title: String!
+					description: String!
+				}
+				```
+			</Property> 
+			<Property name='likes' type='Int!'> 
+				Funnel template likes
+			</Property> 
+			<Property name='isLiked' type='Boolean'> 
+				Funnel template isLiked boolean
+			</Property> 
+			<Property name='languages' type='[FunnelLanguage!]!'> 
+				Funnel template languages
+				```
+				scalar FunnelLanguage
+				```
+			</Property> 
+		</Properties> 
+	</Col>
+</Row>
+
+## TemplatePage
+
+<Row>
+	<Col>
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the funnel template page.
+			</Property>
+			<Property name="_id" type="Int!">
+				Unique numeral identifier for the funnel template page.
+			</Property>
+			<Property name='url' type='String!'> 
+				Funnel template page url
+			</Property> 
+			<Property name='name' type='String!'> 
+				Funnel template page name
+			</Property> 
+			<Property name='type' type='StepType!'> 
+				Funnel template page type
+				```
+				enum StepType {
+					blank_page
+					product_page
+					checkout_page
+					upsell_page
+					downsell_page
+					split_test
+					article_page
+					squeeze_page
+					thank_you_page
+					generic_page
+					home_page
+					collection_page
+				}
+				```
 			</Property> 
 		</Properties> 
 	</Col>
