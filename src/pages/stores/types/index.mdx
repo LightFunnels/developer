@@ -42,11 +42,11 @@ This list contains all query types for the store endpoints.
 			<Property name="funnel" label="Funnel!" route='/funnels/types#funnel'>
 				The store funnel.
 			</Property>
-			<Property name="default_collection_uid" type="ID!">
-				The store default collection uid.
+			<Property name="default_collection_id" type="ID!">
+				The store default collection id.
 			</Property>
-			<Property name="shipping_group_uid" type="String">
-				The store shipping group uid.
+			<Property name="shipping_group_id" type="String">
+				The store shipping group id.
 			</Property>
 			<Property name="collections" label="[Collection!]!" route='/collections/types#collection'>
 				The store collections.
@@ -65,13 +65,11 @@ This list contains all query types for the store endpoints.
 			</Property>
 			<Property name="products" label="[CollectionResult!]!" route='/collections/types#collection-result'>
 				The store products.
-				##### Arguments
-				<Property name="cursor" type="String">
-					The products cursor.
-				</Property>
-			</Property>
-			<Property name="destTemplateUid" type="String">
-				The store dest template uid.
+				```
+				Arguments
+
+				cursor: String
+				```
 			</Property>
 		</Properties>
   </Col>
@@ -85,30 +83,28 @@ This list contains all query types for the store endpoints.
   <Col>
 		### Fields
 		<Properties> 
-			<Property name="funnel_steps" label="[StepType!]!" route='/stores/types#step-type'>
-				The store steps.
-			</Property>
-			<Property name="style_id" type="ID">
-				The store style id.
-			</Property>
-			<Property name="product_id" type="ID">
-				The store product id.
-			</Property>
 			<Property name="name" type="String!">
 				The store name.
 			</Property>
 			<Property name="slug" type="String!">
 				The store slug.
 			</Property>
+			<Property name="style_id" type="ID">
+				The store style id.
+			</Property>
 			<Property name="currency" type="String">
 				The store currency.
 			</Property>
-			<Property name="lang" type="StoreLanguage!">
+			<Property name="single_checkout_page" type="Boolean">
+				The store single checkout page boolean.
+			</Property>
+			<Property name="lang" type="FunnelLanguage!">
 				The store language.
 				```
-				scalar StoreLanguage
+				scalar FunnelLanguage
 				```
 			</Property>
+				
 		</Properties>
   </Col>
 </Row>
