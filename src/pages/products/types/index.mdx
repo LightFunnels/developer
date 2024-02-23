@@ -182,16 +182,13 @@ This list contains all query and inputs types for the product endpoints.
 				}
 				```
 			</Property>
-			<Property name="default_variant_uid" type="ID!">
-				The product default variant uid. 
-			</Property>
-			<Property	Property name="default_variant_id" type="Int!">
+			<Property	Property name="default_variant_id" type="ID!">
 				The product default variant id. 
 			</Property>
-			<Property name="shipping_group_id" type="String">
+			<Property name="shipping_group_id" type="ID">
 				The product shipping group id. 
 			</Property>
-			<Property name="price_bundle_id" type="String">
+			<Property name="price_bundle_id" type="ID">
 				The product price bundle id. 
 			</Property>
 			<Property name="price_bundle" label="PriceBundle" route="/bundles/types#price-bundle">
@@ -200,8 +197,8 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="file" label="File" route="/products/types#file">
 				The product file. 
 			</Property>
-			<Property name="file_uid" type="ID">
-				The product file uid. 
+			<Property name="file_id" type="ID">
+				The product file id. 
 			</Property>
 			<Property name="sku" type="String!">
 				The product sku. 
@@ -217,11 +214,8 @@ This list contains all query and inputs types for the product endpoints.
 				}
 				```
 			</Property>
-			<Property name="has_published_funnel" type="Boolean!">
-				The product has published funnel option. 
-			</Property>	
-			<Property name="collections_uids" type="[ID!]!">
-				The product collections uids. 
+			<Property name="collections_ids" type="[ID!]!">
+				The product collections ids. 
 			</Property>
 			<Property name="customFunnel" label='Funnel' route="/funnels/types#funnel">
 				The product funnel. 
@@ -636,14 +630,14 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="image" label="Image" route="/other#image">
 				The product image.
 			</Property>
-			<Property name="image_uid" type="ID">
-				The product image uid.
+			<Property name="image_id" type="ID">
+				The product image id.
 			</Property>
 			<Property name="file" label="File" route="/products/types#file">
 				The product file.
 			</Property>
-			<Property name="file_uid" type="ID">
-				The product file uid.
+			<Property name="file_id" type="ID">
+				The product file id.
 			</Property>
 			<Property name="product_id" type="Int!">
 				The product id.
@@ -657,7 +651,13 @@ This list contains all query and inputs types for the product endpoints.
 				}
 				```
 			</Property>
-			<Property name="labeldOptions (typo here)" type="[OrderVariantOption!]!">
+			<Property name="enable_inventory_limit" type="Boolean!">
+				The product enable inventory limit boolean.
+			</Property>
+			<Property name="inventory_quantity" type="Int!">
+				The product inventory quantity.
+			</Property>
+			<Property name="labeldOptions" type="[OrderVariantOption!]!">
 				The product options.
 				```
 				type OrderVariantOption {
