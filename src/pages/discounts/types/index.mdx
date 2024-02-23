@@ -33,20 +33,20 @@ This list contains all query and input types for the discount endpoints.
 			<Property name="usage_limit" type="Int!">
 				The discount usage limit.
 			</Property>
-			<Property name="usage" type="Int">
-				The discount usage.
+			<Property name="one_time_usage_per_customer" type="Boolean!">
+				The discount one time usage per customer boolean.
+			</Property>
+			<Property name="active" type="Boolean!">
+				The discount active boolean.
 			</Property>	
 			<Property name="limited_usage" type="Boolean!">
 				The discount limited usage boolean.
 			</Property>	
-			<Property name="one_time_usage_per_customer" type="Boolean!">
-				The discount one time usage per customer boolean.
-			</Property>
+			<Property name="usage" type="Int">
+				The discount usage.
+			</Property>	
 			<Property name="tags" type="[String!]!">
 				The discount tags.
-			</Property>	
-			<Property name="active" type="Boolean!">
-				The discount active boolean.
 			</Property>	
 			<Property name="product_ids" type="[ID!]!">
 				The discount product ids.
