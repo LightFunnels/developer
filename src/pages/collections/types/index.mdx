@@ -27,10 +27,10 @@ This list contains all query and inputs types for the collection endpoints.
 				}
 				```
 			</Property>
-			<Property name="products_uids" type="[ID!]!">
+			<Property name="products_ids" type="[ID!]!">
 				The products unique identifiers for the collection.
 			</Property>
-			<Property name="tags_uids" type="[String!]!">
+			<Property name="tags_ids" type="[String!]!">
 				The tags unique identifiers for the collection.
 			</Property>
 			<Property name="name" type="String!">
@@ -42,7 +42,7 @@ This list contains all query and inputs types for the collection endpoints.
 			<Property name="image" type="Image" route='/other#image'>
 				The collection image.
 			</Property>
-			<Property name="image_uid" type="ID">
+			<Property name="image_id" type="ID">
 				The collection image unique identifier.
 			</Property>
 			<Property name="description" type="String!">
@@ -53,6 +53,11 @@ This list contains all query and inputs types for the collection endpoints.
 			</Property>
 			<Property name="result" type="[CollectionResult!]!">
 				The collection result.
+				```
+				Arguments
+
+				cursor: String
+				```
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the collection was updated.
