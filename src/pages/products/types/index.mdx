@@ -200,7 +200,7 @@ This list contains all query and inputs types for the product endpoints.
 				The product options.
 			</Property>
 			<Property name="type" type="ProductOptionTypeEnum!">
-				The product title.
+				The product type.
 				```
 				enum ProductOptionTypeEnum {
 					image
@@ -250,63 +250,41 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="compare_at_price" type="Float">
 				The product compare price.
 			</Property>
-			<Property name="options" type="[InputProductOption!]!">
+			<Property name="options" label="[InputProductOption!]!" route='/products/types#input-product-option'>
 				The product options.
-				```
-				input InputProductOption {
-					id: String
-					label: String
-					options: [String!]
-					type: ProductOptionTypeEnum! = text
-					options_types: [InputProductOptionType!]! = []
-				}
-
-				input InputProductOptionType {
-					option_id: String!
-					value: ProductOptionTypeValue!
-				}
-
-				scalar ProductOptionTypeValue
-				```
 			</Property>
 			<Property name="images" type="[ID!]">
 				The product images.
 			</Property>
-			<Property name="variants" type="[InputProductVariant!]!">
+			<Property name="variants" label="[InputProductVariant!]!" route='/products/types#input-product-variant'>
 				The product variants.
-				```
-				input InputProductVariant {
-					id: ID
-					price: Float = 0
-					compare_at_price: Float = 0
-					image_uid: ID
-					file_uid: ID
-					sku: String
-					options: [InputProductOptionValue!]! = []
-				}
-
-				input InputProductOptionValue {
-					value: String!
-					id: String!
-				}
-				```
 			</Property>
 			<Property name="tags" type="[ID!]">
 				The product tags.
 			</Property>
-			<Property name="order_bump" type="InputProductBump">
+			<Property name="order_bump" label="InputProductBump" route='/products/types#input-product-bump'>
 				The product order bump.
+			</Property>
+			<Property name="features" type="[InputProductFeatures!]">
+				The product features.
 				```
-				input InputProductBump {
+				input InputProductFeatures {
 					id: String!
 					title: String!
-					price: Float!
-					compare_at_price: Float!
 					description: String!
-					sku: String!
-					enabled: Boolean!
-					image_uid: ID
-					file_uid: ID
+					image_id: ID
+				}
+				```
+			</Property>
+			<Property name="testimonials" type="[InputProductTestimonials!]">
+				The product testimonials.
+				```
+				input InputProductTestimonials {
+					id: String!
+					name: String!
+					position: String!
+					comment: String!
+					image_id: ID
 				}
 				```
 			</Property>
@@ -326,29 +304,6 @@ This list contains all query and inputs types for the product endpoints.
 				```
 				input InputProductSticky {
 					enabled: Boolean!
-				}
-				```
-			</Property>
-			<Property name="features" type="[InputProductFeatures!]">
-				The product features.
-				```
-				input InputProductFeatures {
-					id: String!
-					title: String!
-					description: String!
-					image_uid: ID
-				}
-				```
-			</Property>
-			<Property name="testimonials" type="[InputProductTestimonials!]">
-				The product testimonials.
-				```
-				input InputProductTestimonials {
-					id: String!
-					name: String!
-					position: String!
-					comment: String!
-					image_uid: ID
 				}
 				```
 			</Property>
@@ -380,11 +335,8 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="price_bundle_id" type="String">
 				The product price bundle id.
 			</Property>
-			<Property name="file_uid" type="ID">
-				The product file uid.
-			</Property>
-			<Property name="file_uid" type="ID">
-				The product file uid.
+			<Property name="file_id" type="ID">
+				The product file id.
 			</Property>
 			<Property name="crossSellProducts" type="[CrossInputSellProduct!]">
 				The product enable price bundle option.
@@ -394,6 +346,18 @@ This list contains all query and inputs types for the product endpoints.
 					downsell_product_uid: ID
 				}
 				```
+			</Property>
+			<Property name="enable_inventory_limit" type="Boolean">
+				The product file id.
+			</Property>
+			<Property name="inventory_quantity" type="Int">
+				The product file id.
+			</Property>
+			<Property name="custom_options" label="[CustomOptionInput!]" route='/products/types#custom-option-input'>
+				The product custom options.
+			</Property>
+			<Property name="enable_custom_options" type="Boolean">
+				The product enable custom options boolean.
 			</Property>
 		</Properties>
   </Col>
@@ -772,6 +736,42 @@ This list contains all query and inputs types for the product endpoints.
 			</Property>
 			<Property name="type" type="CustomOptionType!">
 				Product custom option type.
+				```
+				enum CustomOptionType {
+					image
+					text
+				}
+				```
+			</Property>
+			<Property name="name" type="String!">
+				Product custom option name.
+			</Property>
+			<Property name="placeholder" type="String!">
+				Product custom option placeholder.
+			</Property>
+		</Properties>	
+	</Col>
+</Row>		
+
+---
+
+## CustomOptionInput
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product custom option.
+			</Property>
+			<Property name="type" type="CustomOptionType!">
+				Product custom option type.
+				```
+				enum CustomOptionType {
+					image
+					text
+				}
+				```
 			</Property>
 			<Property name="name" type="String!">
 				Product custom option name.
@@ -908,3 +908,130 @@ This list contains all query and inputs types for the product endpoints.
 		</Properties>
 	</Col>
 </Row>	
+
+--- 
+
+## InputProductOption
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String">
+				Unique identifier for the product option.
+			</Property>
+			<Property name="label" type="String">
+				The product label.
+			</Property>
+			<Property name="options" type="[String!]">
+				The product options.
+			</Property>
+			<Property name="type" type="ProductOptionTypeEnum!">
+				The product title.
+				```
+				enum ProductOptionTypeEnum {
+					image
+					text
+					color
+				}
+				```
+			</Property>
+			<Property name="options_types" type="[ProductOptionType!]!">
+				The product options types.
+				```
+				type InputProductOptionType {
+					option_id: String!
+					value: ProductOptionTypeValue!
+				}
+
+				scalar ProductOptionTypeValue
+				```
+			</Property>
+		</Properties> 
+	</Col>		
+</Row>
+
+---
+
+## InputProductVariant
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product.
+			</Property>
+			<Property name="price" type="Float">
+				The product price.
+			</Property>
+			<Property name="compare_at_price" type="Float">
+				The product compare price.
+			</Property>
+			<Property name="image_id" type="ID">
+				The product image id.
+			</Property>
+			<Property name="file_id" type="ID">
+				The product file id.
+			</Property>
+			<Property name="sku" type="String">
+				The product sku.
+			</Property>
+			<Property name="options" type="[InputProductOptionValue!]!">
+				The product options.
+				```
+				input InputProductOptionValue {
+					value: String!
+					id: String!
+				}
+				```
+			</Property>
+			<Property name="enable_inventory_limit" type="Boolean">
+				The product enable inventory limit boolean.
+			</Property>
+			<Property name="inventory_quantity" type="Int">
+				The product inventory quantity.
+			</Property>
+		</Properties>	
+	</Col>
+</Row>	
+
+---
+
+## InputProductBump 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the product bump.
+			</Property>
+			<Property name="title" type="String!">
+				Product bump title.
+			</Property>
+			<Property name="price" type="Float!">
+				Product bump price.
+			</Property>
+			<Property name="compare_at_price" type="Float!">
+				Product bump compare at price.
+			</Property>
+			<Property name="description" type="String!">
+				Product bump description.
+			</Property>
+			<Property name="sku" type="String!">
+				Product bump sku.
+			</Property>
+			<Property name="enabled" type="Boolean!">
+				Product bump enabled.
+			</Property>
+			<Property name="image_id" type="ID">
+				Product bump image id.
+			</Property>
+			<Property name="file_id" type="ID">
+				Product bump file id.
+			</Property>
+		</Properties>	
+	</Col>
+</Row>
+			
