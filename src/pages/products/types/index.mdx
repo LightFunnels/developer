@@ -48,33 +48,17 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="images_ids" type="[ID!]!">
 				The product image ids.
 			</Property>
-			<Property name="options" type="[ProductOption!]!">
+			<Property name="options" label="[ProductOption!]!" route='/products/types#product-option'>
 				The product options.
-				```
-				type ProductOption {
-					id: String!
-					label: String!
-					options: [String!]!
-					type: ProductOptionTypeEnum!
-					options_types: [ProductOptionType!]!
-				}
-
-				enum ProductOptionTypeEnum {
-					image
-					text
-					color
-				}
-
-				type ProductOptionType {
-					option_id: String!
-					value: ProductOptionTypeValue!
-				}
-
-				scalar ProductOptionTypeValue
-				```
 			</Property>
 			<Property name="variants" label="[ProductVariant!]!" route="/products/types#product-variant">
 				The product variants.
+			</Property>
+			<Property name="custom_options" label="[CustomOption!]!" route='/products/types#custom-option'>
+				The product custom options.
+			</Property>
+			<Property name="enable_custom_options" type="Boolean!">
+				The product enable custom options boolean option.
 			</Property>
 			<Property name="default_variant" label="ProductVariant!" route="/products/types#product-variant">
 				The product default variants. 
@@ -98,67 +82,14 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="thumbnail" label="Image" route="/other#image">
 				The product thumbnail. 
 			</Property>
-			<Property name="order_bump" type="ProductBump!">
+			<Property name="order_bump" label="ProductBump!" route='/products/types#product-bump'>
 				The product order bump. 
-				```
-				type ProductBump {
-					id: String!
-					title: String!
-					price: Float!
-					compare_at_price: Float!
-					description: String!
-					enabled: Boolean!
-					image: Image
-					image_uid: ID
-					file_uid: ID
-					sku: String!
-					file: File
-				}
-				```
 			</Property>
-			<Property name="countdown" type="ProductCountdown!">
-				The product countdown timer. 
-				```
-				type ProductCountdown {
-					enabled: Boolean!
-					evergreen: Boolean!
-					minutes: Int!
-					due: String
-				}
-				```
+			<Property name="features" label="[ProductFeatures!]!" route='/products/types#product-features'>
+				The product features.
 			</Property>
-			<Property name="sticky" type="ProductSticky!">
-				The product sticky buy button. 
-				```
-				type ProductSticky {
-					enabled: Boolean!
-				}
-				```
-			</Property>
-			<Property name="features" type="[ProductFeatures!]!">
-				The product features. 
-				```
-				type ProductFeatures {
-					id: String!
-					title: String!
-					description: String!
-					image: Image
-					image_uid: ID
-				}
-				```
-			</Property>
-			<Property name="testimonials" type="[ProductTestimonials!]!">
+			<Property name="testimonials" label="[ProductTestimonials!]!" type='/products/types#product-testimonials'>
 				The product testimonials. 
-				```
-				type ProductTestimonials {
-					image: Image
-					image_uid: ID
-					id: String!
-					name: String!
-					position: String!
-					comment: String!
-				}
-				```
 			</Property>
 			<Property name="faq" type="[ProductFaq!]!">
 				The product faq. 
@@ -205,20 +136,24 @@ This list contains all query and inputs types for the product endpoints.
 			</Property>
 			<Property name="crossSellProducts" label="[CrossSellProduct!]!" route="/products/types#cross-sell-product">
 				The product cross sell products. 
-				```
-				type CrossSellProduct {
-					upsell_product_uid: ID!
-					upsell_product: Product!
-					downsell_product_uid: ID
-					downsell_product: Product
-				}
-				```
+			</Property>
+			<Property name="funnels" type="[Funnel!]!">
+				The product funnels. 
+			</Property>
+			<Property name="stores" type="[Store!]!">
+				The product stores. 
 			</Property>
 			<Property name="collections_ids" type="[ID!]!">
 				The product collections ids. 
 			</Property>
 			<Property name="customFunnel" label='Funnel' route="/funnels/types#funnel">
-				The product funnel. 
+				The product custom funnel. 
+			</Property>
+			<Property name="enable_inventory_limit" type="Boolean!">
+				The product enable inventory limit. 
+			</Property>
+			<Property name="inventory_quantity" type="Int!">
+				The product inventory quantity. 
 			</Property>
 		</Properties>
   </Col>
@@ -245,6 +180,48 @@ This list contains all query and inputs types for the product endpoints.
 			```
     </CodeGroup>
   </Col>
+</Row>
+
+---
+
+## ProductOption 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the product option.
+			</Property>
+			<Property name="label" type="String!">
+				The product label.
+			</Property>
+			<Property name="options" type="[String!]!">
+				The product options.
+			</Property>
+			<Property name="type" type="ProductOptionTypeEnum!">
+				The product title.
+				```
+				enum ProductOptionTypeEnum {
+					image
+					text
+					color
+				}
+				```
+			</Property>
+			<Property name="options_types" type="[ProductOptionType!]!">
+				The product options types.
+				```
+				type ProductOptionType {
+					option_id: String!
+					value: ProductOptionTypeValue!
+				}
+
+				scalar ProductOptionTypeValue
+				```
+			</Property>
+		</Properties> 
+	</Col>		
 </Row>
 
 ---
@@ -639,7 +616,7 @@ This list contains all query and inputs types for the product endpoints.
 			<Property name="file_id" type="ID">
 				The product file id.
 			</Property>
-			<Property name="product_id" type="Int!">
+			<Property name="product_id" type="ID!">
 				The product id.
 			</Property>
 			<Property name="options" type="[ProductOptionValue!]!">
@@ -651,12 +628,6 @@ This list contains all query and inputs types for the product endpoints.
 				}
 				```
 			</Property>
-			<Property name="enable_inventory_limit" type="Boolean!">
-				The product enable inventory limit boolean.
-			</Property>
-			<Property name="inventory_quantity" type="Int!">
-				The product inventory quantity.
-			</Property>
 			<Property name="labeldOptions" type="[OrderVariantOption!]!">
 				The product options.
 				```
@@ -666,6 +637,12 @@ This list contains all query and inputs types for the product endpoints.
 					value: String!
 				}
 				```
+			</Property>
+			<Property name="enable_inventory_limit" type="Boolean!">
+				The product enable inventory limit boolean.
+			</Property>
+			<Property name="inventory_quantity" type="Int!">
+				The product inventory quantity.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the product was updated.
@@ -781,3 +758,153 @@ This list contains all query and inputs types for the product endpoints.
 		</Properties>
   </Col>
 </Row>
+
+---
+
+## CustomOption
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier for the product custom option.
+			</Property>
+			<Property name="type" type="CustomOptionType!">
+				Product custom option type.
+			</Property>
+			<Property name="name" type="String!">
+				Product custom option name.
+			</Property>
+			<Property name="placeholder" type="String!">
+				Product custom option placeholder.
+			</Property>
+		</Properties>	
+	</Col>
+</Row>		
+
+--- 
+
+## ProductBump 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the product bump.
+			</Property>
+			<Property name="title" type="String!">
+				Product bump title.
+			</Property>
+			<Property name="price" type="Float!">
+				Product bump price.
+			</Property>
+			<Property name="compare_at_price" type="Float!">
+				Product bump compare at price.
+			</Property>
+			<Property name="description" type="String!">
+				Product bump description.
+			</Property>
+			<Property name="enabled" type="Boolean!">
+				Product bump enabled.
+			</Property>
+			<Property name="image" type="Image">
+				Product bump image.
+			</Property>
+			<Property name="image_id" type="ID">
+				Product bump image id.
+			</Property>
+			<Property name="file_id" type="ID">
+				Product bump file id.
+			</Property>
+			<Property name="sku" type="String!">
+				Product bump sku.
+			</Property>
+			<Property name="file" label="File" route='/products/types#file'>
+				Product bump file.
+			</Property>
+		</Properties>	
+	</Col>
+</Row>
+
+--- 
+
+## ProductFeatures 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String!">
+				Unique identifier for the product features.
+			</Property>
+			<Property name="title" type="String!">
+				Product features title.
+			</Property>
+			<Property name="description" type="String!">
+				Product features description.
+			</Property>
+			<Property name="image" label="Image" route='/other#image'>
+				Product features image.
+			</Property>
+			<Property name="image_id" type="ID">
+				Product features image id.
+			</Property>
+		</Properties>
+	</Col>
+</Row>		
+
+---
+
+## ProductTestimonials
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="image" label="Image" route='/other#image'>
+				Product testimonials image.
+			</Property>
+			<Property name="image_id" type="ID">
+				Product testimonials description.
+			</Property>
+				<Property name="id" type="String!">
+				Unique identifier for the product testimonials.
+			</Property>
+			<Property name="name" type="String!">
+				Product testimonials name.
+			</Property>
+			<Property name="position" type="String!">
+				Product testimonials position.
+			</Property>
+			<Property name="comment" type="String!">
+				Product testimonials comment.
+			</Property>
+		</Properties>
+	</Col>
+</Row>	
+
+--- 
+
+## CrossSellProduct 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="upsell_product_id" type="ID!">
+				Unique identifier for the product upsell.
+			</Property>
+			<Property name="upsell_product" label="Product!" route='/products/types#Product'>
+				Product upsell.
+			</Property>
+			<Property name="downsell_product_id" type="ID">
+				Downsell product id.
+			</Property>
+			<Property name="downsell_product" label="Product" route='/products/types#product'>
+				Product downsell.
+			</Property>
+		</Properties>
+	</Col>
+</Row>	

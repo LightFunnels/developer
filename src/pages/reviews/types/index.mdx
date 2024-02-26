@@ -39,8 +39,8 @@ This list contains all query and inputs types for the review endpoints.
 			<Property name="published" type="Boolean!">
 				The review published.
 			</Property>
-			<Property name="product_uid" type="ID!">
-				The review product uid.
+			<Property name="product_id" type="ID!">
+				The review product id.
 			</Property>
 			<Property name="avatar" type="String!">
 				The review avatar.
@@ -56,6 +56,13 @@ This list contains all query and inputs types for the review endpoints.
 			</Property>
 			<Property name="date" label="TimeStamp!" route='/other#timestamp'>
 				The review date.
+				##### Arguments 
+				<Property name="format" type="String">
+					the reviews format argument string defaults to "fromNow" (ImmutableJS) value. 
+				</Property>
+				<Property name="suffix" type="Boolean">
+					the reviews suffix argument boolean defaults to true. 
+				</Property>
 			</Property>
 		</Properties>
   </Col>
