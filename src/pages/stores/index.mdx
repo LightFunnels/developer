@@ -191,8 +191,8 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
     <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
-    mutation updateStoreMutation($node: StoreUpdateInput!, $uid: ID!){
-			updateStore(node: $node, uid: $uid){
+    mutation updateStoreMutation($node: StoreUpdateInput!, $id: ID!){
+			updateStore(node: $node, id: $id){
 				# Store type fields
 			}
 		}
@@ -224,7 +224,7 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
 
 		### Arguments 
 		<Properties> 
-			<Property name="uids" type="[ID!]!">
+			<Property name="items" type="[ID!]!">
 				The store uids.
 			</Property>
 		</Properties>
@@ -240,8 +240,8 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
 
     <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
     ```
-		mutation deleteStoresMutation($uids: [ID!]!){
-			deleteStore(uids: $uids){
+		mutation deleteStoresMutation($items: [ID!]!){
+			deleteStore(items: $items){
 				# Account type fields
 			}
 		}

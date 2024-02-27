@@ -214,7 +214,7 @@ These endpoints allow you to retrieve, create, update, and delete Funnel(s).
     <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
 
     ```
-    mutation updateFunnelMutation($node: InputFunnel!, $id: Int!){
+    mutation updateFunnelMutation($node: InputFunnel!, $id: ID!){
 			updateFunnel(node: $node, id: $id){
 				# Funnel type fields
 			}
