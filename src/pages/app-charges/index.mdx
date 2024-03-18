@@ -18,7 +18,6 @@ To create an app charge, you need to use the following GraphQL mutation:
 			<Property label="createAppChargeInput!" route="/app-charges/types#create-app-charge-input">
 				The createAppChargeInput! type.
 			</Property>
-			
 		</Properties>
 		### Fields 
 		<Properties>	
@@ -39,7 +38,22 @@ To create an app charge, you need to use the following GraphQL mutation:
 			}
 			```
     </CodeGroup>
-    ```json {{ title: 'Response' }}
+
+		```json {{ title: 'createAppChargeInput type example' }}
+		{
+			"input": {
+				"node": {
+					"price": 0,
+					"return_url": "https://your-website.com",
+					"name": "Plan name",
+					"trial": 0,
+					"plan_id": "navigate to your app billing tab and select a plan id under app plans"
+				}
+			}
+		}
+		```
+
+    ```json {{ title: 'createAppChargePayload type example' }}
     {
 			"node": {
 				"appCharge": {
