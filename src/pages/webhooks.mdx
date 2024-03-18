@@ -112,7 +112,7 @@ const verifyWebhook = async (req) => {
 
 Here are all the event types.
 
-`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `fproduct/created`, `product/deleted`, `funnel/updated`, `funnel/deleted`, `app/uninstalled`
+`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `product/created`, `product/deleted`, `funnel/created`, `funnel/updated`, `funnel/deleted`, `app/uninstalled`
 
 # Order events
 
@@ -126,66 +126,138 @@ Here are all the event types.
         This webhook is useful for getting all the order information including the upsells and downsells once the customer is done purchasing.
       </Property>
 			<Property name="Order fulfillment update" type="order/fulfilled">
-        This webhook is fired when the order fulfillment status is updated.
-      </Property>
+				This webhook is fired when the order fulfillment status is updated.
+			</Property>
 			<Property name="Order cancelled" type="order/cancelled">
-        This webhook is fired when the order is cancelled.
-      </Property>
+				This webhook is fired when the order is cancelled.
+			</Property>
 			<Property name="Order uncancelled" type="order/uncancelled">
-        This webhook is fired when the order is uncancelled.
-      </Property>
+				This webhook is fired when the order is uncancelled.
+			</Property>
 			<Property name="Order refunded" type="order/refunded">
-        This webhook is fired when the order is refunded.
-      </Property>
+				This webhook is fired when the order is refunded.
+			</Property>
+			<Property name="Order item created" type="order-item/created">
+				This webhook is fired when the order item is created.
+			</Property>
 		</Properties>
 	</Col>
-	<Col>
-		```json {{ 'title': 'Order payload' }}
-		{
-			"node":{
-				"id":"1",
-				"__typename":"Order",
-				"_id":12345,
-				"account_id":"acc_CquDNesAvtWZtd8",
-				"total":150.00,
-				"subtotal":120.00,
-				"discount_value":20.00,
-				"normal_discount_value":10.00,
-				"bundle_discount_value":10.00,
-				"name":"John Doe",
-				"notes":"Deliver before weekend",
-				"email":"johndoe@example.com",
-				"phone":"123-456-7890"
-				...
-			}
-		}
-		```
-	</Col>
+
 	<Col>	
-    <Properties>
-      <Property name='New order item' type="order-item/created">
-        A new order item was created. 
-      </Property>
-			{/* ### Fields 
-			<Property name='order' label="Order" route='/orders/types#order'>
-				Order fields.
-      </Property> */}
-		</Properties>
-	</Col>
-	<Col>	
-    ```json {{ 'title': 'Order item payload' }}
+		```json {{ 'title': 'Order created/confirmed payload' }}
 			{
-				"price": 33.39,
-				"id": 0,
-				"title": "New T-shirt",
-				"sku": "nts",
-				"financial_status": "paid",
-				"type": "VariantSnapshot"
-				...
+				"node": {
+					"id": "order_qa6C9z7NCHScxJoewz8xK",
+					"_id": 2554132,
+					"name": "7799",
+					"tags": [],
+					"test": true,
+					"email": "test@lightfunnels.com",
+					"items": [
+						{
+							"id": "vars__DY-kzRSBh_2A3d38kZE7",
+							"_id": 3050394,
+							"sku": "",
+							"image": null,
+							"price": 35,
+							"title": "Updated Product",
+							"carrier": "",
+							"options": [],
+							"refund_id": null,
+							"__typename": "VariantSnapshot",
+							"payment_id": "pay_KvHYIzSxNZWnA2XRpHQnF",
+							"product_id": "prod_L8WGlMDUfgM6LAivoCZhv",
+							"removed_at": null,
+							"variant_id": "var_nG3DGrAyPlG2VYqiv2reY",
+							"tracking_link": null,
+							"custom_options": [],
+							"customer_files": [],
+							"tracking_number": null,
+							"fulfillment_status": "none"
+						}
+					],
+					"notes": "",
+					"phone": "",
+					"total": 35,
+					"custom": {},
+					"currency": "GBP",
+					"customer": {
+						"id": "cus_GsGlWiz-Tp1zRTOJf7Dkp",
+						"avatar": "//www.gravatar.com/avatar/402c2d5ecacd869e2b977a4f4584d3fa",
+						"location": "US, random city",
+						"full_name": "Tester Test"
+					},
+					"payments": [
+						{
+							"id": "pay_KvHYIzSxNZWnA2XRpHQnF",
+							"_id": 2498721,
+							"total": 35,
+							"source": {
+								"payment_gateway": {
+									"prototype": {
+										"key": "cod"
+									}
+								}
+							},
+							"refunds": [],
+							"refunded": 0,
+							"sub_total": 35,
+							"created_at": "a few seconds ago",
+							"refundable": 0,
+							"discount_snapshot": null,
+							"price_bundle_snapshot": []
+						}
+					],
+					"shipping": 0,
+					"subtotal": 35,
+					"__typename": "Order",
+					"account_id": "acc_o5C60ZEzUTDmfB8WXSxnK",
+					"created_at": "2024-03-18 14:20:37",
+					"refundable": 0,
+					"archived_at": null,
+					"net_payment": 0,
+					"cancelled_at": null,
+					"client_details": {
+						"ip": "105.158.83.57"
+					},
+					"discount_value": 0,
+					"original_total": 35,
+					"billing_address": {
+						"zip": "10000",
+						"area": "",
+						"city": "random city",
+						"email": "test@lightfunnels.com",
+						"line1": "random address",
+						"line2": "",
+						"phone": "",
+						"state": "random state",
+						"country": "US",
+						"last_name": "Test",
+						"first_name": "Tester"
+					},
+					"refunded_amount": 0,
+					"paid_by_customer": 0,
+					"shipping_address": {
+						"zip": "10000",
+						"area": "",
+						"city": "random city",
+						"email": "test@lightfunnels.com",
+						"line1": "random address",
+						"line2": "",
+						"phone": "",
+						"state": "random state",
+						"country": "US",
+						"last_name": "Test",
+						"first_name": "Tester"
+					},
+					"shipping_discount": 0,
+					"bundle_discount_value": 0,
+					"normal_discount_value": 0
+				}
 			}
 		```
 	</Col>	
-	</Row>
+</Row>
 
 ---
 
@@ -206,14 +278,32 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Payment payload' }}
 			{
-				"id": 0,
-				"order_id": 0,
-				"paid": 20,
-				"refunded": 0,
-				"net_payment": 20,
-				"discount_value": 0,
-				"total": 20
-				...
+				"node": {
+					"id": "pay_fMQN57XdoYOjvy_2m3wfn",
+					"items": [
+						{
+							"id": "vars_MW2k2nbw4q-nlfRUfYgCO",
+							"_id": 3050426,
+							"sku": "",
+							"image": null,
+							"price": 35,
+							"title": "Test Product",
+							"carrier": "",
+							"options": [],
+							"refund_id": null,
+							"__typename": "VariantSnapshot",
+							"payment_id": "pay_fMQN57XdoYOjvy_2m3wfn",
+							"product_id": "prod_L8WGlMDUfgM6LAivoCZhv",
+							"removed_at": null,
+							"variant_id": "var_nG3DGrAyPlG2VYqiv2reY",
+							"tracking_link": "",
+							"custom_options": [],
+							"customer_files": [],
+							"tracking_number": "",
+							"fulfillment_status": "fulfilled"
+						}
+					]
+				}
 			}
 		```
 	</Col>
@@ -258,18 +348,48 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Customer payload' }}
 			{
-				"id": 0,
-				"email": "no-reply@lightfunnels.com",
-				"phone": "",
-				"first_name": "Estrella",
-				"last_name": "Noland",
-				"account_id": 0,
-				"custom": {},
-				"tags": [
-					"tag1",
-					"tag2"
-				]
-				...
+				"node": {
+					"id": "cus_iH3ipbK4yMPPcnKudRRvb",
+					"tags": [],
+					"email": "Test@lightfunnels.com",
+					"leads": [],
+					"notes": null,
+					"phone": "",
+					"avatar": "//www.gravatar.com/avatar/9a7fcb37672ee218b4fc41bba4f7ad8c",
+					"custom": {},
+					"location": "",
+					"full_name": "Random Buyer",
+					"last_name": "Buyer",
+					"__typename": "Customer",
+					"first_name": "Random",
+					"billing_address": {
+						"zip": "",
+						"area": "",
+						"city": "",
+						"email": "",
+						"line1": "",
+						"line2": "",
+						"phone": "",
+						"state": "",
+						"country": null,
+						"last_name": "",
+						"first_name": ""
+					},
+					"shipping_address": {
+						"zip": "",
+						"area": "",
+						"city": "",
+						"email": "",
+						"line1": "",
+						"line2": "",
+						"phone": "",
+						"state": "",
+						"country": null,
+						"last_name": "",
+						"first_name": ""
+					},
+					"accepts_marketing": false
+				}
 			}
 		```
 	</Col>
@@ -293,17 +413,7 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Checkout payload' }}
 			{
-				"id": 0,
-				"phone": "+212000000",
-				"custom": {
-					"custom_field": "Hello world"
-				},
-				"first_name": "Elhanan",
-				"last_name": "Aljoša",
-				"email": "no-reply@lightfunnels.com",
-				"funnel_id": 0,
-				"step_id": 0
-				...
+				"id": "ch_AfZvYYNDSXdWeXmqKig1C"
 			}
 		```
 	</Col>
@@ -330,8 +440,7 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Product payload' }}
 			{
-				"id": 0,
-				"account_id": 0
+				"id": "prod_tXbZBX43K2pBrmJ9UWTUf"
 			}
 		```
 	</Col>
@@ -358,8 +467,7 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Funnel payload' }}
 			{
-				"id": 0,
-				"account_id": 0
+				"id": "fun_KpLWLA-B1QAWKfYj9ZOsz"
 			}
 		```
 	</Col>
