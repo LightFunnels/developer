@@ -76,7 +76,7 @@ This list contains all query and input types for the order endpoints.
 				Customer client details.
 				```
 				type ClientDetails {
-					ip: String
+					ip: String!
 					device: String
 					user_agent: String
 				}
@@ -421,7 +421,7 @@ This list contains all query and input types for the order endpoints.
 			<Property name="id" type="ID!">
 				Unique identifier for the payment source.
 			</Property>
-			<Property name="_id" type="Int!">
+			<Property name="_id" type="String!">
 				Unique number identifier for the payment source.
 			</Property>
 			<Property name="order" label="Order!" route="/orders/types#order">
