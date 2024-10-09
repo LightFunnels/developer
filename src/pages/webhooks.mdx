@@ -324,13 +324,15 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Contact form payload' }}
 			{
-				"custom": {},
-				"message": "Message goes here",
-				"subject": "Subject goes here",
-				"email": "no-reply@lightfunnels.com",
-				"first_name": "Elhanan",
-				"last_name": "Aljoša"
-				...
+				"node":{
+					"custom": {},
+					"message": "Message goes here",
+					"subject": "Subject goes here",
+					"email": "no-reply@lightfunnels.com",
+					"first_name": "Elhanan",
+					"last_name": "Aljoša"
+					...
+				}
 			}
 		```
 	</Col>
@@ -413,7 +415,9 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Checkout payload' }}
 			{
-				"id": "ch_AfZvYYNDSXdWeXmqKig1C"
+				"node":{
+					"id": "ch_AfZvYYNDSXdWeXmqKig1C"
+				}
 			}
 		```
 	</Col>
@@ -432,15 +436,32 @@ Here are all the event types.
       <Property name='Product created' type="product/created">
         A new product form was created.
       </Property>
+		</Properties>
+	</Col>
+	<Col>	
+    ```json {{ 'title': 'Product created/updated payload' }}
+			{
+				"node":{
+					"id": "prod_tXbZBX43K2pBrmJ9UWTUf",
+					"title": "My really great product",
+					"description": "My product description"
+				}
+			}
+		```
+	</Col>
+	<Col>
+		<Properties>
 			<Property name='Delete product' type="product/deleted">
         A product was successfully deleted.
       </Property>
 		</Properties>
 	</Col>
 	<Col>	
-    ```json {{ 'title': 'Product payload' }}
+    ```json {{ 'title': 'Product deleted payload' }}
 			{
-				"id": "prod_tXbZBX43K2pBrmJ9UWTUf"
+				"node":{
+					"id": "prod_tXbZBX43K2pBrmJ9UWTUf",
+				}
 			}
 		```
 	</Col>
@@ -467,7 +488,9 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'Funnel payload' }}
 			{
-				"id": "fun_KpLWLA-B1QAWKfYj9ZOsz"
+				"node":{
+					"id": "fun_KpLWLA-B1QAWKfYj9ZOsz"
+				}
 			}
 		```
 	</Col>
@@ -488,7 +511,7 @@ Here are all the event types.
 	<Col>	
     ```json {{ 'title': 'App payload' }}
 			{
-				node:{
+				"node":{
 					"id": "id of the account that uninstalled the app"
 				}
 			}
