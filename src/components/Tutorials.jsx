@@ -12,10 +12,12 @@ export function Tutorials(){
           we'll cover the fundamental steps to kickstart your app development journey. 
           Whether you're a coding enthusiast or a total beginner, we've got you covered. Let's dive in!`}
         </div>
-          <a className='relative w-max block' href="https://www.lightfunnels.co/academy/apps-development" target="_blank" rel="noreferrer">
-            <img className='absolute top-1/2 right-1/2 [transform:translate(50%,-50%)] max-w-[50px]' src='images/yutab.webp'/>
-            <img className="max-w-[500px]" src="images/thumbnail.jpg" />
+        <div className='relative max-w-[500px] w-full mx-auto overflow-hidden'>
+          <a className='block' href="https://www.lightfunnels.co/academy/apps-development" target="_blank" rel="noreferrer">
+            <img className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50px] h-[50px] z-10' src='images/yutab.webp'/>
+            <img className="w-full h-auto" src="images/thumbnail.jpg" />
           </a>
+        </div>
       </div>
     </div>
   )
