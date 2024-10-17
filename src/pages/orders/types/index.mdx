@@ -383,16 +383,16 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the discount snapshot.
 			</Property>
 			<Property name="code" type="String">
-				Discount snapshot code.
+				The discount code applied at the time of the transaction. This code represents a specific promotional offer or coupon that was used to reduce the total payment amount. It may be a string of characters or numbers that the customer entered during checkout to receive the discount.
 			</Property>
 			<Property name="value" type="Float">
-				Discount snapshot value.
+				The exact value of the discount associated with the discount code. This value can represent either a fixed amount or a percentage, depending on the type of discount applied. It reflects the user-defined discount that reduces the total payment amount.
 			</Property>
 			<Property name="discount_result" type="Float">
-				Discount snapshot result.
+				The actual discount amount applied to the payment, calculated based on the discount type. For example, if the discount is a percentage, this field returns the computed value after applying the percentage to the order total.
 			</Property>
 			<Property name="type" type="DiscountType">
-				Discount snapshot type.
+				The type of discount applied, indicating whether the discount is a fixed amount or a percentage of the total. The DiscountType enum has two possible values:
 				```
 				enum DiscountType {
 					percentage
