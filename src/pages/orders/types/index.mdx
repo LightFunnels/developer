@@ -19,7 +19,7 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the Order.
 			</Property>
 			<Property name="account_id" type="ID!">
-				Unique number identifier for the Order.
+				A unique number identifier representing the account that received the order.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the order was updated.
@@ -34,25 +34,25 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the order was cancelled.
 			</Property>
 			<Property name="email" type="Email!">
-				Customer email address.
+				The email address associated with the customer.
 				```
 				scalar Email
 				```
 			</Property>
 			<Property name="phone" type="Phone!">
-				Customer phone number.
+				The phone number associated with the customer.
 				```
 				scalar Phone
 				```
 			</Property>
 			<Property name="name" type="String!">
-				Customer name.
+				A human-readable identifier for the order, typically formatted as a stringified number with a # prefix (e.g., #120).
 			</Property>
 			<Property name="notes" type="String">
-				Order notes.
+				Optional notes or comments associated with the order. This field can store additional information or instructions related to the order, such as special requests from the customer or internal notes for order handling.
 			</Property>
 			<Property name="financial_status" type="OrderFinancialStatus!">
-				Order financial status.
+				The current financial status of the order. This field indicates the payment state of the order and is represented by the OrderFinancialStatus enum. Possible values include:
 				```
 				enum OrderFinancialStatus {
 					pending
@@ -63,7 +63,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="fulfillment_status" type="OrderFulfillmentStatus!">
-				Order fulfillment status.
+				The current fulfillment status of the order, indicating how much of the order has been fulfilled or shipped. This field is represented by the OrderFulfillmentStatus enum, with the following possible values:
 				```
 				enum OrderFulfillmentStatus {
 					unfulfilled
@@ -73,7 +73,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="client_details" type="ClientDetails!">
-				Customer client details.
+				Information about the customer's client (device and browser) used to place the order. This field is represented by the ClientDetails type, which includes the following properties:
 				```
 				type ClientDetails {
 					ip: String!
@@ -83,85 +83,85 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="custom" type="CustomFields!">
-				Order custom fields.
+				A set of custom fields associated with the order. These fields allow for the storage of additional, order-specific data beyond the predefined fields in the API. The CustomFields scalar type represents a flexible structure, which can hold custom key-value pairs or other metadata relevant to the order.
 				```
 				scalar CustomFields
 				```
 			</Property>
 			<Property name="tags" type="[String!]!">
-				Order tags. 
+				A list of tags associated with the order. Tags are used to categorize or label orders for easier filtering and organization. Each tag is a non-null string, and the list itself cannot be empty.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				Order discount value. 
+				The total monetary value of discounts applied to the order. This value represents the amount subtracted from the original order total due to bundle discounts, coupon codes, or other discount mechanisms. The discount is expressed as a floating-point number, typically in the order’s currency.
 			</Property>
 			<Property name="bundle_discount_value" type="Float!">
-				Order bundle discount value.
+				The total monetary value of discounts specifically applied to bundled products within the order. This value reflects the discount provided when multiple products are purchased together as part of a bundle promotion. It is expressed as a floating-point number, typically in the currency of the order.
 			</Property>
 			<Property name="normal_discount_value" type="Float!">
-				Order normal discount value.
+				The total monetary value of standard discounts applied to the order, typically through the use of coupon codes. This value represents the coupon code discount amount subtracted from the order total and is expressed as a floating-point number, usually in the currency of the order.
 			</Property>
 			<Property name="total" type="Float!">
-				Order total cost.
+				The final total cost of the order, after applying all discounts, taxes, and shipping fees. This value represents the amount the customer is required to pay and is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="shipping" type="Float!">
-				Order shipping cost.
+				The total cost of shipping for the order. This value represents the amount charged for delivering the products to the customer, expressed as a floating-point number in the currency of the order. It includes any applicable shipping fees based on the chosen shipping method.
 			</Property>
 			<Property name="subtotal" type="Float!">
-				Order subtotal.
+				The subtotal cost of the order, representing the total price of all items before applying any discounts, taxes, or shipping fees. This value is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="payments" label="[Payment!]!" route="/orders/types#payment">
-				Order payments.
+				A list of payments associated with the order. An order can have multiple payments, such as the initial payment and additional payments for upsells or post-purchase modifications. Each payment is represented by the Payment object, detailing the amount, method, and other relevant payment information.
 			</Property>
 			<Property name="refunded_amount" type="Float!">
-				Order refunded amount.
+				The total monetary amount that has been refunded for the order. This value represents the portion of the order's total that has been returned to the customer, whether through full or partial refunds, and is expressed as a floating-point number in the order's currency.
 			</Property>
 			<Property name="refundable" type="Float!">
-				Order refundable amount.
+				The total amount of the order that is still eligible for a refund. This value is calculated as the difference between the total payment amount and the refunded amount. It is expressed as a floating-point number in the order's currency.
 			</Property>
 			<Property name="net_payment" type="Float!">
-				Order net payment amount.
+				The net payment amount for the order, calculated as the total payment received minus any refunded amounts. This value represents the final amount the merchant retains after processing refunds, expressed as a floating-point number in the order's currency.
 			</Property>
 			<Property name="paid_by_customer" type="Float!">
-				Order amount paid by customer.
+				The total amount of money paid by the customer for the order. This value includes any payments made for the order, including the initial payment and any additional payments, such as for upsells or shipping costs. It is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="original_total" type="Float!">
-				Order original total cost.
+				The original total cost of the order before any discounts, refunds, or adjustments are applied. This value represents the full amount of the order as initially calculated, including all items, taxes, and shipping fees, and is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="shipping_address" label="Address" route="/customers/types#address">
-				Customer shipping address.
+				The shipping address provided by the customer for the order. This address specifies where the order will be delivered and includes details such as the recipient's name, street address, city, state or region, postal code, and country.
 			</Property>
 			<Property name="billing_address" label="Address" route="/customers/types#address">
-				Customer billing address.
+				The billing address associated with the customer’s payment method. This address is used for invoicing and payment verification purposes and typically includes details such as the customer’s name, street address, city, state or region, postal code, and country.
 			</Property>
 			<Property name="customer" label="Customer!"  route="/customers/types#customer">
-				Customer details.
+				The details of the customer who placed the order. This field contains information such as the customer’s name, contact information (email, phone) etc.
 			</Property>
 			<Property name="customer_full_name" type="String">
-				Customer full name.
+				The full name of the customer who placed the order, typically including both first and last names. This value is used for identification and communication purposes in order processing and customer service interactions.
 			</Property>
 			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
-				Order items union type.
+				A list of items included in the order, represented as a union of either ProductVariantSnapshot or OrderBumpSnapshot. Each item in this list can be a product variant selected by the customer or an order bump item. This structure allows flexibility in representing different types of items within a single order.
 			</Property>
 			<Property name='checkout' label="Checkout" route="/orders/types#checkout">
-				Order checkout details.
+				Details related to the order's checkout process. The Checkout object provides a snapshot of the final steps the customer took to complete the purchase.
 			</Property>
 			<Property name="test" type="Boolean!">
-				Order test option.
+				A flag indicating whether the order is a test transaction. If set to true, the order is considered a test and does not represent a real transaction. This is typically used for testing and development purposes to simulate order creation without processing actual payments.
 			</Property>
 			<Property name="nextOrderID" type="ID">
-				The next order id.
+				The unique identifier for the next sequential order related to this transaction. This field can be used to track or reference follow-up orders. If there is no subsequent order, this field may be null.
 			</Property>
 			<Property name="prevOrderID" type="ID">
-				Previous order id.
+				The unique identifier of the previous order related to this transaction. This field can be used to reference any prior order in a sequence. If this is the first order, this field will be null.
 			</Property>
 			<Property name="link" type="String">
-				Order link.
+				The URL link to the order's thank-you page. This page is typically displayed to the customer after the order has been successfully completed. The link provides a reference for the customer to review their order details and confirmation.
 			</Property>
 			<Property name="currency" type="String!">
-				Order currency.
+				The currency in which the order is priced and processed. This value is represented by a currency code following the ISO 4217 standard (e.g., "USD" for US Dollars, "EUR" for Euros). It defines the monetary unit for all prices, payments, and refunds associated with the order.
 			</Property>
 			<Property name="utm" type="[Utm!]">
-				Order utm.
+				A list of UTM (Urchin Tracking Module) parameters associated with the order, used for tracking the source of traffic or marketing campaigns that led to the purchase. Each Utm object contains the following fields:
 				```
 				type Utm {
 					v: String!
@@ -208,40 +208,40 @@ This list contains all query and input types for the order endpoints.
 		### Fields
 		<Properties> 
 			<Property name="notes" type="String">
-				Order notes.
+				Optional notes or comments to be attached to the order. This field allows users to provide additional information, special instructions, or internal comments when creating or updating an order. The content is flexible and can be used for various purposes, such as customer preferences or handling instructions.
 			</Property>
 			<Property name="archived" type="Boolean">
-				The archived option.
+				A flag indicating whether the order should be marked as archived. When set to true, the order is moved to an archived state, typically used for organizing or filtering completed or inactive orders.
 			</Property>
 			<Property name="shipping_address" label="InputAddress" route="/customers/types#input-address">
-				Customer shipping address.
+				The customer’s shipping address. This field includes the full details required for order delivery, such as the recipient’s name, street address, city, state or region, postal code, and country. The address is essential for shipping and fulfillment purposes.
 			</Property>
 			<Property name="billing_address" label="InputAddress" route="/customers/types#input-address">
-				Customer billing address.
+				The billing address associated with the customer's payment method. This address is used for payment processing and verification, and should include full details such as the customer’s name, street address, city, state or region, postal code, and country.
 			</Property>
 			<Property name="email" type="String">
-				Customer email address.
+				The email address of the customer placing the order. It must be a valid email format, ensuring successful delivery of important order information.
 			</Property>
 			<Property name="phone" type="String">
-				Customer phone number.
+				The customer's phone number, used for contact regarding the order. It should be provided in a valid format, including the appropriate country code if applicable.
 			</Property>
 			<Property name="sync_customer_details" type="Boolean">
-				Order sync customer detail boolean.
+				A flag indicating whether to synchronize and override the customer details with updated information. When set to true, the existing customer information on the order will be replaced with the latest details provided.
 			</Property>
 			<Property name="items" type="[ID!]">
-				Order items.
+				A list of IDs representing the items included in the order. Each ID can refer to a product variant or an order bump, allowing flexibility in what can be included in the order. This field is required when updating an order, and it supports both regular items and upsell (order bump) items.
 			</Property>
 			<Property name="variants" type="[Int!]">
-				Order variants.
+				A list of variant number ids associated with the products in the order. This field is used to specify which product variants the customer has selected as part of the order.
 			</Property>
 			<Property name="custom" type="CustomFields">
-				Order custom fields.
+				Custom fields associated with the order, allowing the storage of additional, user-defined data beyond the predefined fields. The CustomFields scalar type is flexible and can hold custom key-value pairs or other metadata relevant to the order, providing room for extra information based on business needs.
 				```
 				scalar CustomFields
 				```
 			</Property>
 			<Property name="tags" type="[String!]">
-				Order tags. 
+				A list of tags associated with the order. Tags are used to categorize or label orders for easier filtering, organization, or tracking. Each tag is a non-null string.
 			</Property>
 		</Properties>
   </Col>
