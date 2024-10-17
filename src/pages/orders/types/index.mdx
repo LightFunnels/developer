@@ -279,19 +279,19 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the payment was created.
 			</Property>
 			<Property name="discount_snapshot" label="DiscountSnapshot" route="/orders/types#discount-snapshot">
-				Payment discount snapshot.
+				A snapshot of the discount applied to the payment at the time of transaction. This includes details of the promotional code, discount type etc.
 			</Property>
 			<Property name="price_bundle_snapshot" label="[PriceBundleSnapshot!]!" route="/bundles/types#price-bundle-snapshot">
-				Payment price bundle snapshot.
+				A list of snapshots representing bundled pricing and discounts applied to the payment at the time of the transaction. Each snapshot captures the details of a pricing bundle, such as the applied discount, bundle value, and type of discount used. This field provides a historical record of the price bundle at the time of payment.
 			</Property>
 			<Property name="total" type="Float!">
-				Payment total.
+				The total amount paid for the order, including any applied discounts, and shipping fees. This value represents the final sum charged to the customer for the transaction and is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="sub_total" type="Float!">
-				Payment subtotal.
+				The subtotal amount for the payment, representing the total cost of the items before any discounts, or shipping fees are applied. This value reflects the base price of the order and is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="refunds" type="[Refund]">
-				Payment refunds.
+				A list of refunds associated with the payment. Each refund represents a partial or full return of funds to the customer for this transaction. This field provides details on all refund actions taken for the payment.
 				```
 				type Refund {
 					id: ID!
@@ -302,25 +302,25 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="refunded" type="Float!">
-				Payment refunded amount.
+				The total amount that has been refunded for the payment. This value represents the sum of all refunds issued for the transaction, expressed as a floating-point number in the currency of the order. It reflects the portion of the payment returned to the customer.
 			</Property>
 			<Property name="refundable" type="Float!">
-				Payment refundable amount.
+				The total amount of the payment that is still eligible for a refund. This value is calculated as the difference between the total payment amount and the refunded amount. It is expressed as a floating-point number in the order's currency.
 			</Property>
 			<Property name="paid" type="Float!">
-				Payment paid amount.
+				The total amount successfully paid by the customer for the transaction. This value represents the actual funds received, excluding any refunds, and is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="paid_at" label="TimeStamp" route='/other#timestamp'>
-				Timestamp of when the payment was paid.
+				The timestamp when the payment was successfully made.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				Payment discount value.
+				The total monetary value of discounts applied to the payment. This includes all promotions, coupon codes, or special offers that reduced the overall amount paid by the customer. The discount is expressed as a floating-point number in the currency of the order.
 			</Property>
 			<Property name="source" label="Source!" route="/orders/types#source">
-				Payment source.
+				The source of the payment, providing details about how the payment was processed and through which system. The Source type contains information such as the order, payment gateway, and relevant timestamps for tracking the source of the payment.
 			</Property>
 			<Property name="shipping" type="Shipping">
-				Payment shipping information.
+				Information about the shipping details associated with the payment, including the shipping cost, any applicable discounts, and the shipping label. This field provides an overview of how the order’s shipping was handled as part of the payment process.
 				```
 				type Shipping {
 					id: ID!
@@ -332,10 +332,10 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="paymentMethodLabel" type="String!">
-				Payment method label.
+				A label describing the payment method used for the transaction. This provides a user-friendly name for the payment method, such as "Stripe," or "PayPal," helping to identify how the payment was processed.
 			</Property>
 			<Property name="financial_status" type="VariantSnapshotFinancialStatus">
-				Payment financial status.
+				The financial status of the payment, indicating the current state of the transaction. The status is represented by the VariantSnapshotFinancialStatus enum, with the following possible values:
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -344,7 +344,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
-				Order items union type.
+				A list of items associated with the payment, represented as a union of either ProductVariantSnapshot or OrderBumpSnapshot. Each item reflects a product variant or an order bump that was part of the transaction paid for. 
 			</Property>
 		</Properties>
   </Col>
