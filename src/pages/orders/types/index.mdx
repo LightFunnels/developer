@@ -677,7 +677,7 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the checkout was created.
 			</Property>
 			<Property name="customer" type="CheckoutCustomer!">
-				Checkout customer.
+				The customer information provided during the checkout process. This includes details such as the customer's name, contact information, and marketing preferences.
 				```
 				type CheckoutCustomer {
 					first_name: String!
@@ -692,40 +692,40 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="variants" label="[CheckoutVariant!]!" route='/orders/types#checkout-variant'>
-				Checkout variants.
+				A list of product variants included in the checkout. Each item in the list is represented by the CheckoutVariant object, which contains details about the specific variant of product selected by the customer during the checkout process.
 			</Property>
 			<Property name="total" type="Float!">
-				Checkout total.
+				The total cost of the checkout, including all products, shipping fees, and any applied discounts. This value represents the final amount the customer is required to pay and is expressed as a floating-point number in the currency of the checkout.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				Checkout discount value.
+				The total value of all discounts applied to the checkout. This amount reflects any coupons, or offers that reduced the overall cost of the checkout, expressed as a floating-point number in the currency of the checkout.
 			</Property>
 			<Property name="subtotal" type="Float">
-				Checkout subtotal.
+				The subtotal amount of the checkout, representing the total cost of all items before applying discounts and shipping fees. This value is expressed as a floating-point number in the currency of the checkout.
 			</Property>
 			<Property name="email" type="String">
-				Checkout email.
+				The email address provided by the customer during the checkout process. This email is used for sending order confirmations, receipts, and any other communications related to the order.
 			</Property>
 			<Property name="phone" type="String">
-				Checkout phone.
+				The phone number provided by the customer during the checkout process. This number may be used for order-related communication, such as shipping updates or customer service inquiries.
 			</Property>
 			<Property name="step" label="Step" route="/funnels/types#step">
-				Checkout step.
+				The specific step or page in the checkout process where the checkout creation occurred. 
 			</Property>
 			<Property name="link" type="String">
-				Checkout link.
+				The URL of the checkout page, including the pre-filled checkout form. This link can be used to revisit the checkout page with all customer information and order details already entered.
 			</Property>
 			<Property name="store" label="Store" route='/stores/types#store'>
-				Checkout store.
+				The store where the checkout was created. This field links to the Store object, providing information about the specific store associated with the checkout process.
 			</Property>
 			<Property name="funnel" label="Funnel" route='/funnels/types#funnel'>
-				Checkout funnel.
+				The funnel where the checkout was created. This field links to the Funnel object, providing information about the specific funnel associated with the checkout process.
 			</Property>
 			<Property name="currency" type="String!">
-				Checkout currency.
+				The currency in which the checkout is processed. This value is represented by a currency code (e.g., "USD" for US Dollars, "EUR" for Euros), determining the monetary unit for all prices, payments, and totals within the checkout.
 			</Property>
 			<Property name="recovered" type="Boolean">
-				Checkout recovered option.
+				A boolean flag indicating whether the checkout was successfully completed, meaning an order was created from this checkout. If `true`, it indicates the checkout resulted in a completed order; if `false`, no order was created from this checkout session.
 			</Property>
 			<Property name="shipping_address" type="CheckoutAddress">
 				Checkout shipping address.
@@ -770,10 +770,10 @@ This list contains all query and input types for the order endpoints.
 		### Fields
 		<Properties> 
 			<Property name='variant' label='ProductVariant' route="/products/types#product-variant">
-				Checkout product variant.
+				A reference to the specific product variant included in the checkout. This field links the checkout variant to the corresponding ProductVariant object, allowing access to detailed information about the selected product variant
 			</Property>
 			<Property name="quantity" type="Int!">
-				Checkout variant quantity.
+				The quantity of the product variant selected in the checkout. This field specifies how many units of the variant the customer has chosen to purchase during the checkout process.
 			</Property>
 		</Properties> 
   </Col>
