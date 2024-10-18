@@ -425,10 +425,10 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the payment source.
 			</Property>
 			<Property name="order" label="Order!" route="/orders/types#order">
-				Payment source order.
+				The order associated with this payment source. This field links the payment source to the corresponding Order object, providing context on which order the payment was made for.
 			</Property>
 			<Property name="payment_gateway" label="PaymentGateway!" route="/other#payment-gateway">
-				Payment gateway.
+				The payment gateway used to process the transaction. This field references the PaymentGateway object, detailing the specific service or platform (e.g., Stripe, PayPal) that facilitated the payment.
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the payment source was updated.
@@ -452,7 +452,7 @@ This list contains all query and input types for the order endpoints.
 				Unique identifier for the variant snapshot.
 			</Property>
 			<Property name="groupID" type="String!">
-				Variant snapshot group id.
+				A string that references the actual variant number ID in the format `VariantSnapshot:variant_id` (e.g., VariantSnapshot:1856). 
 			</Property>
 			<Property name="_id" type="Int!">
 				Unique number identifier for the variant snapshot.
@@ -467,19 +467,19 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the variant snapshot was removed.
 			</Property>
 			<Property name="title" type="String!">
-				Variant snapshot title.
+				The title or name of the product variant at the time the snapshot was taken. This field captures the product’s title as it appeared during the transaction, ensuring consistency even if the product title changes later.
 			</Property>
 			<Property name="sku" type="String!">
-				Variant snapshot sku.
+				The SKU (Stock Keeping Unit) of the product variant at the time the snapshot was taken. The sku is a unique identifier used for inventory management and tracking, preserving the specific SKU value during the transaction.
 			</Property>
 			<Property name="image" label="Image" route="/other#image">
-				Variant snapshot image.
+				The image of the product variant as it appeared at the time the snapshot was taken. This field stores the reference to the product image used during the transaction, ensuring that the visual representation of the variant is preserved, even if the product image changes later.
 			</Property>
 			<Property name="price" type="Float!">
-				Variant snapshot price.
+				The price of the product variant at the time the snapshot was taken. This field captures the exact price during the transaction, ensuring that the price remains consistent for historical records, even if the product price is updated later.
 			</Property>
 			<Property name="options" type="[OrderVariantOption!]!">
-				Orderbump snapshot options.
+				A list of options for the product variant at the time the snapshot was taken. Each option represents a specific configuration or customization of the variant, such as size or color. The structure is defined by the OrderVariantOption type, which includes:
 				```
 				type OrderVariantOption {
 					id: String!
@@ -489,25 +489,25 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="tracking_number" type="String">
-				Variant snapshot tracking number.
+				The tracking number associated with the shipment of the product variant at the time the snapshot was taken. This field captures the shipping tracking number if applicable, providing a reference for tracking the delivery of the variant.
 			</Property>
 			<Property name="tracking_link" type="String">
-				Variant snapshot tracking link.
+				The URL link for tracking the shipment of the product variant. This field provides a direct link to the carrier's tracking page, allowing real-time updates on the delivery status of the variant at the time the snapshot was taken.
 			</Property>
 			<Property name="carrier" type="String">
-				Variant snapshot carrier.
+				The name of the shipping carrier responsible for delivering the product variant at the time the snapshot was taken. This field identifies the carrier (e.g., "FedEx," "UPS," "DHL") associated with the shipment, providing context for tracking and delivery.
 			</Property>
 			<Property name="payment_id" type="ID!">
-				Variant snapshot payment id.
+				The unique identifier for the payment associated with the product variant at the time the snapshot was taken. This field links the variant to the corresponding payment, allowing for tracking and reference of the transaction details.
 			</Property>
 			<Property name="refund_id" type="ID">
-				Variant snapshot refund id.
+				The unique identifier for the refund associated with the product variant, if applicable. This field links the variant to a specific refund transaction, allowing for tracking and reference of any refunds issued for the variant. It may be `null` if no refund is associated.
 			</Property>
 			<Property name="variant_id" type="ID">
-				Variant snapshot variant id.
+				The unique identifier for the product variant at the time the snapshot was taken. This field links the snapshot to the specific product variant, allowing for tracking and reference to the original variant, even if changes are made later.
 			</Property>
 			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus!">
-				Variant snapshot fulfillment status.
+				The fulfillment status of the product variant at the time the snapshot was taken. This field indicates whether the variant has been fulfilled (shipped) or not. The `VariantSnapshotItemFulfillmentStatus` enum has the following values:
 				```
 				enum VariantSnapshotItemFulfillmentStatus {
 					none
@@ -516,7 +516,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="financial_status" type="VariantSnapshotFinancialStatus!">
-				Variant snapshot financial status.
+				The financial status of the product variant at the time the snapshot was taken. This field indicates the current payment status for the variant. The `VariantSnapshotFinancialStatus` enum has the following values:
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -525,10 +525,10 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="variant" label="ProductVariant" route="/products/types#product-variant">
-				Variant snapshot product variant.
+				A reference to the current ProductVariant object, if it still exists. This field links the snapshot to the active product variant, allowing developers to retrieve up-to-date details about the variant, even after the snapshot was taken. If the variant has been deleted or modified, the snapshot still retains historical data, but this reference will point to the actual variant in the system, if available.
 			</Property>
 			<Property name="payment" label="Payment!" route="/orders/types#payment">
-				Variant snapshot payment.
+				A reference to the Payment object associated with the variant snapshot. This field links the variant to the specific payment made for it, allowing developers to retrieve details about the transaction, such as payment method, total amount, and any related refunds.
 			</Property>
 			<Property name="customer_files" type="[CustomerFileGroup!]!">
 				Variant snapshot customer files.
@@ -584,7 +584,7 @@ This list contains all query and input types for the order endpoints.
 				Unique number identifier for the orderbump snapshot.
 			</Property>
 			<Property name="groupID" type="String!">
-				Orderbump snapshot group id.
+				A string that references the actual order bump group ID in the format `OrderBumpSnapshot:order_bump_id` (e.g., OrderBumpSnapshot:1234). 
 			</Property>
 			<Property name="updated_at" label="TimeStamp!" route='/other#timestamp'>
 				Timestamp of when the orderbump snapshot was updated.
@@ -596,37 +596,37 @@ This list contains all query and input types for the order endpoints.
 				Timestamp of when the orderbump snapshot was removed.
 			</Property>
 			<Property name="title" type="String!">
-				Orderbump snapshot title.
+				The title or name of the order bump product at the time the snapshot was taken. This field captures the product's title as it appeared during the transaction, ensuring that the name is preserved, even if the product title changes later.
 			</Property>
 			<Property name="sku" type="String!">
-				Orderbump snapshot sku.
+				The SKU (Stock Keeping Unit) of the order bump product at the time the snapshot was taken. This unique identifier is used for tracking and inventory management, preserving the specific SKU used during the transaction, even if the product’s SKU changes later.
 			</Property>
 			<Property name="image" label="Image" route="/other#image">
-				Orderbump snapshot image.
+				The image of the order bump product at the time the snapshot was taken. This field stores the reference to the product image used during the transaction, preserving the visual representation of the order bump product even if the image is changed later.
 			</Property>
 			<Property name="price" type="Float!">
-				Orderbump snapshot price.
+				The price of the order bump product at the time the snapshot was taken. This field captures the exact price during the transaction, ensuring that the price is preserved for historical records, even if the product price is updated later.
 			</Property>
 			<Property name="tracking_number" type="String">
-				Orderbump snapshot tracking number.
+				The tracking number associated with the shipment of the order bump product at the time the snapshot was taken. This field provides a reference for tracking the delivery of the order bump product, if applicable.
 			</Property>
 			<Property name="tracking_link" type="String">
-				Orderbump snapshot tracking link.
+				The URL link for tracking the shipment of the order bump product. This field provides a direct link to the carrier’s tracking page.
 			</Property>
 			<Property name="carrier" type="String">
-				Orderbump snapshot carrier.
+				The name of the shipping carrier responsible for delivering the order bump product at the time the snapshot was taken. This field identifies the carrier (e.g., "FedEx," "UPS," "DHL"), providing context for shipment tracking and delivery.
 			</Property>
 			<Property name="payment_id" type="ID!">
-				Orderbump snapshot payment id.
+				The unique identifier for the payment associated with the order bump snapshot. This field links the order bump product to the corresponding payment, allowing for tracking and reference of the transaction details.
 			</Property>
 			<Property name="refund_id" type="ID">
-				Orderbump snapshot refund id.
+				The unique identifier for the refund associated with the order bump, if applicable. This field links the order bump product to a specific refund transaction, allowing for tracking and reference of any refunds issued. It may be null if no refund is associated with the order bump.
 			</Property>
 			<Property name="product_id" type="ID!">
-				Orderbump snapshot product id.
+				The unique identifier for the actual product associated with the order bump. This field links to the current product in the system, allowing for tracking and reference of the active product, even after the snapshot was taken.
 			</Property>
 			<Property name="fulfillment_status" type="VariantSnapshotItemFulfillmentStatus">
-				Orderbump snapshot fulfillment status.
+				The fulfillment status of the order bump product at the time the snapshot was taken. This field indicates whether the order bump product has been shipped or fulfilled.
 				```
 				enum VariantSnapshotItemFulfillmentStatus {
 					none
@@ -635,7 +635,7 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="financial_status" type="VariantSnapshotFinancialStatus!">
-				Orderbump snapshot financial status.
+				The financial status of the order bump product at the time the snapshot was taken. This field indicates the payment status for the order bump snapshot. 
 				```
 				enum VariantSnapshotFinancialStatus {
 					pending
@@ -644,10 +644,10 @@ This list contains all query and input types for the order endpoints.
 				```
 			</Property>
 			<Property name="product" label="Product" route="/products/types#product">
-				Orderbump snapshot product.
+				A reference to the current Product object associated with the order bump. This field links the snapshot to the actual product in the system, allowing developers to retrieve up-to-date details about the product, even after the snapshot was taken.
 			</Property>
 			<Property name="payment" label="Payment!" route="/orders/types#payment">
-				Orderbump snapshot payment.
+				A reference to the Payment object associated with the order bump snapshot. This field links the order bump product to the corresponding payment, allowing developers to track transaction details such as the payment method, total amount, and any associated refunds.
 			</Property>
 			<Property name="file" label="File" route="/products/types#file">
 				Variant snapshot file.
