@@ -112,7 +112,7 @@ const verifyWebhook = async (req) => {
 
 Here are all the event types.
 
-`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `product/created`, `product/deleted`, `funnel/created`, `funnel/updated`, `funnel/deleted`, `app/uninstalled`
+`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `order/updated`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `product/created`, `product/deleted`, `funnel/created`, `funnel/updated`, `funnel/deleted`, `app/uninstalled`
 
 # Order events
 
@@ -139,6 +139,9 @@ Here are all the event types.
 			</Property>
 			<Property name="Order item created" type="order-item/created">
 				This webhook is fired when the order item is created.
+			</Property>
+			<Property name="Order updated" type="order/updated">
+				This webhook is triggered whenever an update occurs on an order within the platform. It captures a wide range of modifications, including changes to tags, notes, items, refunds, cancellations, or marking an order as paid. Because this webhook is general, it provides notification of updates without specifying the exact nature of the change. To monitor specific order events, consider using the above webhooks.
 			</Property>
 		</Properties>
 	</Col>
