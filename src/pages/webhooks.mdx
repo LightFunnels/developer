@@ -103,8 +103,30 @@ const verifyWebhook = async (req) => {
     return true;
 }
 ```
+## Deleting webhooks
 
+When your app no longer needs to receive a specefic webhook, you can delete it by its unique ID. This mutation permanently removes the specified webhook from Lightfunnels, preventing any further events from triggering it.
 
+```graphql {{ title: 'GraphQL Mutation' }}
+mutation webhooksDeleteMutation($id: ID!){
+	deleteWebhook(id: $id)
+}
+```
+Variables object will contain only the webhook id, here is an example:
+```json {{ title: 'GraphQL Variables'}}
+{
+	"id": "webhook_id"
+}
+```
+
+It will return the deleted webhook ID if the mutation was executed successfully, here is an example:
+```json {{ title: 'GraphQL Response'}}
+{
+	"data": {
+		"deleteWebhook" : "webhook_id"
+	}
+}
+```
 
 ---
 
