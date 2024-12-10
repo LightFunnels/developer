@@ -346,6 +346,9 @@ This list contains all query and input types for the order endpoints.
 			<Property name="items" label="[ProductVariantSnapshotOrOrderBumpSnapshot!]!" route='/orders/types#product-variant-snapshot-or-order-bump-snapshot'>
 				A list of items associated with the payment, represented as a union of either ProductVariantSnapshot or OrderBumpSnapshot. Each item reflects a product variant or an order bump that was part of the transaction paid for. 
 			</Property>
+			<Property name="external_payment" label="ExternalPayment!" route='/orders/types#external-payment'>
+				Represents details of an external payment processed through third-party payment gateways such as Tap, Razorpay, or others. This field is included for payments that were completed using external systems rather than native methods. 
+			</Property>
 		</Properties>
   </Col>
 </Row>
@@ -365,6 +368,21 @@ This list contains all query and input types for the order endpoints.
 		union ProductVariantSnapshotOrOrderBumpSnapshot = VariantSnapshot | OrderBumpSnapshot
 		```
 	</Properties> 
+  </Col>
+</Row>
+
+---
+
+## ExternalPayment
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String">
+				The unique identifier assigned to the payment by the external gateway. Useful for tracking and reconciling transactions between your platform and the external payment provider.
+			</Property>
+		</Properties>
   </Col>
 </Row>
 
