@@ -71,7 +71,7 @@ This list contains all query and inputs types for the product endpoints.
 				</Property>
 			</Property>
 			<Property name="tags" label="[Tag!]!" route="/products/types#tag">
-				The product tags. 
+				A list of tags associated with the product. Tags are useful for categorizing and filtering products.
 			</Property>
 			<Property name="review_score" type="Float!">
 				The product review score. 
@@ -582,6 +582,12 @@ This list contains all query and inputs types for the product endpoints.
 			</Property>
 			<Property name="product_id" type="ID!">
 				The product id.
+			</Property>
+      <Property name="product_id" type="ID!">
+				The product id.
+			</Property>
+      <Property name="product" label="Product" route="/products/types#product">
+				Resolves the parent product associated with this variant. Use this property to access details of the main product, such as its name, category, tags or shared attributes. This is particularly useful when working with product variants and needing context about their parent product.
 			</Property>
 			<Property name="options" type="[ProductOptionValue!]!">
 				The product options.
