@@ -35,3 +35,25 @@ Errors are returned in a consistent structure, making it easier for clients to p
 3. **User Communication**: Display the `message` to the user if it's intended for them.
 4. **Logging and Monitoring**: Log the error details for monitoring and debugging purposes.
 5. **Conditional Logic**: Implement conditional logic based on `key` to handle specific errors uniquely.
+
+## Common Error Keys
+
+This section is reserved for providing common error identifiers that you should expect to make your business logic reliable.
+### Products
+
+- `errors_wrong_product` : Meaning that the product cannot be found.
+- `errors_dup_slug` : Meaning that the slug of the product that you're attempting to create or update is already existing.
+
+### Webhooks
+
+- `webhooks_errors_permission` : Means that You don't have access to the requested webhook type.
+- `webhooks_duplicated` : Means that the webhook you're attempting to create already exists.
+- `webhooks_not_found` : Means that the requested webhook is not found.
+- `webhooks_version_error` : Means that you're requesting the creation of a webhook with a deprecated version.
+
+### Stores
+
+- `errors_duplicated_store_slug` : Means that the store you are using a pre-existing slug when trying to update or create a store.
+- `errors_missing_default_collection` : You should always provide a default collection for a store.
+- `errors_delete_default_collection` : Deleting a default store collection is prohibited.
+- `errors_store_not_found` : The store you are looking for is unfound.
