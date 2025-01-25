@@ -259,3 +259,63 @@ These endpoints allow you to retrieve, create, update, and delete Store(s).
     ```
   </Col>
 </Row>
+
+---
+
+## Add Products to Store
+
+<Row>
+  <Col>
+    This mutation allows you to add existing products to store.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="[ID!]!">
+				The store uid.
+			</Property>
+      <Property name="node" type="AddProductsToStoreInput!">
+				object named node that contains an array of the products uids (see the type structure below).
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property name='AddProductsToStoreInput!' type="AddProductsToStoreInput!">
+				The AddProductsToStoreInput! type.
+				```
+				type AddProductsToStoreInput {
+					products_uids: [String!]!
+				}
+				```
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+    ```
+    mutation addProductsToStore($node: AddProductsToStoreInput!$id: ID!){
+        addProductsToStore(id: $id, node: $node) {
+          id
+          products(cursor: null){
+              title
+              price
+              link
+              cursor
+          }
+        }
+      }
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"addProductsToStore": {
+					# Store type fields
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
