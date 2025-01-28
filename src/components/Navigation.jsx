@@ -213,6 +213,7 @@ export const navigation = [
       { title: 'Segments', href: '/segments' },
       { title: 'Settings', href: '/settings' },
       { title: 'Stores', href: '/stores' },
+      { title: 'Shipping Rate Groups', href: '/shipping-rate-groups' },
     ],
   },
 	{
@@ -230,6 +231,7 @@ export const navigation = [
       { title: 'Segments', href: '/segments/types' },
       { title: 'Settings', href: '/settings/types' },
 			{ title: 'Stores', href: '/stores/types' },
+      { title: 'Shipping Rate Groups', href: '/shipping-rate-groups/types' },
       { title: 'Other types', href: '/other' },
     ],
   },

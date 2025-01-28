@@ -1,0 +1,203 @@
+export const description =
+  'On this page, we’ll dive into the different shipping rate groups endpoints you can use to manage them programmatically.'
+
+# Shipping Rate Groups
+
+These endpoints allow you to retrieve, create, update, and delete shipping rate group(s) --- used to specify the shipping rates for geographical zone, and can be then connected to a product or a store (see update mutations for those data structures).
+
+---
+
+## List
+
+<Row>
+  <Col>
+    This query allows you to retrieve all shipping rate groups on your account.
+		### Fields 
+		<Properties>	
+			<Property label="[ShippingRateGroup!]!" route="/shipping-rate-groups/types#shipping-rate-group">
+				The ShippingRateGroup! query type.
+			</Property>
+		</Properties>	
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```
+			query AccountQuery{
+				account{
+					shipping_rates {
+						# ShippingRateGroup type fields
+						id
+						...
+					}
+				}
+			}
+    	```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"account": {
+					"shipping_rates": [
+						{
+							"id": "shrg_qsdqsdqsdsqdqs",
+						}
+					]
+				},
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Create
+
+<Row>
+  <Col>
+    This query allows you to create a new shipping rate group.
+		### Arguments 
+		<Properties> 
+			<Property label="InputShippingRateGroup!" route="/shipping-rate-groups/types#input-shipping-rate-group">
+				The InputShippingRateGroup! type.
+			</Property>
+		</Properties>	
+
+		### Fields 
+		<Properties>	
+			<Property name='CreateShippingRateGroupMutation!' type="CreateShippingRateGroupMutation!">
+				The CreateShippingRateGroupMutation! query type.
+				```
+				type CreateShippingRateGroupMutation {
+					node: InputShippingRateGroup!
+				}
+				```
+			</Property>
+		</Properties>	
+		
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+			```
+			mutation mutationName($node: InputShippingRateGroup!) {
+				createShippingRateGroup(node: $node){
+					# Account type fields
+					id
+					...
+				}
+			}
+			```
+    </CodeGroup>
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"createShippingRateGroup": {
+					# Account type fields
+                    "id" : "acc_RnVubmVsOjIwMTIz"
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>
+
+---
+
+## Update
+
+<Row>
+  <Col>
+    This mutation allows you to perform an update on a shipping rate group.
+
+		### Arguments 
+		<Properties> 
+			<Property name="id" type="ID!">
+				The shipping rate group id.
+			</Property>
+			<Property name="node" label="InputShippingRateGroup!" route="/shipping-rate-groups/types#input-shipping-rate-group">
+				The shipping rate group input node.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="ShippingRateGroup!" route="/shipping-rate-groups/types#shipping-rate-group">
+				The ShippingRateGroup! query type.
+			</Property>
+		</Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="Post" label="https://services.lightfunnels.com/api/v2">
+
+    ```
+    mutation updateShippingRateGroupMutation($node: InputShippingRateGroup!, $id: ID!){
+			updateShippingRateGroup(node: $node, id: $id){
+				# ShippingRateGroup type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+			"data": {
+				"updateShippingRateGroup": {
+					"id": "shrg_qsdqsdqsdsqdqs",
+					...
+				}
+			}
+		}
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete
+
+<Row>
+  <Col>
+    This mutation allows you to delete a shipping rate group.
+
+		### Arguments 
+		<Properties> 
+			<Property name="uid" type="ID!">
+				The shipping rate group id.
+			</Property>
+		</Properties>
+
+		### Fields 
+		<Properties>	
+			<Property label="Account" route='/account/types#account'>
+				The account type.
+			</Property>
+		</Properties>
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="https://services.lightfunnels.com/api/v2">
+    ```
+		mutation deleteShippingRateGroupMutation($id: ID!){
+			deleteShippingRateGroup(id: $id){
+				# Account type fields
+			}
+		}
+    ```
+    </CodeGroup>
+
+		```json {{ title: 'Response' }}
+    {
+			"data": {
+				"deleteShippingRateGroup": {
+					# Account type fields
+                    "id" : "acc_RnVubmVsOjIwMTIz"
+				}
+			}
+		}
+    ```
+  </Col>
+</Row>

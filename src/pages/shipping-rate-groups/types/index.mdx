@@ -1,0 +1,133 @@
+export const description =
+  'On this page, we’ll dive into the different shipping rate groups types.'
+
+# Shipping Rate Groups types
+This list contains all query types for the shipping rate groups endpoints.
+
+---
+
+## ShippingRateGroup 
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				Unique identifier of type number for the shipping rate group.
+			</Property>
+			<Property name="uid" type="ID!">
+				Unique identifier of type string for the shipping rate group.
+			</Property>
+			<Property name="label" type="String!">
+				The shipping rate group name.
+			</Property>
+			<Property name="zones" label="[ShippingZone!]!" route='/shipping-rate-groups/types#shipping-zone'>
+				The shipping rate group zones are used to define shipping rates per country or countries.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## ShippingZone
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="String!">
+				The unique identifier of the shipping zone.
+			</Property>
+			<Property name="label" type="String!">
+				The shipping zone name.
+			</Property>
+      <Property name="countries" type="[Country!]!">
+				It represents one country or more codes that the zone will be operating on (if you want to enable the 'rest of the world' pass '*').
+			</Property>
+			<Property name="rates" label="[ShippingRate!]!" route='/shipping-rate-groups/types#shipping-rate'>
+				It represents the shipping rates to be associated with the zone.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## ShippingRate
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				The unique identifier of the shipping rate.
+			</Property>
+			<Property name="label" type="String!">
+				The name of the shipping rate.
+			</Property>
+			<Property name="price" type="Float!">
+				The price of the shipping rate.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+---
+
+## InputShippingRateGroup
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="label" type="String!">
+				The name of the shipping rate group.
+			</Property>
+			<Property name="zones" label="[InputZone!]!" route='/shipping-rate-groups/types#input-zone'>
+				The zones of the shipping rate group.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+## InputZone
+
+<Row>
+  <Col>
+		### Fields
+		<Properties>
+      <Property name="id" type="ID!">
+				The unique identifier of the zone, make sure it is of type String.
+			</Property> 
+			<Property name="label" type="String!">
+				The name of the shipping rate group zone.
+			</Property>
+			<Property name="countries" type="[Country!]!">
+				Where you should pass list of countries codes that the zone will be operating on (if you want to enable the 'rest of the world' pass '*').
+			</Property>
+			<Property name="rates" label="[InputShippingRate!]!" route='/shipping-rate-groups/types#input-shipping-rate'>
+				It represents the shipping rates to be associated with the zone.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
+
+## InputShippingRate
+
+<Row>
+  <Col>
+		### Fields
+		<Properties> 
+			<Property name="id" type="ID!">
+				The unique identifier of the shipping rate.
+			</Property>
+			<Property name="label" type="String!">
+				The name of the shipping rate.
+			</Property>
+			<Property name="price" type="Float!">
+				The price of the shipping rate.
+			</Property>
+		</Properties>
+  </Col>
+</Row>
