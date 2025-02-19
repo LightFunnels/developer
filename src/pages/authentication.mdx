@@ -50,15 +50,52 @@ https://app.lightfunnels.com/admin/oauth?client_id=9461026524765762404265764243&
 
 Once the user accepts the requested permissions on the consent screen, they will get redirected to the `redirect URI` that you used in Step 1, with an authorization `code` variable added in the query string.
 
-Using the authorization `code` variable, combined with the `client ID` and `client secret`, you can request your permanent `access token` by making a JSON post request:
+You should pass your client_id and client_secret on authorization header, joined by two points character `:` (should be on the same order as we said) and base64 encoded, then the resulted value should be joined with `Basic `. You should pass too the `code` variable on the body of the request, either using search params as below, or nested on an object and json stringified. Here is an example ts code:
 
-``` json {{ title: 'POST - https://api.lightfunnels.com/oauth/access_token'}}
-{
-    "client_id" : "{{client_id}}",
-    "client_secret" : "{{client_secret}}",
-    "code" : "the authorization code from the query string"
-}
+``` typescript ({ title: '' })
+const getOAuthToken = async () => {
+  const clientId = 'client_id';
+  const clientSecret = 'client_secret';
+  const tokenUrl = 'https://api.lightfunnels.com/api/access_token';
+
+  // Encode client credentials in Base64
+  const credentials = btoa(`${clientId}:${clientSecret}`);
+
+  try {
+    const response = await fetch(tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${credentials}`,
+      },
+      body: new URLSearchParams({
+        'code': 'the authorization code from the query string'
+      }).toString()
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('OAuth Token Response:', data);
+    return data.access_token;
+  } catch (error) {
+    console.error('OAuth request failed:', error);
+    return null;
+  }
+};
+
+// Call the function
+getOAuthToken().then(token => {
+  if (token) {
+    console.log('Access Token:', token);
+  } else {
+    console.log('Failed to retrieve access token.');
+  }
+});
+
 ```
+
 ``` json {{ title: 'Response example'}}
 {
     "access_token": "YOUR_ACCESS_TOKEN",
