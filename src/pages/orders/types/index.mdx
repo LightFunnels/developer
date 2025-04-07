@@ -719,7 +719,10 @@ This list contains all query and input types for the order endpoints.
 				The total cost of the checkout, including all products, shipping fees, and any applied discounts. This value represents the final amount the customer is required to pay and is expressed as a floating-point number in the currency of the checkout.
 			</Property>
 			<Property name="discount_value" type="Float!">
-				The total value of all discounts applied to the checkout. This amount reflects any coupons, or offers that reduced the overall cost of the checkout, expressed as a floating-point number in the currency of the checkout.
+				The total monetary value of standard discounts applied to the checkout, typically through the use of coupon codes. This value represents the coupon code discount amount subtracted from the checkout subtotal and is expressed as a floating-point number, usually in the currency of the checkout.
+			</Property>
+      <Property name="bundle_discount_value" type="Float!">
+				The total monetary value of discounts specifically applied to bundled products within the checkout. This value reflects the discount provided when multiple products are purchased together as part of a bundle promotion. It is expressed as a floating-point number, typically in the currency of the checkout.
 			</Property>
 			<Property name="subtotal" type="Float">
 				The subtotal amount of the checkout, representing the total cost of all items before applying discounts and shipping fees. This value is expressed as a floating-point number in the currency of the checkout.
