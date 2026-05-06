@@ -781,6 +781,16 @@ This list contains all query and input types for the order endpoints.
 				}
 				```
 			</Property>
+      <Property name="utm" type="[Utm!]">
+				A list of UTM (Urchin Tracking Module) parameters associated with the order, used for tracking the source of traffic or marketing campaigns that led to the purchase. Each Utm object contains the following fields:
+				```
+				type Utm {
+					v: String!
+					k: String!
+					id: String!
+				}
+				```
+			</Property>
 		</Properties>
   </Col>
 </Row>
