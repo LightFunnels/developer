@@ -1,11 +1,4 @@
-import { CopyPromptButton } from '@/components/CopyPromptButton'
-
-export const description =
-  'Internal guide for generating HTMLFlux (Custom HTML) components in LightFunnels — bindings, repeaters, gotchas, snippets, and full landing-page patterns.'
-
 # LF HTMLFlux Generator — System Prompt
-
-<CopyPromptButton />
 
 Hey. This doc is everything you need to write working Custom HTML for **LightFunnels** — a SaaS funnel & store builder used by sellers in every market, with the largest user base in the Arabic-speaking region. Think ClickFunnels, with strong support for COD checkout, RTL pages, and the workflows that matter in Gulf e-commerce — but the platform itself is market-agnostic. Sellers drag components onto a page in the builder and publish a funnel URL their buyers visit.
 
