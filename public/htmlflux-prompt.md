@@ -673,7 +673,30 @@ Full control over each option's layout. Use when the design demands custom swatc
 </style>
 ```
 
-### 5. Cart drawer — multi-product store
+### 5. Quantity picker — single-product page
+
+```html
+<div class="inline-flex items-stretch rounded-lg border border-zinc-200 overflow-hidden">
+  <button data-lf-action="decrement-quantity"
+          class="w-10 h-10 flex items-center justify-center font-bold hover:bg-zinc-50">−</button>
+  <div class="w-12 flex items-center justify-center font-bold"
+       data-lf-bind="state.cart.variants.0.quantity">1</div>
+  <button data-lf-action="increment-quantity"
+          class="w-10 h-10 flex items-center justify-center font-bold hover:bg-zinc-50">+</button>
+</div>
+```
+
+**The path that matters**: the display element binds to `state.cart.variants.0.quantity` — **NOT** `state.cart.quantity`. The runtime stores quantity per variant inside `state.cart.variants[]`, so a flat `state.cart.quantity` returns `undefined` and the display stays stuck on its static fallback (the `1` in the template above), even though the +/− buttons are correctly mutating state. The bug is invisible to the developer because clicks "do nothing" visually — but actually they're updating an unread slot of state.
+
+Notes:
+
+- The `1` inside the bound `<div>` is a fallback that shows before the runtime mounts; once hydrated, the runtime overwrites it with the live cart value (usually `1` on first paint, then whatever the user clicks to).
+- The actions auto-clamp at min 1 (`decrement-quantity` won't go below 1, no need to guard yourself).
+- For **multi-product cart drawers** (rendering a `checkout.variants` repeater, see snippet #6), each button needs `data-lf-bind-attr-lf-group-index="$item.groupIndex"` so increments target the right line, and the display binds to `$item.quantity` instead.
+
+---
+
+### 6. Cart drawer — multi-product store
 
 Only build this when the user explicitly says it's for a store. Not for landing pages.
 
@@ -729,7 +752,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 6. Checkout form
+### 7. Checkout form
 
 ```html
 <div class="space-y-3 max-w-md">
@@ -763,7 +786,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 
 > Custom HTML can collect data via `data-lf-input` but **cannot** process payments or submit orders. Payment method selection and order submission go through native LF checkout components. Use `data-lf-action="redirect" data-lf-page="checkout"` to navigate to the payment step.
 
-### 7. Order summary (thank-you page)
+### 8. Order summary (thank-you page)
 
 ```html
 <div class="max-w-xl">
@@ -797,7 +820,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 8. FAQ accordion (the placement-rule pattern)
+### 9. FAQ accordion (the placement-rule pattern)
 
 ```html
 <div data-lf-repeat="product.faq" class="divide-y divide-zinc-200 border-y border-zinc-200">
@@ -815,7 +838,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 9. Testimonials grid
+### 10. Testimonials grid
 
 ```html
 <div data-lf-repeat="product.testimonials" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -835,7 +858,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 
 > `$item.image` is a flat URL string — NOT `$item.image.path`.
 
-### 10. Reviews list with star rating
+### 11. Reviews list with star rating
 
 ```html
 <div data-lf-repeat="product.reviews" class="space-y-6">
@@ -856,7 +879,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 11. Features grid
+### 12. Features grid
 
 ```html
 <div data-lf-repeat="product.features" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -869,7 +892,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 12. Popup (modal)
+### 13. Popup (modal)
 
 ```html
 <button data-lf-action="openPopup" data-lf-target="size-guide"
@@ -886,7 +909,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </div>
 ```
 
-### 13. Star rating from numeric `review_score` — `bind-css-var` trick
+### 14. Star rating from numeric `review_score` — `bind-css-var` trick
 
 ```html
 <div class="stars" data-lf-bind-css-var="--score:product.review_score">
@@ -899,7 +922,7 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </style>
 ```
 
-### 14. Common micro-patterns
+### 15. Common micro-patterns
 
 ```html
 <!-- Show "save X" only when there's a saving -->
