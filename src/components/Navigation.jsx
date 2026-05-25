@@ -190,6 +190,7 @@ export const navigation = [
       { title: 'Introduction', href: '/' },
       { title: 'Getting Started', href: '/gettingstarted' },
       { title: 'Authentication', href: '/authentication' },
+      { title: 'Embedded apps', href: '/embedded-apps' },
       { title: 'Scopes', href: '/scopes' },
       // { title: 'Pagination', href: '/pagination' },
       { title: 'Errors', href: '/errors' },

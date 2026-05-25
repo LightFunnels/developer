@@ -1,0 +1,100 @@
+export const description =
+  'Lightfunnels apps run embedded inside an iframe in the merchant admin. This guide explains how to complete OAuth and maintain a session inside that iframe — without breaking out to a new tab, without a popup, and without storing sensitive tokens in the browser.'
+
+# Embedded apps & iframe sessions
+
+When a merchant opens your app from the Lightfunnels admin, your app is loaded inside an `iframe`. This guide explains how to complete OAuth and keep the merchant signed in **inside that iframe** — no popup, no breaking out to a top-level tab, and no sensitive tokens stored in the browser. {{ className: 'lead' }}
+
+If you have not set up OAuth yet, read [Authentication](/authentication) first. This page builds on it.
+
+## How embedding works
+
+The Lightfunnels admin renders your app inside an iframe and passes a small amount of context on the URL:
+
+```text {{ title: 'Embedded app URL' }}
+https://yourapp.com/?account_id={{account_uid}}&iframe=true
+```
+
+- `account_id` — the merchant account the app was opened for.
+- `iframe=true` — a hint that your app is running embedded.
+
+These are **hints, not credentials**. They are not signed and must never be trusted on their own to grant access. Authentication still happens through OAuth (below).
+
+<Note>
+  Lightfunnels does not currently issue a signed session token per iframe load
+  (there is no "App Bridge"-style primitive). You don't need one — the OAuth
+  flow works inside the iframe, and your app issues its own session. This guide
+  shows how.
+</Note>
+
+## OAuth works inside the iframe
+
+You do **not** need to open a popup or break out to a top-level window to authorize. You can run the entire OAuth flow inside the iframe with a normal, same-frame navigation to the consent screen:
+
+```text {{ title: 'Consent screen (navigate the iframe itself)' }}
+https://app.lightfunnels.com/admin/oauth?client_id={{client_id}}&redirect_uri={{redirect_uri}}&scope={{scopes}}&state={{state}}
+```
+
+Trigger it as a same-frame navigation — a server redirect of the iframe's own request, or `window.location.assign(...)` from inside the iframe. **Do not** target `window.top` and **do not** call `window.open`.
+
+```js {{ title: 'Start OAuth from inside the iframe' }}
+// Same-frame navigation — stays in the iframe.
+window.location.assign(consentUrl)
+
+// ❌ Do NOT do either of these — they are unnecessary:
+// window.top.location.assign(consentUrl)  // breaks out to top-level
+// window.open(consentUrl)                 // popup
+```
+
+### Why it works
+
+When your iframe navigates to `app.lightfunnels.com/admin/oauth`, the iframe's document is now on `lightfunnels.com` — the **same site as the top-level admin window** that is hosting it. The merchant's Lightfunnels login cookie is therefore first-party in that context, so the consent screen resolves normally. Third-party-cookie blocking does not apply here, because nothing cross-site is being read.
+
+After the merchant approves, Lightfunnels redirects back to your `redirect_uri` (your origin) with the authorization `code`, still inside the iframe. You then exchange the code for an access token on your server, exactly as described in [Authentication](/authentication).
+
+## Don't store the access token in the browser
+
+The OAuth access token is a long-lived credential — treat it like a password. Keep it on your **server**, in your database, keyed by account. The browser should never hold it.
+
+This sidesteps the problem developers usually hit: "I can't safely store a token in the browser." Correct — so don't. `localStorage` is readable by any script on the page (XSS), so it is not a safe place for a sensitive token. Keep the access token server-side and give the browser only a **session**, as below.
+
+## Maintaining a session inside the iframe
+
+After OAuth, your app needs to recognise the merchant on subsequent requests. Your app issues and validates this session itself — keep the Lightfunnels access token on your server and hand the browser only a session.
+
+We recommend using a battle-tested auth library rather than rolling your own session logic. [Better Auth](https://www.better-auth.com/) and [NextAuth / Auth.js](https://authjs.dev/) both handle session creation, signing, and cookie management for you. Whichever you choose, configure its session cookie with the attributes below so it works inside the iframe.
+
+### Session cookie attributes
+
+Set your session cookie with these attributes so it works embedded and stays safe:
+
+```text {{ title: 'Set-Cookie' }}
+Set-Cookie: session=<your-signed-session-id>;
+            HttpOnly; Secure; SameSite=None; Partitioned; Path=/
+```
+
+- `HttpOnly` — JavaScript can't read it, so XSS can't steal it (the problem `localStorage` has).
+- `Secure` — HTTPS only. Required with `SameSite=None`.
+- `SameSite=None` — allows the cookie to be sent in the cross-site iframe context.
+- `Partitioned` — opts into [CHIPS](https://developers.google.com/privacy-sandbox/cookies/chips). The browser keeps a **separate copy of this cookie per top-level site**, so it can't be used for cross-site tracking — which is why browsers still allow it even with third-party cookies blocked.
+
+The cookie value should be a signed/opaque session id — not the access token. Your server validates the signature, looks up the matching account, and uses the access token (from your database) to call the Lightfunnels API.
+
+<Note>
+  `Partitioned` ties the cookie to the Lightfunnels admin (the top-level site).
+  Inside the admin iframe it works. If the same app is also opened in a
+  standalone tab, that is a different partition and won't see this cookie.
+</Note>
+
+## Browser support
+
+- **Chrome / Edge** — full support for `Partitioned` (CHIPS).
+- **Firefox / Safari** — partition third-party storage by default, so embedded cookies work; the `Partitioned` attribute may be ignored but the cookie is still isolated. Test your flow in each.
+- Most auth libraries don't set `Partitioned` by default — make sure you add it to the session cookie config, or the cookie won't be sent inside the iframe.
+
+## Summary
+
+- Your app runs in an iframe; `account_id` and `iframe=true` are unsigned hints, not auth.
+- Run OAuth inside the iframe with a same-frame navigation to `/admin/oauth` — no popup, no `window.top`.
+- Keep the access token on your server. Never put it in `localStorage`.
+- Issue your own session with a `HttpOnly; Secure; SameSite=None; Partitioned` cookie — ideally via an auth library like Better Auth or NextAuth.
