@@ -55,7 +55,12 @@ What this means in practice:
 1. Output ONLY the raw HTML. No explanation, no markdown fences, no commentary.
 2. Use Tailwind CSS for layout/typography/colors. Use a `<style>` block for: gradients, complex animations, `lf-selected` / `lf-active` / `lf-unavailable` overrides, `lf-slot-*` / `lf-bundle-slot-*` / `lf-variant-option-*` styling, and anything Tailwind cannot express cleanly.
 3. **Scope**: For a single component, no wrapper class is needed. For a full landing page (or any output spanning multiple sections), wrap everything in ONE root element with a unique class (e.g. `<div class="paz">…`) and scope all custom CSS under that class. This prevents leaking styles into other custom-HTML blocks on the same funnel.
-4. Never use `<script>` tags. All interactivity comes from `data-lf-*` attributes.
+4. **Interactivity, in this order**:
+   1. `data-lf-*` attributes for anything the runtime already handles (clicks tied to cart/variant/bundle/popup state, conditionals, repeaters, two-way inputs, redirects).
+   2. **CSS-first** for visual interactions: scrollable galleries (`overflow-x-auto` + `scroll-snap-*`), hover/focus states, `<details>` for accordions, CSS animations.
+   3. **Inline event handlers** (`onclick="..."`, `onmouseenter="..."`, etc.) when (1) and (2) don't cover it — fine for swapping the active thumbnail, scrolling to a slide, toggling a class.
+   4. **Small `<script>` blocks** as a last resort for things like autoplay carousels, intersection-observer animations, video lightboxes. Two rules: wrap in an IIFE (`(function(){ ... })();`) so identifiers don't leak across HTMLFlux blocks, and scope all DOM queries under your wrapper class (e.g. `document.querySelector('.qmd .qmd-carousel')`). Scripts execute once on initial page load via SSR — they will NOT re-run when cart state changes, so don't use them to react to LF state.
+   5. Still forbidden anywhere: fetching external data, cookies / localStorage / sessionStorage, third-party SDKs, analytics, navigation API.
 5. Every price / currency value MUST have `data-lf-filter="currency"`.
 6. Default: every dynamic text, image, link, and price comes from a binding. Product titles, prices, variant names, bundle labels, review text, FAQ Q&A flow from `product.*` / `account.*` / `checkout.*` / `order.*`.
    - **Exception**: A/B-test variants, fixed-price campaigns, or pages where you intentionally don't want the admin value to affect the page. In those cases hardcoding is fine — but flag hardcoded values with a brief HTML comment (`<!-- HARDCODED: launch price -->`) so they're easy to grep for later.
@@ -84,9 +89,11 @@ When you build a **standalone component** for a multi-product store (the user ex
 
 Step targeting priority on `redirect` / `collect-lead`:
 
-1. `data-lf-step-uid="step_abc123"` — exact UID match (use when funnel has multiple steps of the same type).
-2. `data-lf-page="checkout"` — first step of that type. Default for single-product funnels.
+1. `data-lf-step-uid="step_abc123"` — exact step match by UID. **Use this whenever the funnel has more than one step of the same type.**
+2. `data-lf-page="checkout"` — resolves to the **first** step of that type in funnel order. Fine for single-product funnels with one step per type; ambiguous (you can't choose *which*) when there are several.
 3. `data-lf-href="https://…"` — external URL fallback.
+
+**Priority is presence-based, and there is NO fall-through on a miss.** The resolver commits to the highest-priority attribute that is *present* on the element — it does not try the next one if that attribute fails to resolve. So `data-lf-step-uid="step_typo"` (a UID that matches no step) returns nothing and the click **silently no-ops**; it will NOT fall back to `data-lf-page` / `data-lf-href`. Put exactly one targeting attribute on the element and make sure it resolves. (Inside a repeater, the UID from `$item` must use the dynamic-attr form: `data-lf-bind-attr-lf-step-uid="$item.uid"`.)
 
 ---
 
@@ -169,6 +176,8 @@ Single-variant products produce an empty container — the runtime decides. Alwa
 | `data-lf-bind-html` on a non-trusted field | `data-lf-bind` | text content (escaped, safe) |
 
 `data-lf-bind-html` may only be used with the seven trusted HTML fields: `product.description`, `account.refund_policy` / `privacy_policy` / `terms_of_services`, `store.refund_policy` / `privacy_policy` / `terms_of_services`.
+
+**The runtime does NOT enforce this** — it injects the resolved value as raw `innerHTML` for *any* allowed path. So binding `data-lf-bind-html` to untrusted / customer-supplied content (review text, testimonials, any `$item.*` field) is an XSS vector. Restricting it to the seven pre-sanitized fields is your responsibility; for everything else use `data-lf-bind` (escaped via `textContent`).
 
 ### 7. Forgetting to style `lf-selected` / `lf-active` / `lf-unavailable`
 
@@ -258,13 +267,13 @@ Tailwind utilities are namespaced by Tailwind itself — no need to prefix those
 | Attribute | Effect | Constraints |
 |---|---|---|
 | `data-lf-bind="path"` | Sets `textContent` | Safe (no XSS). Use everywhere for text. |
-| `data-lf-bind-html="path"` | Sets `innerHTML` | Trusted fields only (description, policies). |
+| `data-lf-bind-html="path"` | Sets `innerHTML` | Trusted fields only (description, policies) — convention, NOT runtime-enforced. See gotcha #6. |
 | `data-lf-bind-src="path"` | Sets `<img>.src` | Only on `<img>`. URL safety enforced. |
 | `data-lf-bind-href="path"` | Sets `<a>.href` | Only on `<a>`. URL safety enforced. |
 | `data-lf-bind-style="path"` | Appends to `style.cssText` | Only inside repeaters. Use for `$item._style`. |
 | `data-lf-bind-css-var="--name:path"` | Sets `--name` CSS custom property from `path` | Works outside repeaters. Used for partial-fill stars and similar. |
-| `data-lf-bind-attr-{name}="path"` | Sets `data-{name}` from path | Only inside repeaters. The name MUST start with `lf-` — never with `data-`. |
-| `data-lf-filter="currency"` | Formats numeric value as currency | Pair with `data-lf-bind` on prices. |
+| `data-lf-bind-attr-{name}="path"` | Sets `data-{name}` from path | Only inside repeaters. For action-target attrs the name must start with `lf-` (so the result is a `data-lf-*` attr the click handler reads); never start it with `data-` (yields `data-data-…`). The runtime appends any suffix verbatim, so the `lf-` rule is about hitting a real target attr, not a hard constraint. |
+| `data-lf-filter="currency"` | Formats numeric value as currency | Pair with `data-lf-bind` on prices. (`data-lf-filter="currency-no-group"` formats without thousands separators.) |
 
 ### Conditionals
 
@@ -285,20 +294,21 @@ Falsy values: `false`, `0`, `null`, `undefined`, `""`, `[]`.
 | `data-lf-repeat="$item.subPath"` | Nested repeater — iterates a sub-array of the parent item. Inside, `$parent.*` refers to the outer item. |
 | `data-lf-selected` | Element gets `lf-selected` class when `$item._selected` is true. |
 | `data-lf-option-value="val"` | Element gets `lf-active` when `val` matches the currently-selected option value. |
-| `data-lf-variant-pick` | Standalone option-picker element. Click changes the variant; element gets `lf-active` / `lf-unavailable`. |
+| `data-lf-variant-pick` | Option-picker element. Click changes the variant; element gets `lf-active` (and `lf-unavailable` when out of stock). Place it inside a `product.options` repeater (see snippet #3) — it isn't a top-level scanned attribute, so a block whose *only* `data-lf-*` attribute is `data-lf-variant-pick` is skipped entirely. |
 
 ### Actions (DOM → state)
 
 | Action | Purpose | Required attrs |
 |---|---|---|
 | `add-to-cart` | Add current selection to cart, fire tracking events | — |
-| `select-variant` | Make a variant the active selection | `data-lf-variant-id` |
-| `select-bundle` | Activate a price bundle | `data-lf-bundle-id` |
+| `select-variant` | Make a variant the active selection | `data-lf-variant-id` (must be a real numeric variant id from `product.variants`; an unbound/unknown/non-numeric id silently no-ops) |
+| `select-bundle` | Activate a price bundle | `data-lf-bundle-id` (re-clicking the already-active bundle is a deliberate no-op, to preserve per-slot variant choices) |
 | `close-cart` | Close the cart sidebar | — |
 | `toggleCartPopup` | Toggle cart sidebar | — |
-| `openPopup` / `closePopup` / `togglePopup` | Manage popups | `data-lf-target` (popup id) |
-| `scroll` | Smooth-scroll to a target | `data-lf-target` (selector or id) — see "Cross-section anchors" below for a more reliable native fallback |
-| `redirect` | Navigate | `data-lf-step-uid` OR `data-lf-page` OR `data-lf-href` (priority order) |
+| `openPopup` / `togglePopup` | Open / toggle a popup | `data-lf-target` (popup id) |
+| `closePopup` | Close the open popup | — (ignores `data-lf-target`; always closes whichever popup is active) |
+| `scroll` | Smooth-scroll to a **native LF component** | `data-lf-target` = the **Anchor/ID** of a native LF Section (matched via the `data-id` LF injects), NOT a CSS selector and NOT an `id` on your own HTMLFlux markup. To scroll within/between HTMLFlux blocks use a native `<a href="#id">` instead — see "Cross-section anchors". |
+| `redirect` | Navigate | `data-lf-step-uid` OR `data-lf-page` OR `data-lf-href` (priority order). Optional `data-lf-target` opens the destination in a new tab. |
 | `collect-lead` | Submit lead form, redirect to destination | Same destination resolution as `redirect` |
 | `increment-quantity` | +1 quantity | Optional `data-lf-group-index` (target a cart line) |
 | `decrement-quantity` | −1 quantity (min 1) | Optional `data-lf-group-index` |
@@ -329,7 +339,7 @@ checkout.billing_address.{same fields as shipping_address}
 collectLead.{first_name | last_name | email | phone | line1 | line2 | city | state | zip | country | accepts_marketing}
 ```
 
-Any input bound to a `.country` path is auto-replaced with a populated `<select>` dropdown.
+Any input bound to a `.country` path is auto-replaced with a `<select>` dropdown. **It's only populated when the page also has a native LF address/checkout component** — that's what loads the country list. On a page whose only country field is HTMLFlux, the select renders empty and unselectable, so use the native LF checkout/address component for country selection. (The swap also fires on *any* path ending in `.country`, even a typo'd one not in the writable list — producing a dead, non-functional dropdown.)
 
 ### Hard rule for action target attrs inside repeaters
 
@@ -356,7 +366,7 @@ Direct `data-lf-bundle-id="$item.id"` is a literal string at runtime; clicks sil
 |---|---|---|
 | `lf-selected` | Item is the active variant or active bundle | Elements with `data-lf-selected` inside `product.variants` / `product.price_bundles` |
 | `lf-active` | Option value matches current selection | `[data-lf-option-value]` and `[data-lf-variant-pick]`; auto-generated `.lf-slot-pill` / `.lf-slot-color` / `.lf-slot-image` |
-| `lf-unavailable` | All variants matching this option value are out of stock | `[data-lf-variant-pick]` and auto-generated swatches (default: opacity .4, diagonal stripe, click disabled) |
+| `lf-unavailable` | All variants matching this option value are out of stock | Manual `[data-lf-variant-pick]` and option elements rendered inside a `product.options` repeater (default style: opacity .4, diagonal stripe, click disabled). **NOT applied to auto-generated `data-lf-bundle-slots` / `data-lf-variant-options` swatches** — those only ever toggle `lf-active`, so out-of-stock options inside an auto-picker stay clickable and unstyled. |
 
 ---
 
@@ -364,7 +374,7 @@ Direct `data-lf-bundle-id="$item.id"` is a literal string at runtime; clicks sil
 
 ### Allowed top-level prefixes
 
-`product.*`, `checkout.*`, `order.*`, `state.cart.*`, `discount.*`, `collections.*`, `collectionList.*`, `signup.*`, `store.*`, `translation.*`, `lists.*`, `variantsList.*`, `priceBundlesList.*`, `shipping_zones.*`. Anything else returns undefined silently.
+`product.*`, `checkout.*`, `order.*`, `state.cart.*`, `discount.*`, `collections.*`, `collectionList.*`, `signup.*`, `store.*`, `translation.*`, `lists.*`, `variantsList.*`, `priceBundlesList.*`, `shipping_zones.*`, plus the specific `account.*` paths in the data dictionary below (`account.name`, `account.currency`, `account.customers_email`, `account.address`, and the three `account.*_policy` / `terms_of_services` fields — `account.` is NOT a blanket prefix, so `account.foo` is rejected). Anything else returns undefined silently.
 
 ### Allowed exact paths
 
@@ -383,6 +393,8 @@ You'll see fields starting with an underscore throughout the data dictionary: `$
 These don't exist in the raw product/order JSON. They're **computed by the runtime when the repeater renders** — using the current cart state, the variant inventory, and the product schema. That's why they only make sense inside a repeater context.
 
 Rule: use `_`-fields only inside the matching `data-lf-repeat`. Outside, they return undefined.
+
+**Client-only — absent from the server-rendered HTML.** `_`-fields are computed during client-side hydration, not in the SSR pass. So on first paint (and for no-JS crawlers) every `_`-field is empty: bundle prices (`$item._total`, `$item._savings`) render blank, and any container gated on `data-lf-if="$item._selected"` — including the **required** `data-lf-bundle-slots` — is server-rendered hidden until hydration fills it in. Usually a sub-second flash for real users, but don't rely on `_`-fields (or the slot picker) being present in the initial HTML.
 
 ### Product
 
@@ -569,7 +581,8 @@ Drop in the auto container and style its generated classes:
   [data-lf-variant-options] .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   [data-lf-variant-options] .lf-slot-pill { padding: 0 14px; height: 34px; border: 1.5px solid #e4e4e7; border-radius: 8px; font-size: 13px; cursor: pointer; }
   [data-lf-variant-options] .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  [data-lf-variant-options] .lf-unavailable { opacity: 0.4; pointer-events: none; }
+  /* Note: auto-generated [data-lf-variant-options] swatches never receive .lf-unavailable —
+     out-of-stock options can't be styled or disabled in an auto-picker. */
 </style>
 ```
 
@@ -676,7 +689,7 @@ Full control over each option's layout. Use when the design demands custom swatc
   .slots .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .slots .lf-slot-pill { padding: 0 12px; height: 28px; border: 1px solid #e4e4e7; border-radius: 6px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; }
   .slots .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  .slots .lf-unavailable { opacity: .35; pointer-events: none; }
+  /* (auto-generated bundle slots never receive .lf-unavailable — out-of-stock options stay clickable here) */
 </style>
 ```
 
@@ -929,7 +942,110 @@ Only build this when the user explicitly says it's for a store. Not for landing 
 </style>
 ```
 
-### 15. Common micro-patterns
+### 15. Scrollable image gallery with thumbnail switcher
+
+Pattern for product-page hero galleries: a horizontally scrollable strip of full-size slides + thumbnails that jump to the matching slide. Pure CSS scroll-snap does the layout; a tiny IIFE-wrapped script wires the thumbnails.
+
+```html
+<div class="qmd-gallery">
+  <!-- Slides -->
+  <div class="qmd-slides">
+    <img data-lf-bind-src="product.images.0" alt="" class="qmd-slide" />
+    <img data-lf-bind-src="product.images.1" alt="" loading="lazy" class="qmd-slide" />
+    <img data-lf-bind-src="product.images.2" alt="" loading="lazy" class="qmd-slide" />
+    <img data-lf-bind-src="product.images.3" alt="" loading="lazy" class="qmd-slide" />
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="qmd-thumbs">
+    <button type="button" class="qmd-thumb qmd-active" data-qmd-i="0">
+      <img data-lf-bind-src="product.images.0" alt="" loading="lazy" />
+    </button>
+    <button type="button" class="qmd-thumb" data-qmd-i="1">
+      <img data-lf-bind-src="product.images.1" alt="" loading="lazy" />
+    </button>
+    <button type="button" class="qmd-thumb" data-qmd-i="2">
+      <img data-lf-bind-src="product.images.2" alt="" loading="lazy" />
+    </button>
+    <button type="button" class="qmd-thumb" data-qmd-i="3">
+      <img data-lf-bind-src="product.images.3" alt="" loading="lazy" />
+    </button>
+  </div>
+</div>
+
+<style>
+  .qmd-gallery { display: flex; flex-direction: column; gap: 12px; }
+
+  .qmd-slides {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: 16px;
+  }
+  .qmd-slides::-webkit-scrollbar { display: none; }
+  .qmd-slide {
+    flex: 0 0 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    scroll-snap-align: start;
+  }
+
+  .qmd-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .qmd-thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #e4e4e7;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: border-color .15s ease;
+  }
+  .qmd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .qmd-thumb.qmd-active { border-color: #111; }
+</style>
+
+<script>
+  (function () {
+    // Scope every query under the wrapper class so other HTMLFlux blocks on
+    // this page don't get touched. The page may have multiple galleries with
+    // different prefixes — each script only sees its own.
+    var root = document.querySelector('.qmd-gallery');
+    if (!root) return;
+    var slides = root.querySelector('.qmd-slides');
+    var thumbs = root.querySelectorAll('.qmd-thumb');
+
+    // Click a thumb → scroll the corresponding slide into view
+    thumbs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = Number(btn.getAttribute('data-qmd-i')) || 0;
+        slides.scrollTo({ left: i * slides.clientWidth, behavior: 'smooth' });
+      });
+    });
+
+    // Scroll the slides → mark the matching thumb active
+    slides.addEventListener('scroll', function () {
+      var i = Math.round(slides.scrollLeft / slides.clientWidth);
+      thumbs.forEach(function (b, idx) {
+        b.classList.toggle('qmd-active', idx === i);
+      });
+    });
+  })();
+</script>
+```
+
+**Three rules every JS snippet must follow** (this snippet demonstrates all three):
+
+1. **IIFE-wrap** every `<script>` — `(function(){ ... })();`. Without this, `var slides` leaks into `window` and the next HTMLFlux block on the page that names something `slides` overwrites it.
+2. **Scope DOM queries** to your wrapper class — `document.querySelector('.qmd-gallery .qmd-slides')`, not `document.querySelector('.gallery .slides')`. Page-builder pages often have multiple HTMLFlux blocks with similar markup; a bare `.slides` selector grabs whichever block ended up first in the DOM.
+3. **Don't try to react to LF state changes** from your script. Scripts run once during initial page parse, then never again. If you need to update the gallery when the customer switches variants, do it via `data-lf-*` (e.g. bind the slide `src` to `product.variants.*.image` inside a `data-lf-repeat` that re-renders on selection).
+
+If you need real autoplay, add a `setInterval` inside the same IIFE that calls `slides.scrollBy({ left: slides.clientWidth, behavior: 'smooth' })` and snaps back to 0 when at the end.
+
+### 16. Common micro-patterns
 
 ```html
 <!-- Show "save X" only when there's a saving -->
@@ -942,8 +1058,10 @@ Only build this when the user explicitly says it's for a store. Not for landing 
      data-lf-bind="product.notice_text"
      class="text-xs uppercase tracking-wider text-amber-700"></div>
 
-<!-- Smooth-scroll anchor -->
-<button data-lf-action="scroll" data-lf-target="#bundles" class="text-sm underline">See pricing</button>
+<!-- Smooth-scroll anchor — use a native <a href> to scroll within your own HTMLFlux markup
+     (data-lf-action="scroll" only resolves native LF Sections, by their Anchor/ID). -->
+<a href="#bundles" class="text-sm underline">See pricing</a>
+<!-- ...and put id="bundles" on the target element; add `html { scroll-behavior: smooth }` once. -->
 
 <!-- Sticky bottom CTA on mobile -->
 <div class="fixed bottom-0 inset-x-0 sm:hidden bg-white/95 backdrop-blur border-t border-zinc-200 px-4 py-3 z-30">
@@ -1190,7 +1308,7 @@ A minimal, working single-product landing — copy this as a starting point and 
   .paz .paz-slots .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .paz .paz-slots .lf-slot-pill { padding: 0 12px; height: 28px; border: 1px solid #e4e4e7; border-radius: 6px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; }
   .paz .paz-slots .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  .paz .paz-slots .lf-unavailable { opacity: .35; pointer-events: none; }
+  /* (auto-generated bundle slots never receive .lf-unavailable — out-of-stock options stay clickable here) */
 </style>
 ```
 
@@ -1202,7 +1320,7 @@ Most landing pages have multiple HTMLFlux blocks plus native LF sections (form, 
 
 ### Native `<a href="#id">` is the most reliable approach
 
-`data-lf-action="scroll"` works in most cases, but if it ever silently no-ops on the storefront (we've seen it), the cleanest fallback is a plain anchor + global smooth-scroll:
+`data-lf-action="scroll"` only resolves **native LF components** — it looks them up by the `data-id` LF injects (i.e. a Section's **Anchor/ID** field), so it cannot target an arbitrary `id` or selector on your own HTMLFlux markup (those silently no-op). For scrolling within or between HTMLFlux blocks, use a plain anchor + global smooth-scroll:
 
 ```html
 <a href="#form-section" class="no-underline">Buy Now →</a>
@@ -1287,16 +1405,19 @@ Three cases come up over and over.
 
 **Case 2 — it's not in the snippets but composes from primitives.** Mix bindings + conditionals + repeaters until you get there. Most things compose: stacked `data-lf-if` for either/or rendering, nested repeaters for sub-arrays, `data-lf-bind-css-var` for partial-fill bars, `data-lf-if="path=value"` for branching layouts.
 
-**Case 3 — the user wants something this doc doesn't cover.** Country-based content. Time-based offers. Fetching external data. Custom JS interactivity. Analytics event sends. Cookies. localStorage. Server-side fetches.
+**Case 3 — the user wants something this doc doesn't cover.** Country-based content. Time-based offers. Fetching external data. Analytics event sends. Cookies. localStorage. Server-side fetches.
 
 For Case 3: tell the user straight that it's out of scope, propose the nearest documented alternative, ask if they want to proceed without the feature. Don't silently fabricate.
+
+**Custom JS interactivity is NOT Case 3.** Carousels, autoplay sliders, image gallery thumbnail-switching, hover-driven overlays, intersection-observer scroll animations, video lightboxes — all fair game via inline handlers + small IIFE-wrapped `<script>` blocks (see Output rule #4 and the gallery snippet).
 
 ### What you're never allowed to do
 
 - Invent a `data-lf-*` attribute that isn't in the attribute reference. Typos return silently — the element renders empty, you and the user both think it's working until QA catches it.
-- Write a `<script>` tag. Anywhere. For any reason.
-- Fetch external data via `<iframe>` / `<img onerror>` / `srcset` tricks.
+- Use a `<script>` tag (or inline handler) to fetch external data, hit third-party APIs, load SDKs, send analytics events, or touch the network in any way.
 - Touch cookies, localStorage, sessionStorage, or the navigation API.
+- Write a `<script>` block whose top-level `let` / `const` / `function` names aren't prefixed (collide across HTMLFlux blocks). Always IIFE-wrap.
+- Rely on a `<script>` to react to LF state changes (variant pick, bundle pick, cart updates). Scripts run once on initial page load; they don't re-execute on state change. Use `data-lf-*` for state-reactive work.
 - Bind to paths outside the data dictionary. They return `undefined` and the element renders empty.
 - Add `<html>` / `<head>` / `<body>` wrappers. You're inside a Custom HTML block — output is fragment-only.
 - Add `<link>` tags pointing anywhere except Google Fonts. Other CDN stylesheets get blocked by the storefront's CSP.
@@ -1342,7 +1463,7 @@ Styling:
 - [ ] Multi-section output wrapped in a single root with a unique class.
 - [ ] All custom CSS classes, `@keyframes`, and CSS variables prefixed with that wrapper (no bare `.cta` / `@keyframes pulse` / `--accent`).
 - [ ] `.lf-selected`, `.lf-active`, `.lf-unavailable`, `.lf-slot-*`, `.lf-bundle-slot-*` styles defined where used.
-- [ ] No `<script>` tags.
+- [ ] Any `<script>` block is IIFE-wrapped, scopes its DOM queries under the wrapper class, doesn't react to LF state changes, and doesn't fetch / touch storage / load SDKs.
 - [ ] No `<html>` / `<head>` / `<body>` wrappers — output is fragment-only.
 - [ ] No `<link>` tags except Google Fonts.
 - [ ] `font-family` declarations include a system fallback (`'Cairo', sans-serif`, not `'Cairo'` alone).
