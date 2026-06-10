@@ -177,7 +177,7 @@ Single-variant products produce an empty container — the runtime decides. Alwa
 
 `data-lf-bind-html` may only be used with the seven trusted HTML fields: `product.description`, `account.refund_policy` / `privacy_policy` / `terms_of_services`, `store.refund_policy` / `privacy_policy` / `terms_of_services`.
 
-**The runtime does NOT enforce this** — it injects the resolved value as raw `innerHTML` for *any* allowed path. So binding `data-lf-bind-html` to untrusted / customer-supplied content (review text, testimonials, any `$item.*` field) is an XSS vector. Restricting it to the seven pre-sanitized fields is your responsibility; for everything else use `data-lf-bind` (escaped via `textContent`).
+**The runtime enforces this** — for any other path (including every `$item.*` field; review text is customer-supplied) the value renders as escaped **plain text**, client-side and in SSR. So `data-lf-bind-html` on a non-trusted path isn't an XSS vector anymore, but it *will* show literal tags to the customer. Use `data-lf-bind` for everything that isn't one of the seven fields.
 
 ### 7. Forgetting to style `lf-selected` / `lf-active` / `lf-unavailable`
 
@@ -267,7 +267,7 @@ Tailwind utilities are namespaced by Tailwind itself — no need to prefix those
 | Attribute | Effect | Constraints |
 |---|---|---|
 | `data-lf-bind="path"` | Sets `textContent` | Safe (no XSS). Use everywhere for text. |
-| `data-lf-bind-html="path"` | Sets `innerHTML` | Trusted fields only (description, policies) — convention, NOT runtime-enforced. See gotcha #6. |
+| `data-lf-bind-html="path"` | Sets `innerHTML` | Trusted fields only (description, policies) — **runtime-enforced**: any other path renders as escaped plain text. See gotcha #6. |
 | `data-lf-bind-src="path"` | Sets `<img>.src` | Only on `<img>`. URL safety enforced. |
 | `data-lf-bind-href="path"` | Sets `<a>.href` | Only on `<a>`. URL safety enforced. |
 | `data-lf-bind-style="path"` | Appends to `style.cssText` | Only inside repeaters. Use for `$item._style`. |
@@ -283,8 +283,11 @@ Tailwind utilities are namespaced by Tailwind itself — no need to prefix those
 | `data-lf-if="path!"` | Value is falsy OR empty array (negated) |
 | `data-lf-if="path=value"` | Resolved value (stringified) equals literal `value` |
 | `data-lf-if="path=value!"` | Resolved value does NOT equal `value` (negated equality) |
+| `data-lf-if="path!=value"` | Same as `path=value!` — inequality, the form authors naturally write |
 
 Falsy values: `false`, `0`, `null`, `undefined`, `""`, `[]`.
+
+URL safety (`data-lf-bind-src` / `data-lf-bind-href` / `data-lf-href`): scheme **allowlist** — relative URLs plus `http:` / `https:` / `mailto:` / `tel:` / `sms:`. Any other scheme (`javascript:`, `data:`, `blob:`, `whatsapp:`, …) is silently dropped.
 
 ### Repeaters
 
@@ -341,6 +344,12 @@ collectLead.{first_name | last_name | email | phone | line1 | line2 | city | sta
 
 Any input bound to a `.country` path is auto-replaced with a `<select>` dropdown. **It's only populated when the page also has a native LF address/checkout component** — that's what loads the country list. On a page whose only country field is HTMLFlux, the select renders empty and unselectable, so use the native LF checkout/address component for country selection. (The swap also fires on *any* path ending in `.country`, even a typo'd one not in the writable list — producing a dead, non-functional dropdown.)
 
+Checkboxes bind through their **checked** state and dispatch `true`/`false` (not the `value` attribute) — use one for `collectLead.accepts_marketing`:
+
+```html
+<label><input type="checkbox" data-lf-input="collectLead.accepts_marketing" /> Email me offers</label>
+```
+
 ### Hard rule for action target attrs inside repeaters
 
 When an action target attribute (`data-lf-variant-id`, `data-lf-bundle-id`, `data-lf-target`, `data-lf-href`, `data-lf-page`, `data-lf-step-uid`, `data-lf-group-index`, `data-lf-option-id`, `data-lf-option-value`) takes its value from `$item` or `$parent`, you MUST use the `data-lf-bind-attr-*` form:
@@ -366,7 +375,7 @@ Direct `data-lf-bundle-id="$item.id"` is a literal string at runtime; clicks sil
 |---|---|---|
 | `lf-selected` | Item is the active variant or active bundle | Elements with `data-lf-selected` inside `product.variants` / `product.price_bundles` |
 | `lf-active` | Option value matches current selection | `[data-lf-option-value]` and `[data-lf-variant-pick]`; auto-generated `.lf-slot-pill` / `.lf-slot-color` / `.lf-slot-image` |
-| `lf-unavailable` | All variants matching this option value are out of stock | Manual `[data-lf-variant-pick]` and option elements rendered inside a `product.options` repeater (default style: opacity .4, diagonal stripe, click disabled). **NOT applied to auto-generated `data-lf-bundle-slots` / `data-lf-variant-options` swatches** — those only ever toggle `lf-active`, so out-of-stock options inside an auto-picker stay clickable and unstyled. |
+| `lf-unavailable` | All variants matching this option value are out of stock | Manual `[data-lf-variant-pick]`, option elements rendered inside a `product.options` repeater, AND auto-generated `data-lf-bundle-slots` / `data-lf-variant-options` swatches (default style: opacity .4, diagonal stripe, click disabled). |
 
 ---
 
@@ -581,8 +590,9 @@ Drop in the auto container and style its generated classes:
   [data-lf-variant-options] .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   [data-lf-variant-options] .lf-slot-pill { padding: 0 14px; height: 34px; border: 1.5px solid #e4e4e7; border-radius: 8px; font-size: 13px; cursor: pointer; }
   [data-lf-variant-options] .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  /* Note: auto-generated [data-lf-variant-options] swatches never receive .lf-unavailable —
-     out-of-stock options can't be styled or disabled in an auto-picker. */
+  /* Auto-generated swatches get .lf-unavailable when all matching variants are
+     out of stock (default: opacity .4 + diagonal stripe + click disabled) —
+     override [data-lf-variant-options] .lf-unavailable to restyle. */
 </style>
 ```
 
@@ -689,7 +699,7 @@ Full control over each option's layout. Use when the design demands custom swatc
   .slots .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .slots .lf-slot-pill { padding: 0 12px; height: 28px; border: 1px solid #e4e4e7; border-radius: 6px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; }
   .slots .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  /* (auto-generated bundle slots never receive .lf-unavailable — out-of-stock options stay clickable here) */
+  /* (auto-generated bundle slots apply .lf-unavailable to out-of-stock options — opacity .4, stripe, click disabled) */
 </style>
 ```
 
@@ -1308,7 +1318,7 @@ A minimal, working single-product landing — copy this as a starting point and 
   .paz .paz-slots .lf-slot-pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .paz .paz-slots .lf-slot-pill { padding: 0 12px; height: 28px; border: 1px solid #e4e4e7; border-radius: 6px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; }
   .paz .paz-slots .lf-slot-pill.lf-active { background: #111; color: #fff; border-color: #111; }
-  /* (auto-generated bundle slots never receive .lf-unavailable — out-of-stock options stay clickable here) */
+  /* (auto-generated bundle slots apply .lf-unavailable to out-of-stock options — opacity .4, stripe, click disabled) */
 </style>
 ```
 
