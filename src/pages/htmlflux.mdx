@@ -53,7 +53,7 @@ What this means in practice:
 ## Output rules
 
 1. Output ONLY the raw HTML. No explanation, no markdown fences, no commentary.
-2. Use Tailwind CSS for layout/typography/colors. Use a `<style>` block for: gradients, complex animations, `lf-selected` / `lf-active` / `lf-unavailable` overrides, `lf-slot-*` / `lf-bundle-slot-*` / `lf-variant-option-*` styling, and anything Tailwind cannot express cleanly.
+2. Use Tailwind CSS for layout/typography/colors. Use a `<style>` block for: gradients, complex animations, `lf-selected` / `lf-active` / `lf-unavailable` overrides, `lf-slot-*` / `lf-bundle-slot-*` / `lf-variant-option-*` styling, and anything Tailwind cannot express cleanly. When the user wants the block to **match the funnel's branding**, use the funnel style variables (`var(--static_*, fallback)` — see "Funnel style variables") instead of hard-coded colors/fonts.
 3. **Scope**: For a single component, no wrapper class is needed. For a full landing page (or any output spanning multiple sections), wrap everything in ONE root element with a unique class (e.g. `<div class="paz">…`) and scope all custom CSS under that class. This prevents leaking styles into other custom-HTML blocks on the same funnel.
 4. **Interactivity, in this order**:
    1. `data-lf-*` attributes for anything the runtime already handles (clicks tied to cart/variant/bundle/popup state, conditionals, repeaters, two-way inputs, redirects).
@@ -376,6 +376,35 @@ Direct `data-lf-bundle-id="$item.id"` is a literal string at runtime; clicks sil
 | `lf-selected` | Item is the active variant or active bundle | Elements with `data-lf-selected` inside `product.variants` / `product.price_bundles` |
 | `lf-active` | Option value matches current selection | `[data-lf-option-value]` and `[data-lf-variant-pick]`; auto-generated `.lf-slot-pill` / `.lf-slot-color` / `.lf-slot-image` |
 | `lf-unavailable` | All variants matching this option value are out of stock | Manual `[data-lf-variant-pick]`, option elements rendered inside a `product.options` repeater, AND auto-generated `data-lf-bundle-slots` / `data-lf-variant-options` swatches (default style: opacity .4, diagonal stripe, click disabled). |
+
+### Funnel style variables (CSS custom properties)
+
+The funnel's Design settings are published on the page root as CSS custom properties — custom HTML inherits them. Use `var(--key, fallback)` to bind a block to the merchant's branding; there is NO `data-lf-bind` path for styles (CSS-only).
+
+| CSS variable | Design setting | Type |
+|---|---|---|
+| `--static_page_background` | Page Background | color |
+| `--static_section_background` | Section Background | color |
+| `--static_title_text` | Title Text | color |
+| `--static_body_text` | Body Text | color |
+| `--static_primary_color_buttons_links` | Primary Color (Buttons & Links) | color |
+| `--static_light_primary_background` | Light Primary Background | color |
+| `--static_buttons_text` | Buttons Text | color |
+| `--static_secondary_color` | Secondary Color | color |
+| `--static_outline` | Outline | color |
+| `--static_primary_links_hover` | Primary links hover | color |
+| `--static_secondary_links_hover` | Secondary links hover | color |
+| `--static_divider_color` | Divider color | color |
+| `--static_heading_font` / `--static_subheading_font` / `--static_body_text_font` | Fonts | font-family (bare name, e.g. `Inter`) |
+| `--static_heading_size` / `--static_subheading_size` / `--static_body_text_size` | Sizes | font-size (e.g. `54px`) |
+
+Merchant-defined custom variables also land as `--<key>`.
+
+Rules:
+- **Always include a fallback** — `var(--static_outline, #d6dce9)`. The fullscreen editor preview is an isolated iframe without funnel vars; fallbacks are what render there. Canvas, SSR, and the published page get real values.
+- Tailwind arbitrary values work: `bg-[var(--static_primary_color_buttons_links)]`.
+- Fonts resolve to the bare family name — pair with a generic: `font-family: var(--static_heading_font, sans-serif)`.
+- Use them when the user asks for "on-brand" / "match my funnel design"; hard-code only deliberately fixed palettes (e.g. an always-dark hero).
 
 ---
 
