@@ -54,7 +54,7 @@ After the merchant approves, Lightfunnels redirects back to your `redirect_uri` 
 
 ## Don't store the access token in the browser
 
-The OAuth access token is a long-lived credential — treat it like a password. Keep it on your **server**, in your database, keyed by account. The browser should never hold it.
+The OAuth access and refresh tokens are credentials — treat them like a password. Keep it on your **server**, in your database, keyed by account. The browser should never hold it.
 
 This sidesteps the problem developers usually hit: "I can't safely store a token in the browser." Correct — so don't. `localStorage` is readable by any script on the page (XSS), so it is not a safe place for a sensitive token. Keep the access token server-side and give the browser only a **session**, as below.
 

@@ -50,62 +50,97 @@ https://app.lightfunnels.com/admin/oauth?client_id=9461026524765762404265764243&
 
 Once the user accepts the requested permissions on the consent screen, they will get redirected to the `redirect URI` that you used in Step 1, with an authorization `code` variable added in the query string.
 
-You should send a POST request to `https://api.lightfunnels.com/oauth/access_token` with a JSON body containing your `client_id`, `client_secret`, and the `code` you received. Here is an example ts code:
+Exchange the code by sending a POST request to `https://api.lightfunnels.com/api/v3/access_token`. The body must be `application/x-www-form-urlencoded` and contain:
 
-``` typescript ({ title: '' })
-const getOAuthToken = async () => {
-  const clientId = 'client_id';
-  const clientSecret = 'client_secret';
-  const tokenUrl = 'https://api.lightfunnels.com/oauth/access_token';
+- `grant_type`: `authorization_code`
+- `code`: the code you received
+- `redirect_uri`: the same `redirect URI` you used in Step 1
+- `client_id` and `client_secret` (or send them as HTTP Basic auth)
 
-  try {
-    const response = await fetch(tokenUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: 'the authorization code from the query string'
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('OAuth Token Response:', data);
-    return data.access_token;
-  } catch (error) {
-    console.error('OAuth request failed:', error);
-    return null;
-  }
-};
-
-// Call the function
-getOAuthToken().then(token => {
-  if (token) {
-    console.log('Access Token:', token);
-  } else {
-    console.log('Failed to retrieve access token.');
-  }
+``` typescript {{ title: 'Exchange the code' }}
+const response = await fetch('https://api.lightfunnels.com/api/v3/access_token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: new URLSearchParams({
+    grant_type: 'authorization_code',
+    code: 'the authorization code from the query string',
+    redirect_uri: 'https://yourapp.com/redirect',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
+  }),
 });
 
+if (!response.ok) {
+  throw new Error(`Error: ${response.status} ${await response.text()}`);
+}
+
+const { access_token, refresh_token, expires_in } = await response.json();
 ```
 
 ``` json {{ title: 'Response example'}}
 {
-    "access_token": "YOUR_ACCESS_TOKEN",
+  "access_token": "app_v3_...",
+  "token_type": "Bearer",
+  "expires_in": 7199,
+  "refresh_token": "rt_..."
 }
 ```
 
+Save both tokens in your database. Use the `access_token` in the `Authorization: Bearer` header of your API requests.
+
+## Step 3 - Refreshing the access token
+
+Access tokens expire after 2 hours. When one expires (or shortly before), get a new pair with the refresh token:
+
+``` typescript {{ title: 'Refresh the access token' }}
+const response = await fetch('https://api.lightfunnels.com/api/v3/access_token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: new URLSearchParams({
+    grant_type: 'refresh_token',
+    refresh_token: 'the saved refresh token',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
+  }),
+});
+
+const { access_token, refresh_token } = await response.json();
+```
+
+Every refresh returns a **new** refresh token and the old one stops working. Always save the new one. Refresh tokens expire after 90 days without use.
+
+## Upgrading from the old token endpoint
+
+<Note>
+  `/oauth/access`, `/oauth/access_token` and `/api/access_token` are deprecated. Please use `/api/v3/access_token`.
+</Note>
+
+If your app used one of these endpoints, your saved access tokens keep working. To move an install to v3, exchange its old token once:
+
+``` typescript {{ title: 'Upgrade an existing install' }}
+const response = await fetch('https://api.lightfunnels.com/api/v3/access_token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: new URLSearchParams({
+    grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
+    subject_token: 'the old access token',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
+  }),
+});
+
+const { access_token, refresh_token } = await response.json();
+```
+
+The response is the same as Step 2. Each install can be upgraded only once; after that, use the refresh token.
+
 ## Important notes
-- While testing, the authorization code will only work once. If you need to test again, you will need to go through the consent screen again.
+- The authorization code expires after 10 minutes and works only once. If you need to test again, go through the consent screen again.
 - The client secret is private and should never be shared.
-- The access token is permanent and should be saved in your database. You will need it for all your requests.
-
-
-
-
+- Keep the access and refresh tokens on your server, never in the browser.
