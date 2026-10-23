@@ -134,7 +134,7 @@ It will return the deleted webhook ID if the mutation was executed successfully,
 
 Here are all the event types.
 
-`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `order/updated`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `product/created`, `product/deleted`, `funnel/created`, `funnel/updated`, `funnel/deleted`, `app/uninstalled`
+`order/created`, `order/confirmed`, `order/fulfilled`, `order/cancelled`, `order/uncancelled`, `order/refunded`, `order-item/created`, `order/updated`, `payment/created`, `payment/paid`, `contact-form/created`, `contact/signup`, `contact/updated`, `checkout/created`, `checkout/updated`, `product/updated`, `product/created`, `product/deleted`, `funnel/created`, `funnel/updated`, `funnel/deleted`, `subscription/created`, `subscription/updated`, `subscriptionItem/canceled`, `subscriptionItem/expired`, `subscriptionInvoice/paymentSucceeded`, `subscriptionInvoice/paymentFailed`, `subscriptionAuth/requested`, `app/uninstalled`
 
 # Order events
 
@@ -523,6 +523,57 @@ Here are all the event types.
 			{
 				"node":{
 					"id": "fun_KpLWLA-B1QAWKfYj9ZOsz"
+				}
+			}
+		```
+	</Col>
+</Row>
+
+---
+
+# Subscription events
+
+These events need the `orders` scope.
+
+<Row>
+	<Col>
+    <Properties>
+      <Property name='Subscription created' type="subscription/created">
+        A customer subscription was created from an order.
+      </Property>
+      <Property name='Subscription updated' type="subscription/updated">
+        A customer subscription changed.
+      </Property>
+      <Property name='Subscription item canceled' type="subscriptionItem/canceled">
+        An item of a subscription was canceled. The id is the subscription item id.
+      </Property>
+      <Property name='Subscription item expired' type="subscriptionItem/expired">
+        An item of a subscription reached its end. The id is the subscription item id.
+      </Property>
+      <Property name='Invoice paid' type="subscriptionInvoice/paymentSucceeded">
+        A subscription invoice was charged successfully. The id is the invoice id.
+      </Property>
+      <Property name='Invoice payment failed' type="subscriptionInvoice/paymentFailed">
+        Charging a subscription invoice failed. The id is the invoice id.
+      </Property>
+      <Property name='Subscription link requested' type="subscriptionAuth/requested">
+        A customer asked for the link to manage their subscriptions. When your app listens to this event, Lightfunnels does not send the email: your app sends `url` to `email`.
+      </Property>
+		</Properties>
+	</Col>
+	<Col>
+    ```json {{ 'title': 'Subscription payload' }}
+			{
+				"node":{
+					"id": "id of the subscription, subscription item or invoice"
+				}
+			}
+		```
+    ```json {{ 'title': 'Subscription link requested payload' }}
+			{
+				"node":{
+					"email": "customer@example.com",
+					"url": "https://..."
 				}
 			}
 		```
